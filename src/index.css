@@ -1,0 +1,298 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import "tailwindcss";
+@plugin "daisyui";
+
+body {
+  font-family: "Urbanist", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+:root {
+  --primary: #0F7771;
+  --secondary: #EC5D28;
+  --white: #ffffff;
+  --dark: #111111;
+}
+
+/* Background Colors */
+.bg-primary {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+.bg-secondary {
+  background-color: var(--secondary);
+  color: var(--white);
+}
+
+/* Text Colors */
+.text-primary {
+  color: var(--primary);
+}
+
+.text-secondary {
+  color: var(--secondary);
+}
+
+/* Hover Effects */
+.bg-primary:hover {
+  background-color: #0c5f5a;
+}
+
+.bg-secondary:hover {
+  background-color: #c94e20;
+}
+
+/* Button Styles */
+.btn-primary {
+  background: var(--primary);
+  color: var(--white);
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  color: var(--white);
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+}
+
+
+/* text shadow + subtle glow animation */
+.text-eye {
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-shadow:
+    0 1px 0 rgba(66, 66, 66, 0.6), 
+    0 2px 6px rgba(85, 85, 85, 0.5),
+    0 6px 20px rgba(90, 90, 90, 0.5),
+    0 0 8px rgba(247, 142, 142, 0.2), 
+    0 0 18px rgba(182, 94, 94, 0.08);
+
+  position: relative;
+  z-index: 0;
+}
+
+/* .text-eye::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 4px;
+  filter: blur(14px);
+  background: radial-gradient(ellipse at center,
+                rgba(255,165,0,0.18) 0%,
+                rgba(255,140,0,0.08) 30%,
+                transparent 70%);
+  opacity: 0.9;
+  transform: translateZ(0);
+  pointer-events: none;
+  animation: text-glow 3.2s ease-in-out infinite;
+} */
+
+/* Keyframes for gentle pulsing glow */
+@keyframes text-glow {
+  0%   { transform: translateY(0) scale(1); opacity: 0.85; }
+  50%  { transform: translateY(-2px) scale(1.02); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 0.85; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-eye::after {
+    animation: none;
+    opacity: 0.9;
+  }
+}
+
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 0px rgba(20, 184, 166, 0.4); }
+  50% { box-shadow: 0 0 18px rgba(20, 184, 166, 0.7); }
+  100% { box-shadow: 0 0 0px rgba(20, 184, 166, 0.4); }
+}
+
+.glow-pulse {
+  animation: glowPulse 2.5s infinite ease-in-out;
+}
+
+/* Add this main CSS file or a styled component */
+.testimonial-section-container {
+    padding: 60px 20px;
+    background-color: #f4f7fa;
+    text-align: center;
+}
+
+.testimonial-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    min-height: 280px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+    transition: transform 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.quote-icon {
+    font-size: 40px;
+    color: #007bff; 
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.quote {
+    font-size: 16px;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.scholarship-info {
+    margin-bottom: 15px;
+}
+
+.scholarship-name {
+    font-weight: 700;
+    color: #333;
+    font-size: 15px;
+}
+
+.student-details {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.student-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.name {
+    margin: 0;
+    font-size: 16px;
+    color: #007bff;
+}
+
+.designation {
+    margin: 0;
+    font-size: 14px;
+    color: #888;
+}
+
+/* Swiper Pagination Style */
+.swiper-pagination-bullet {
+    background: #ccc !important;
+}
+
+.swiper-pagination-bullet-active {
+    background: #007bff !important; 
+}
+
+/* FAQSection.css */
+
+.faq-section-wrapper {
+    padding: 60px 20px;
+    background-color: #f9f9f9;
+    box-shadow: 2px 3px 6px #c94e20;
+    border-radius: 15px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: 32px;
+    color: #007bff; 
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    font-size: 16px;
+    color: #555;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+}
+
+.faq-item {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden; 
+}
+
+.faq-question {
+    width: 100%;
+    padding: 18px 25px;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: left;
+    color: #333;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.faq-question:hover, .faq-question.active {
+    background-color: #ebfffe; 
+    color: #ff9900;
+}
+
+.toggle-icon {
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 300;
+    transition: transform 0.3s ease;
+}
+
+.faq-answer-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+}
+
+.faq-answer-text {
+    padding: 0 25px 20px 25px;
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+    .section-title {
+        font-size: 28px;
+    }
+    .faq-question {
+        font-size: 16px;
+        padding: 15px 20px;
+    }
+}
