@@ -9,7 +9,7 @@ import { scholarshipTestimonials } from '../pages/shared/data/scholarshipTestimo
 
 
 const TestimonialCard = ({ quote, name, designation, scholarshipName, image }) => (
-  <div className=" bg-teal-100 p-6 rounded-xl shadow-md hover:shadow-xl overflow-hidden transition-all duration-300">
+  <div className=" bg-[#ddfffa] p-6 rounded-xl shadow-xl overflow-hidden transition-all duration-300">
     <div className="text-[54px] text-secondary text-left">❝</div>
     <p className="mb-4 text-left">{quote}</p>
     <div className="scholarship-info">

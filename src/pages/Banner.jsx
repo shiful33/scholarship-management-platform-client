@@ -12,9 +12,9 @@ const Banner = () => {
     <Carousel
     autoPlay={true}
     infiniteLoop={true}
-    className="my-[80px] m-4"
+    className="my-20 p-4 lg:p-0"
     >
-      <div className="transition-all duration-300 opacity-85 bg-teal-100 shadow-lg">
+      <div className="transition-all duration-300 opacity-85 bg-teal-100 shadow-lg pl-2">
         <img src={banner1} className="relative m-4"/>
         
         <div className="absolute bottom-[5%] lg:bottom-[15%] lg:left-[5%] text-primary font-semibold text-left">
@@ -26,7 +26,7 @@ const Banner = () => {
         </div>
       </div>
 
-      <div className="transition-all duration-300 opacity-85 bg-teal-100 shadow-lg">
+      <div className="transition-all duration-300 opacity-85 bg-teal-100 shadow-lg pl-2">
         <img src={banner2} className="relative m-4"/>
         
         <div className="absolute bottom-[5%] lg:bottom-[15%] lg:left-[5%] text-primary font-semibold text-left">
@@ -38,7 +38,7 @@ const Banner = () => {
         </div>
       </div>
 
-      <div className="transition-all duration-300 opacity-85 bg-teal-100 shadow-lg">
+      <div className="transition-all duration-300 opacity-85 bg-teal-100 shadow-lg pl-2">
         <img src={banner3} className="relative m-4"/>
         
         <div className="absolute bottom-[5%] lg:bottom-[15%] lg:left-[5%] text-primary font-semibold text-left">

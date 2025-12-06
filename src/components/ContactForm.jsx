@@ -40,11 +40,11 @@ const ContactForm = () => {
   }
 
   return (
-    <section className="max-w-5xl mx-auto my-30 p-8 lg:p-0">
+    <section className="lg:max-w-5xl mx-auto my-30 p-8 lg:p-0">
       <div className="flex flex-col lg:flex-row shadow-2xl rounded-xl overflow-hidden bg-white">
         
         {/* Left  Contact Info */}
-        <div className="lg:w-1/3 p-8 bg-primary text-white flex flex-col justify-center space-y-6">
+        <div className="lg:w-1/3 p-8 bg-teal-500 text-white flex flex-col justify-center space-y-6">
           <h2 className="text-3xl font-bold text-eye">Need Help?
             <br/>Get in Touch!</h2>
           <p className="text-blue-100">Our support team is ready to assist you with your scholarship application or general questions.</p>
@@ -67,7 +67,7 @@ const ContactForm = () => {
         
         {/* Right Side: The Form */}
         <form className="lg:w-2/3 p-8 md:p-12" onSubmit={handleSubmit}>
-          <h3 className="text-2xl font-bold text-primary mb-6">Send Us a Message</h3>
+          <h3 className="text-2xl font-bold text-teal-600 mb-6">Send Us a Message</h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="col-span-1">
@@ -126,11 +126,11 @@ const ContactForm = () => {
               rows="4"
               placeholder="Type your question or detailed inquiry here..."
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-teal-700 focus:text-teal-500 transition"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-teal-700 focus:text-teal-600 transition"
             />
           </div>
 
-          <button type="submit" className="mt-8 w-full flex items-center justify-center space-x-2 bg-secondary hover:bg-orange-700 text-white font-semibold py-3 rounded-lg shadow-md transition duration-300 cursor-pointer">
+          <button type="submit" className="w-full flex justify-center items-center gap-2 font-semibold border-2 bg-transparent px-6 py-2 cursor-pointer rounded-lg hover:bg-orange-600 transition-all duration-300 hover:text-white border-orange-600 mt-4 text-teal-600">
             <Send className="w-5 h-5"/>
             <span>Send Message</span>
           </button>
