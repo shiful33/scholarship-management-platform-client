@@ -1,15 +1,21 @@
 import React from 'react';
 import { topScholarships } from './data/topScholarshipsData';
+import { motion } from "framer-motion";
+import { slideInLeftVariants } from './data/variants';
 
 const TopScholarship = () => {
     return (
 
         <div className="m-4 lg:m-0">
-        <div className="text-left mt-[100px]">
+        <motion.div className="text-left mt-[100px]"
+            variants={slideInLeftVariants}
+            initial="hidden"
+            whileInView="visible" 
+            viewport={{ once: true, amount: 0.5 }}>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 text-primary">Top 6<span className=" text-eye"> Scholarships Here</span></h2>
             <p className="text-[18px] lg:w-[500px] mb-4">Scholarships.com is a free college scholarship search platform that matches you to college scholarships you qualify for.</p>
             <button className="font-normal border-2 bg-transparent px-6 py-2 cursor-pointer rounded-lg hover:bg-orange-600 text-[#404040] transition-all duration-300 hover:text-white border-orange-600 mt-4">Find Scholarship Now</button>
-        </div>
+        </motion.div>
         <div className="grid md:grid-cols-3 gap-8 mt-15">
       {topScholarships.map((item) => (
         <div
@@ -29,6 +35,10 @@ const TopScholarship = () => {
 
             <p className="text-[#404040] mt-2 text-md leading-relaxed">
               {item.description}
+            </p>
+
+            <p className="text-[#404040] mt-2 text-md leading-relaxed">
+              <span className='font-semibold'>Post Date:</span> {item.postedDate}
             </p>
 
             <div className="mt-4">

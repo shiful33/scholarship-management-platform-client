@@ -1,6 +1,19 @@
 import { Mail, MapPin, Phone, Send } from 'lucide-react';
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
+
+const slideUpVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
+};
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -18,7 +31,6 @@ const ContactForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     setIsSubmitted(true);
     setFormData({
       name: '',
@@ -40,10 +52,16 @@ const ContactForm = () => {
   }
 
   return (
-    <section className="lg:max-w-5xl mx-auto my-30 p-8 lg:p-0">
+    <motion.section
+        variants={slideUpVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        className="lg:max-w-5xl mx-auto my-30 p-8 lg:p-0"
+    >
       <div className="flex flex-col lg:flex-row shadow-2xl rounded-xl overflow-hidden bg-white">
         
-        {/* Left  Contact Info */}
+        {/* Left Contact Info */}
         <div className="lg:w-1/3 p-8 bg-teal-500 text-white flex flex-col justify-center space-y-6">
           <h2 className="text-3xl font-bold text-eye">Need Help?
             <br/>Get in Touch!</h2>
@@ -136,7 +154,7 @@ const ContactForm = () => {
           </button>
         </form>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

@@ -6,6 +6,7 @@ import TestimonialSection from '../../components/TestimonialSlider';
 import FAQSection from '../../components/FAQSection';
 import ContactForm from '../../components/ContactForm';
 
+
 const Home = () => {
     return (
         <div>

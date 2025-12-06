@@ -18,7 +18,7 @@ const Banner = () => {
         <img src={banner1} className="relative m-4"/>
         
         <div className="absolute bottom-[5%] lg:bottom-[15%] lg:left-[5%] text-primary font-semibold text-left">
-          <h2 className="text-xl md:text-5xl lg:text-7xl font-extrabold lg:mb-6">Find <span className="text-eye">Scholarships</span><br/> for study</h2>
+          <h2 className="text-xl md:text-5xl lg:text-6xl font-extrabold lg:mb-6">Find <span className="text-eye">Scholarships</span><br/> for study</h2>
             
             <p className="flex items-center gap-3 text-sm lg:text-[20px] w-[180px] lg:w-full"><HandHeart className="text-[#404040]"/>100% free scholarship</p>
             <p className="flex items-center gap-3 text-sm lg:text-[20px] w-[180px] lg:w-full"><HeartPlus  className="text-[#404040]"/>Durable opportunities for every students</p>
@@ -30,7 +30,7 @@ const Banner = () => {
         <img src={banner2} className="relative m-4"/>
         
         <div className="absolute bottom-[5%] lg:bottom-[15%] lg:left-[5%] text-primary font-semibold text-left">
-          <h2 className="text-xl md:text-5xl lg:text-7xl font-extrabold lg:mb-6">Find <span className="text-eye">Scholarships</span><br/> for study</h2>
+          <h2 className="text-xl md:text-5xl lg:text-6xl font-extrabold lg:mb-6">Find <span className="text-eye">Scholarships</span><br/> for study</h2>
             
             <p className="flex items-center gap-3 text-sm lg:text-[20px] w-[180px] lg:w-full"><HandHeart className="text-[#404040]"/>100% free scholarship</p>
             <p className="flex items-center gap-3 text-sm lg:text-[20px] w-[180px] lg:w-full"><HeartPlus  className="text-[#404040]"/>Durable opportunities for every students</p>
@@ -42,7 +42,7 @@ const Banner = () => {
         <img src={banner3} className="relative m-4"/>
         
         <div className="absolute bottom-[5%] lg:bottom-[15%] lg:left-[5%] text-primary font-semibold text-left">
-          <h2 className="text-xl md:text-5xl lg:text-7xl font-extrabold lg:mb-6">Find <span className="text-eye">Scholarships</span><br/> for study</h2>
+          <h2 className="text-xl md:text-5xl lg:text-6xl font-extrabold lg:mb-6">Find <span className="text-eye">Scholarships</span><br/> for study</h2>
             
             <p className="flex items-center gap-3 text-sm lg:text-[20px] w-[180px] lg:w-full"><HandHeart className="text-[#404040]"/>100% free scholarship</p>
             <p className="flex items-center gap-3 text-sm lg:text-[20px] w-[180px] lg:w-full"><HeartPlus  className="text-[#404040]"/>Durable opportunities for every students</p>

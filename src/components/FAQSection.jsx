@@ -1,5 +1,19 @@
 import React, { useState } from 'react';
 import { FaQuestion } from 'react-icons/fa6';
+import { motion } from 'framer-motion';
+
+
+export const slideInTopVariants = {
+  hidden: { opacity: 0, y: -50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8, 
+      ease: "easeOut",
+    },
+  },
+};
 
 const faqData = [
   {
@@ -54,7 +68,13 @@ const FAQItem = ({ question, answer }) => {
 // Main FAQ Section Component
 const FAQSection = () => {
   return (
-    <section className="faq-section-wrapper mt-[100px] m-4">
+    <motion.section
+     variants={slideInTopVariants}
+      initial="hidden"
+      whileInView="visible" 
+      viewport={{ once: true, amount: 0.1 }}
+      className="faq-section-wrapper mt-[100px] m-4"
+    >
       <div className="container">
         <h2 className="text-left text-2xl mg:text-3xl lg:text-4xl font-bold text-primary flex items-center">
           <span role="img" ></span><FaQuestion /> Frequently Asked Questions
@@ -67,7 +87,7 @@ const FAQSection = () => {
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

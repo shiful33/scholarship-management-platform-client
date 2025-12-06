@@ -1,11 +1,13 @@
-// TestimonialSlider.jsx
-
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { scholarshipTestimonials } from '../pages/shared/data/scholarshipTestimonials';
+import { slideInLeftVariants } from '../pages/shared/data/variants';
+import { motion } from "framer-motion";
+
+
 
 
 const TestimonialCard = ({ quote, name, designation, scholarshipName, image }) => (
@@ -30,8 +32,15 @@ const TestimonialCard = ({ quote, name, designation, scholarshipName, image }) =
 const TestimonialSlider = () => {
   return (
     <div className="mt-[120px] m-4">
+        <motion.div
+        variants={slideInLeftVariants}
+        initial="hidden"
+        whileInView="visible" 
+        viewport={{ once: true, amount: 0.5 }}
+        >
         <h2 className='text-2xl md:text-3xl lg:text-5xl font-extrabold mb-4 text-left text-primary'>Experiences of Our <span className='text-eye'>Scholarship Students</span></h2>
         <p className='text-[18px] text-left  lg:w-[650px] mb-8'>community projects, and social initiatives. It encourages socially responsible education and provides funds to advance impactful projects.</p>
+        </motion.div>
         <Swiper
             modules={[Pagination, Autoplay]} 
             spaceBetween={30} 
