@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import Logo from "../../components/Logo";
+import useAuth from "../../hooks/useAuth";
 
 const NavBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  
+  const {user, logOut} = useAuth();
+
+  const handleLogOut = () => {
+    logOut()
+    .then()
+    .catch(error => {
+      console.log(error)
+    })
+  }
 
   const links = (
     <>
@@ -105,16 +116,27 @@ const NavBar = () => {
             {links}
           </ul>
         </div>
-
+        
+        {/* LogIn & LogOut Function */}
         <div className="lg:navbar-end flex justify-center lg:justify-end gap-4 mt-3">
-          <button
+          
+          {
+            user ? <button onClick={handleLogOut}
+            className={`font-normal border-2 px-6 py-2 cursor-pointer rounded-lg hover:bg-[#0c5f5a] hover:text-white transition-all duration-300 border-[#0c5f5a] text-[#0c5f5a] ${loginButtonClasses}`}
+          >
+            Student <span className="font-bold">Log Out</span>
+          </button> : 
+          <Link to="/login"
             className={`font-normal border-2 px-6 py-2 cursor-pointer rounded-lg hover:bg-[#0c5f5a] hover:text-white transition-all duration-300 border-[#0c5f5a] text-[#0c5f5a] ${loginButtonClasses}`}
           >
             Student <span className="font-bold">Log In</span>
-          </button>
-          <button className="font-normal border-2 hover:bg-transparent px-6 py-2 cursor-pointer rounded-lg bg-orange-600 hover:text-[#404040] transition-all duration-300 text-white border-orange-600">
+          </Link>
+          }
+
+          <Link to="/register"
+          className="font-normal border-2 hover:bg-transparent px-6 py-2 cursor-pointer rounded-lg bg-orange-600 hover:text-[#404040] transition-all duration-300 text-white border-orange-600">
             Student <span className="font-bold">Sign Up</span>
-          </button>
+          </Link>
         </div>
       </div>
     </div>
