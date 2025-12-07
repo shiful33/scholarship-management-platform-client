@@ -75,7 +75,7 @@ const Footer = () => {
         </nav>
         
       </footer>
-      <div className="bg-[#212121] text-white py-4">
+      <div className="bg-[#212121] text-white py-4 text-center">
         <small>Copyright © {new Date().getFullYear()} - All right reserved By | <span className="text-primary">Shiful Islam</span></small>
       </div>
     </div>

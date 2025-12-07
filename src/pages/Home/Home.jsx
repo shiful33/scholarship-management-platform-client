@@ -5,16 +5,24 @@ import TopScholarship from '../shared/TopScholarship';
 import TestimonialSection from '../../components/TestimonialSlider';
 import FAQSection from '../../components/FAQSection';
 import ContactForm from '../../components/ContactForm';
+import Brands from './Brands';
+import Reviews from './Reviews';
+
+
+const reviewsPromise = fetch('/reviewData.json')
+.then(res => res.json());
 
 
 const Home = () => {
     return (
         <div>
            <Banner />
+           <Brands />
            <HowItWorks />
            <TopScholarship />
-           <TestimonialSection />
+           <Reviews reviewsPromise={reviewsPromise} />
            <FAQSection />
+           <TestimonialSection />
            <ContactForm />
         </div>
     );

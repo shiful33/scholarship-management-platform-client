@@ -1,0 +1,52 @@
+[
+  {
+    "id": "rev001",
+    "reviewerImage": "https://i.postimg.cc/VN3yxydH/premium_photo_1689568126014_06fea9d5d341.jpg",
+    "reviewerName": "Asif Iqbal",
+    "date": "2024-10-25",
+    "rating": 5,
+    "comment": "The support team was incredibly helpful during my application process. The merit scholarship covered my full tuition fees. Highly recommended for sincere students!",
+    "scholarshipId": "SCHL101",
+    "institutionName": "Global Excellence Scholarship Fund"
+  },
+  {
+    "id": "rev002",
+    "reviewerImage": "https://i.postimg.cc/C5YtxtYC/female4.jpg",
+    "reviewerName": "Nusrat Jahan",
+    "date": "2024-09-15",
+    "rating": 4,
+    "comment": "A great platform for finding niche scholarships. I received the 'Women in Tech' grant. Documentation process was a bit long, but worth the effort.",
+    "scholarshipId": "SCHL101",
+    "institutionName": "Global Excellence Scholarship Fund"
+  },
+  {
+    "id": "rev003",
+    "reviewerImage": "https://i.postimg.cc/fLvt6tbR/female1.jpg",
+    "reviewerName": "Fariha Zaman",
+    "date": "2024-11-01",
+    "rating": 5,
+    "comment": "Transparent selection process and fast communication. The university itself is top-notch with excellent faculty.",
+    "scholarshipId": "UNIV205",
+    "institutionName": "Metropolitan University of Technology (MUT)"
+  },
+  {
+    "id": "rev004",
+    "reviewerImage": "https://i.postimg.cc/4d4NH8Jd/female2.jpg",
+    "reviewerName": "Tanjila Akter",
+    "date": "2024-08-05",
+    "rating": 3,
+    "comment": "The course content is strong, but the administrative fees are quite high, even with the partial scholarship. Could improve on student services.",
+    "scholarshipId": "UNIV205",
+    "institutionName": "Metropolitan University of Technology (MUT)"
+  },
+  {
+    "id": "rev005",
+    "reviewerImage": "https://i.postimg.cc/28gQdWbM/male6.jpg",
+    "reviewerName": "Rahim Khan",
+    "date": "2024-12-01",
+    "rating": 5,
+    "comment": "Securing a spot here was the best decision. The campus environment is diverse and highly motivating. Zero complaints about the academic quality.",
+    "scholarshipId": "UNIV205",
+    "institutionName": "Metropolitan University of Technology (MUT)"
+  }
+]
