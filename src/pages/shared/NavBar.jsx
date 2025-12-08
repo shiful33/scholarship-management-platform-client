@@ -42,6 +42,18 @@ const NavBar = () => {
           All Scholarships
         </NavLink>
       </li>
+      <li>
+        <NavLink
+          to="/add-scholarship"
+          className={`font-semibold ${
+            isScrolled
+              ? "text-gray-800 hover:text-[#212121]"
+              : "text-[#404040] hover:text-[#212121]"
+          }`}
+        >
+          Add Scholarship
+        </NavLink>
+      </li>
     </>
   );
 
@@ -133,9 +145,9 @@ const NavBar = () => {
           </Link>
           }
 
-          <Link to="/register"
+          <Link /* to="/application-scholarship" */
           className="font-normal border-2 hover:bg-transparent px-6 py-2 cursor-pointer rounded-lg bg-orange-600 hover:text-[#404040] transition-all duration-300 text-white border-orange-600">
-            Student <span className="font-bold">Sign Up</span>
+             <span className="font-bold">Application Scholarship</span>
           </Link>
         </div>
       </div>

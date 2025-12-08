@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import SocialLogin from "./SocialLogin";
 import axios from "axios";
+import { FaEye } from "react-icons/fa";
+import { IoMdEyeOff } from "react-icons/io";
 
 const Register = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [ show, setShow ] = useState(false);
 
     const { registerUser, updateUserProfile } = useAuth();
+    const navigate = useNavigate();
+
+    const location = useLocation();
 
     const handleRegistration = (data) => {
       console.log('after register', data.photo[0]);
@@ -40,6 +46,7 @@ const Register = () => {
           updateUserProfile(userProfile)
           .then(() => {
             console.log('user profile updated done')
+            navigate(location.state || '/');
           })
           .catch(error => console.log(error))
 
@@ -81,10 +88,19 @@ const Register = () => {
           {errors.password?.type === 'minLength' && <p className="text-red-500">Password must be 6 characters or longer.</p>}
           {errors.password?.type === 'pattern' && <p className="text-red-500">Password must have at least one uppercase, at least one lowercase, at least one number, and at least one special characters.</p>}
 
+          {/* Show Password */}
+          <span
+          onClick={() => setShow(!show)}
+          className="absolute text-[17px] right-10 top-96 text-[#606162] cursor-pointer">
+            {show ? <FaEye /> : <IoMdEyeOff />}
+          </span>
+
 
           {/* Submit Button*/}
           <button className="btn bg-primary mt-4">Register Now</button>
-          <p className="text-center text-[15px] mt-2">You've already registered? <Link to="/login"><span className="underline font-semibold text-primary text-[16px] cursor-pointer">Please Login</span></Link></p>
+          <p className="text-center text-[15px] mt-2">You've already registered? <Link
+          state={location.state}
+          to="/login"><span className="underline font-semibold text-primary text-[16px] cursor-pointer">Please Login</span></Link></p>
         </fieldset>
         <SocialLogin />
       </form>
