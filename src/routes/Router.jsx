@@ -7,6 +7,10 @@ import Register from "../pages/Auth/Register";
 import PrivateRoute from "./PrivateRoute";
 import AllScholarships from "../pages/AllScholarships";
 import AddScholarship from "../pages/AddScholarship";
+import DashboardLayout from "../layouts/DashboardLayout";
+import AdminScholar from "../pages/AdminDashboard/AdminScholar";
+import UpdateScholarship from "../pages/AdminDashboard/UpdateScholarship";
+import MyProfile from "../pages/AdminDashboard/MyProfile";
 
 
 export const router = createBrowserRouter([
@@ -42,6 +46,26 @@ export const router = createBrowserRouter([
                 path: "register",
                 Component: Register,
             }
+        ]
+    },
+    {
+        path: "dashboard",
+        element: <PrivateRoute>
+            <DashboardLayout />
+        </PrivateRoute>,
+        children: [
+           {
+                path: "admin-addScholar",
+                Component: AdminScholar
+           },
+           {
+                path: "update-scholarship/:id", 
+                element: <UpdateScholarship />
+            },
+            {
+                path: "my-profile",
+                element: <PrivateRoute><MyProfile /></PrivateRoute>
+            },
         ]
     }
 ]);

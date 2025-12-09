@@ -1,6 +1,10 @@
 import React from "react";
 import { useForm, Watch } from "react-hook-form";
 import { toast } from "react-toastify";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import useAuth from "../../src/hooks/useAuth";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const defaultValues = {
   scholarshipName: "",
@@ -43,41 +47,94 @@ const AddScholarship = () => {
     register,
     handleSubmit,
     watch,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isLoading },
     reset,
   } = useForm({
     defaultValues: defaultValues,
   });
 
+  const { user } = useAuth();
+
+  const axiosSecure = useAxiosSecure();
+
   const isTuitionCovered = watch("tuitionFeesCovered");
 
-  const handleAddScholarship = (data) => {
+  const MySwal = withReactContent(Swal);
+
+  const handleAddScholarship = async (data) => {
+
+    const result = await MySwal.fire({
+      title: "Confirm Submission",
+      text: "Are you sure you want to submit this scholarship information? It cannot be changed easily afterwards.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Submit it",
+      cancelButtonText: "No, Cancel", 
+      reverseButtons: true,
+    });
+
+    if (!result.isConfirmed) {
+      toast.info("Scholarship submission cancelled.");
+      return;
+    }
+   
     const finalSubmissionData = {
-      ...data,
-      worldRank: Number(data.worldRank),
-      applicationFees: Number(data.applicationFees),
-      serviceCharge: Number(data.serviceCharge),
 
-      tuitionFees: data.tuitionFeesCovered
-        ? null
-        : data.tuitionFees
-        ? Number(data.tuitionFees)
-        : null,
+        ...data, 
 
-      applicationDeadline: new Date(data.applicationDeadline).toISOString(),
+        userEmail: user?.email,
+
+        worldRank: Number(data.worldRank),
+        applicationFees: Number(data.applicationFees),
+        serviceCharge: Number(data.serviceCharge),
+
+        applicationDeadline: new Date(data.applicationDeadline).toISOString(),
+
+        postDate: data.postDate, 
+
+        subjectCategory: Array.isArray(data.subjectCategory) ? data.subjectCategory : [data.subjectCategory],
     };
 
     console.log("Submitting the final JSON data:", finalSubmissionData);
 
-    return new Promise((resolve) => {
-      setTimeout(() => {
+    try {
+      const res = await axiosSecure.post("/addScholars", finalSubmissionData);
+
+      if (res.data.insertedId) {
         toast.success(
-          "Scholarship Added Successfully!"
+          "Scholarship successfully added and saved to MongoDB! (ID: " +
+            res.data.insertedId +
+            ")"
         );
-        resolve();
-      }, 1500);
-    });
+        reset();
+      } else {
+        toast.error(
+          "Scholarship added, but MongoDB did not return a valid ID."
+        );
+      }
+    } catch (error) {
+      console.error("Error submitting scholarship data:", error);
+
+      let errorMessage = "Failed to add scholarship. Server or network error.";
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        errorMessage = error.response.data.message;
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      toast.error(errorMessage);
+    }
   };
+
+  if (isLoading) {
+      return <div className="p-12 text-center"><ThreeDot color="#32cd32" size="medium" text="" textColor="" /></div>;
+    }
+  
 
   return (
     <div className="max-w-4xl mx-auto py-12 px-4">
@@ -99,7 +156,7 @@ const AddScholarship = () => {
             <input
               type="text"
               {...register("scholarshipName", {
-                required: "Scholarship Name is required",
+                required: true,
               })}
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
             />
@@ -116,7 +173,7 @@ const AddScholarship = () => {
             <input
               type="text"
               {...register("universityName", {
-                required: "University Name is required",
+                required: true,
               })}
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
             />
@@ -329,6 +386,7 @@ const AddScholarship = () => {
               {...register("userEmail", {
                 required: "User Email is required",
               })}
+              defaultValue={user?.email}
               placeholder="user@example.com"
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
             />
