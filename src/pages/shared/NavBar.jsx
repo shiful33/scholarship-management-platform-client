@@ -101,9 +101,9 @@ const NavBar = () => {
 
   return (
     <div
-      className={`sticky top-0 z-50 transition-all duration-300 ${navbarClasses}`}
+      className={`sticky top-0 z-50 transition-all duration-300 bg-transparent ${navbarClasses}`}
     >
-      <div className="navbar w-full mx-auto px-4 lg:px-0 flex justify-between">
+      <div className="navbar w-full shadow mx-auto px-4 lg:px-0 flex justify-between">
         <div className="navbar-start">
           {/* Dropdown Menu (Mobile) */}
           <div className="dropdown">
@@ -167,7 +167,7 @@ const NavBar = () => {
         </div>
 
         {/* LogIn / Profile Dropdown / Application Button */}
-        <div className="lg:navbar-end flex justify-center lg:justify-end gap-3 mt-3">
+        <div className="lg:navbar-end flex justify-center lg:justify-end gap-3 mt-3 mr-4">
           {/* Application Scholarship Button */}
           {/* <Link
             to="/application-scholarship"
@@ -217,7 +217,7 @@ const NavBar = () => {
           ) : (
             <Link
               to="/login"
-              className={`font-normal border-2 px-6 py-2 cursor-pointer rounded-lg hover:bg-[#0c5f5a] hover:text-white transition-all duration-300 ${loginButtonClasses}`}
+              className={`font-normal border-2 text-teal-700 border-orange-300 px-6 py-2 cursor-pointer rounded-lg hover:bg-teal-300 hover:border-white hover:text-white transition-all duration-300 ${loginButtonClasses}`}
             >
             <span className="font-bold">Log In</span>
             </Link>

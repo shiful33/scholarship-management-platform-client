@@ -85,7 +85,7 @@ const DashboardLayout = () => {
 
             {/* Manage Users Links */}
             <li>
-                <NavLink to="/manage-users" 
+                <NavLink to="/dashboard/manage-users" 
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Manage Users"
                 ><FaUserCog className="text-2xl text-secondary"/> 
@@ -95,7 +95,7 @@ const DashboardLayout = () => {
 
             {/* Analytics Links */}
             <li>
-                <NavLink to="/analytics" 
+                <NavLink to="/dashboard/analytics" 
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Analytics"
                 ><SiGoogleanalytics className="text-2xl text-secondary"/> 

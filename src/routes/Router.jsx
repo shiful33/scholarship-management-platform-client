@@ -11,6 +11,8 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import AdminScholar from "../pages/AdminDashboard/AdminScholar";
 import UpdateScholarship from "../pages/AdminDashboard/UpdateScholarship";
 import MyProfile from "../pages/AdminDashboard/MyProfile";
+import ManageUsers from "../pages/AdminDashboard/ManageUsers";
+import Analytics from "../pages/AdminDashboard/Analytics";
 
 
 export const router = createBrowserRouter([
@@ -64,7 +66,15 @@ export const router = createBrowserRouter([
             },
             {
                 path: "my-profile",
-                element: <PrivateRoute><MyProfile /></PrivateRoute>
+                element: <MyProfile />
+            },
+            {
+                path: "manage-users",
+                element: <ManageUsers />    
+            },
+            {
+                path: "analytics",
+                element: <Analytics />    
             },
         ]
     }
