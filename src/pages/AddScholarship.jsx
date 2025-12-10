@@ -5,6 +5,7 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import useAuth from "../../src/hooks/useAuth";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import axios from "axios";
 
 const defaultValues = {
   scholarshipName: "",
@@ -61,8 +62,9 @@ const AddScholarship = () => {
 
   const MySwal = withReactContent(Swal);
 
-  const handleAddScholarship = async (data) => {
+  const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`;
 
+  const handleAddScholarship = async (data) => {
     const result = await MySwal.fire({
       title: "Confirm Submission",
       text: "Are you sure you want to submit this scholarship information? It cannot be changed easily afterwards.",
@@ -71,7 +73,7 @@ const AddScholarship = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, Submit it",
-      cancelButtonText: "No, Cancel", 
+      cancelButtonText: "No, Cancel",
       reverseButtons: true,
     });
 
@@ -79,22 +81,39 @@ const AddScholarship = () => {
       toast.info("Scholarship submission cancelled.");
       return;
     }
-   
+
+    let universityImageUrl = "";
+    const uniImageFile = data.universityImage[0];
+    const formData = new FormData();
+    formData.append("image", uniImageFile);
+
+    try {
+      const imgRes = await axios.post(image_API_URL, formData);
+      universityImageUrl = imgRes.data.data.url;
+      toast.success("University image uploaded successfully.");
+    } catch (error) {
+      console.error("Image upload error:", error);
+      toast.error("Failed to upload University Image. Submission cancelled.");
+      return;
+    }
+
     const finalSubmissionData = {
+      ...data,
 
-        ...data, 
+      universityImage: universityImageUrl,
 
-        userEmail: user?.email,
+      worldRank: Number(data.worldRank),
+      applicationFees: Number(data.applicationFees),
+      serviceCharge: Number(data.serviceCharge),
 
-        worldRank: Number(data.worldRank),
-        applicationFees: Number(data.applicationFees),
-        serviceCharge: Number(data.serviceCharge),
+      applicationDeadline: new Date(data.applicationDeadline).toISOString(),
 
-        applicationDeadline: new Date(data.applicationDeadline).toISOString(),
+      userEmail: user?.email,
+      postDate: new Date().toISOString(),
 
-        postDate: data.postDate, 
-
-        subjectCategory: Array.isArray(data.subjectCategory) ? data.subjectCategory : [data.subjectCategory],
+      subjectCategory: Array.isArray(data.subjectCategory)
+        ? data.subjectCategory
+        : [data.subjectCategory],
     };
 
     console.log("Submitting the final JSON data:", finalSubmissionData);
@@ -107,8 +126,8 @@ const AddScholarship = () => {
           "Scholarship successfully added and saved to MongoDB! (ID: " +
             res.data.insertedId +
             ")"
-        );
-        reset();
+        )
+
       } else {
         toast.error(
           "Scholarship added, but MongoDB did not return a valid ID."
@@ -116,13 +135,8 @@ const AddScholarship = () => {
       }
     } catch (error) {
       console.error("Error submitting scholarship data:", error);
-
       let errorMessage = "Failed to add scholarship. Server or network error.";
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
+      if (error.response?.data?.message) {
         errorMessage = error.response.data.message;
       } else if (error.message) {
         errorMessage = error.message;
@@ -132,9 +146,12 @@ const AddScholarship = () => {
   };
 
   if (isLoading) {
-      return <div className="p-12 text-center"><ThreeDot color="#32cd32" size="medium" text="" textColor="" /></div>;
-    }
-  
+    return (
+      <div className="p-12 text-center">
+        <ThreeDot color="#32cd32" size="medium" text="" textColor="" />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto py-12 px-4">
@@ -207,7 +224,21 @@ const AddScholarship = () => {
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
             />
           </div>
+
+          {/* University Image Field */}
           <div>
+            <label className="label">University Image</label>
+            <input
+              type="file"
+              {...register("universityImage", { required: true })}
+              className="file-input w-full"
+            />
+            {errors.universityImage && (
+              <p className="text-red-500">University Image is required.</p>
+            )}
+          </div>
+
+          {/* <div>
             <label className="block text-sm font-medium text-gray-700">
               Image URL
             </label>
@@ -216,7 +247,7 @@ const AddScholarship = () => {
               {...register("universityImageURL", { required: true })}
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
             />
-          </div>
+          </div> */}
         </div>
 
         {/* Categories & Rank */}
@@ -283,7 +314,7 @@ const AddScholarship = () => {
           </div>
         </div>
 
-        {/* 4. Fees */}
+        {/* Fees */}
         <h3 className="text-xl font-semibold pt-4 shadow text-[#0c5f5a]">
           Financial Details
         </h3>

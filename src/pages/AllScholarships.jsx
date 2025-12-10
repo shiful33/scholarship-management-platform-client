@@ -21,7 +21,6 @@ const AllScholarships = () => {
     location: "",
   });
 
-
   const {
     data: scholarships = [],
     isLoading,
@@ -29,7 +28,6 @@ const AllScholarships = () => {
   } = useQuery({
     queryKey: ["allScholarships", filters, searchQuery],
     queryFn: async () => {
-    
       const params = new URLSearchParams({
         search: searchQuery,
         category: filters.category,
@@ -41,7 +39,6 @@ const AllScholarships = () => {
       return res.data;
     },
   });
-
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -61,7 +58,6 @@ const AllScholarships = () => {
     refetch();
   };
 
-
   if (isLoading) {
     return (
       <div className="p-12 text-center flex justify-center items-center h-[70vh]">
@@ -74,7 +70,6 @@ const AllScholarships = () => {
       </div>
     );
   }
-
 
   return (
     <div className="p-4 md:p-10 max-w-7xl mx-auto">
@@ -112,9 +107,10 @@ const AllScholarships = () => {
             className="p-3 border border-orange-300 rounded-lg bg-white text-sm text-primary font-semibold"
           >
             <option value="">Filter by Category</option>
-            <option value="Merit">Merit</option>
+            <option value="Merit-based">Merit-based</option>
             <option value="Need-based">Need-based</option>
-            <option value="Research">Research</option>
+            <option value="Full-tuition">Full-tuition</option>
+            <option value="Partial-fund">Partial-fund</option>
           </select>
 
           {/* Subject Category Filter */}
@@ -126,9 +122,10 @@ const AllScholarships = () => {
           >
             <option value="">Filter by Subject</option>
             <option value="Science">Science</option>
-            <option value="Arts">Arts</option>
+            <option value="Arts">Medical</option>
             <option value="Engineering">Engineering</option>
-            <option value="Business">Business</option>
+            <option value="Humanities">Humanities</option>
+            <option value="Arts">Arts</option>
           </select>
 
           {/* Location Filter */}
@@ -140,9 +137,11 @@ const AllScholarships = () => {
           >
             <option value="">Filter by Location</option>
             <option value="USA">USA</option>
-            <option value="Canada">Canada</option>
             <option value="UK">UK</option>
+            <option value="Switzerland">Switzerland</option>
             <option value="Australia">Australia</option>
+            <option value="Singapore">Singapore</option>
+            <option value="Canada">Canada</option>
           </select>
 
           {/* Reset Button */}
@@ -165,43 +164,50 @@ const AllScholarships = () => {
           {scholarships.map((scholarship) => (
             <div
               key={scholarship._id}
-              className="bg-white rounded-xl shadow-xl overflow-hidden hover:shadow-2xl transition duration-300 border border-gray-100"
+              className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 
+              flex flex-col h-full"
             >
               {/* University Image */}
               <div className="h-40 bg-gray-200 overflow-hidden">
                 <img
                   src={scholarship.universityImage}
                   alt={scholarship.universityName}
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                 />
               </div>
 
               {/* Card Body */}
-              <div className="p-6">
-                <h2 className="text-xl font-extrabold text-[#0c5f5a] mb-2">
+              <div className="p-6 flex flex-col flex-grow">
+                <h2 className="text-xl font-extrabold text-[#0c5f5a] mb-2 text-left line-clamp-2">
                   {scholarship.scholarshipName}
                 </h2>
-                <h3 className="text-lg font-semibold text-gray-700 mb-3">
+                <h3 className="text-lg font-semibold text-gray-700 mb-3 text-left">
                   {scholarship.universityName}
                 </h3>
 
-                <div className="space-y-2 text-sm text-gray-600">
+                <div className="space-y-3 text-sm text-gray-600 flex-grow">
                   {/* Scholarship Category */}
                   <p className="flex items-center">
-                    <FaGraduationCap className="mr-2 text-orange-500" />
-                    <span className="font-semibold">Category:</span>{scholarship.scholarshipCategory}
+                    <FaGraduationCap className="mr-2 mt-0.5 text-orange-500 flex-shrink-0" />
+                    <span className="font-semibold flex-none w-[70px]">
+                      Category:
+                    </span>
+                    {scholarship.scholarshipCategory}
                   </p>
 
                   {/* Location */}
                   <p className="flex items-center">
-                    <FaMapMarkerAlt className="mr-2 text-blue-500" />
-                    <span className="font-semibold">Location:</span> {scholarship.location}
+                    <FaMapMarkerAlt className="mr-2 mt-0.5 text-blue-500 flex-shrink-0" />
+                    <span className="font-semibold flex-none w-[70px]">
+                      Location:
+                    </span>
+                    {scholarship.country}, {scholarship.city}
                   </p>
 
                   {/* Application Fees */}
                   <p className="flex items-center text-md font-bold">
-                    <FaMoneyBill className="mr-2 text-green-600" />
-                    Fees: {" "}
+                    <FaMoneyBill className="mr-2 mt-0.5 text-green-600 flex-shrink-0" />
+                    <span className="flex-none w-[70px]">Fees:</span>{" "}
                     {scholarship.applicationFees
                       ? `$${scholarship.applicationFees}`
                       : "Free"}
@@ -209,11 +215,17 @@ const AllScholarships = () => {
                 </div>
 
                 {/* View Details Button */}
-                <Link to={`/scholarship/details/${scholarship._id}`}>
-                  <button className="w-full mt-5 p-3 bg-transparent font-semibold border-2 border-orange-300 px-6 py-2 cursor-pointer rounded-lg hover:bg-teal-300 hover:border-white hover:text-white transition-all duration-300 text-teal-700">
-                    View Details
-                  </button>
-                </Link>
+                <div className="mt-6">
+                  <Link to={`/scholarship/details/${scholarship._id}`}>
+                    <button
+                      className="w-full py-3 px-4 bg-gradient-to-r from-teal-400 to-orange-200 text-white font-semibold rounded-lg 
+                      hover:from-orange-300 hover:to-teal-400 transform hover:scale-105 transition-all duration-300 
+                      shadow-md cursor-pointer"
+                    >
+                      View Details
+                    </button>
+                  </Link>
+                </div>
               </div>
             </div>
           ))}
