@@ -73,7 +73,7 @@ const FAQSection = () => {
       initial="hidden"
       whileInView="visible" 
       viewport={{ once: true, amount: 0.1 }}
-      className="faq-section-wrapper mt-[100px] m-4"
+      className="faq-section-wrapper mt-[100px] mx-4 lg:mx-0"
     >
       <div className="container">
         <h2 className="text-left text-2xl mg:text-3xl lg:text-4xl font-bold text-primary flex items-center">

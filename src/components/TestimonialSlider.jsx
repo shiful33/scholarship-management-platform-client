@@ -31,7 +31,7 @@ const TestimonialCard = ({ quote, name, designation, scholarshipName, image }) =
 // Main Slider Component
 const TestimonialSlider = () => {
   return (
-    <div className="mt-[120px] m-4">
+    <div className="mt-[120px] p-4 lg:p-0">
         <motion.div
         variants={slideInLeftVariants}
         initial="hidden"

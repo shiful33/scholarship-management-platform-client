@@ -72,7 +72,7 @@ const AllScholarships = () => {
   }
 
   return (
-    <div className="p-4 md:p-10 max-w-7xl mx-auto">
+    <div className="p-4 lg:p-0 mt-25">
       <h1 className="text-4xl font-extrabold mb-8 text-center text-[#0c5f5a]">
         Explore All Scholarships
       </h1>
@@ -216,14 +216,14 @@ const AllScholarships = () => {
 
                 {/* View Details Button */}
                 <div className="mt-6">
-                  <Link to={`/scholarship/details/${scholarship._id}`}>
-                    <button
+                  <Link to={`/scholarship-details/${scholarship._id}`}>
+                  <button
                       className="w-full py-3 px-4 bg-gradient-to-r from-teal-400 to-orange-200 text-white font-semibold rounded-lg 
                       hover:from-orange-300 hover:to-teal-400 transform hover:scale-105 transition-all duration-300 
                       shadow-md cursor-pointer"
                     >
                       View Details
-                    </button>
+                      </button>
                   </Link>
                 </div>
               </div>

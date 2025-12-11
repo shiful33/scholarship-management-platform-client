@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
-import { FaUserCog } from "react-icons/fa";
+import { FaUserCog, FaWpforms } from "react-icons/fa";
 import { SiGoogleanalytics } from "react-icons/si";
 
 
@@ -100,6 +100,16 @@ const DashboardLayout = () => {
                 data-tip="Analytics"
                 ><SiGoogleanalytics className="text-2xl text-secondary"/> 
                 <span className="is-drawer-close:hidden font-bold text-base-300">Analytics</span>
+                </NavLink>
+            </li>
+
+            {/* My-Application Links */}
+            <li>
+                <NavLink to="/dashboard/my-applications" 
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="My Applications"
+                ><FaWpforms className="text-2xl text-secondary"/> 
+                <span className="is-drawer-close:hidden font-bold text-base-300">My Applications</span>
                 </NavLink>
             </li>
 

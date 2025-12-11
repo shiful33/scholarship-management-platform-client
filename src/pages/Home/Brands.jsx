@@ -50,7 +50,7 @@ const Brands = () => {
     >
       {brandLogos.map((logo, index) => (
         <SwiperSlide key={index}>
-          <img src={logo} className={`w-[100px] h-20 my-[50px]`} />
+          <img src={logo} className={`w-[80px] lg:w-[100px] h-[50px] lg:h-20 my-[50px] object-cover shadow-md rounded-lg`} />
         </SwiperSlide>
       ))}
     </Swiper>

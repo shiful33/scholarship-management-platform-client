@@ -6,11 +6,7 @@ import TestimonialSection from '../../components/TestimonialSlider';
 import FAQSection from '../../components/FAQSection';
 import ContactForm from '../../components/ContactForm';
 import Brands from './Brands';
-import Reviews from './Reviews';
-
-
-const reviewsPromise = fetch('/reviewData.json')
-.then(res => res.json());
+import ReviewsSection from './ReviewsSection';
 
 
 const Home = () => {
@@ -20,7 +16,7 @@ const Home = () => {
            <Brands />
            <HowItWorks />
            <TopScholarship />
-           <Reviews reviewsPromise={reviewsPromise} />
+           <ReviewsSection />
            <FAQSection />
            <TestimonialSection />
            <ContactForm />

@@ -31,14 +31,14 @@ const HowItWorksCard = ({ item, index }) => (
 const HowItWorks = () => {
   
   return (
-    <section className="m-4 lg:m-0 py-16 px-4 max-w-7xl mx-auto">
+    <section className="m-4 lg:m-0 py-16">
       
       <motion.div
         variants={slideInLeftVariants}
         initial="hidden"
         whileInView="visible" 
         viewport={{ once: true, amount: 0.5 }}
-        className="text-center lg:text-left mb-12"
+        className="text-left mb-12"
       >
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 text-primary">
           How<span className="text-eye text-orange-600"> It Works</span>
