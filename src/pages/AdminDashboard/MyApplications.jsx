@@ -122,7 +122,7 @@ const MyApplications = () => {
                       "Unknown Scholarship"}
                   </td>
                   <td className="font-semibold text-green-600">
-                    ${(app.paidFees || app.applicationFee || 0).toFixed(2)}
+                    ${(app.paidFees || app.applicationFees || 0)}
                   </td>
                   <td>
                     <span

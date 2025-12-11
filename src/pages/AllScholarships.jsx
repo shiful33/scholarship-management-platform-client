@@ -60,11 +60,11 @@ const AllScholarships = () => {
 
   if (isLoading) {
     return (
-      <div className="p-12 text-center flex justify-center items-center h-[70vh]">
+      <div className="p-12 text-center flex justify-center text-2xl items-center h-[70vh]">
         <ThreeDot
           color="#0c5f5a"
-          size="medium"
-          text="Loading Scholarships..."
+          size="semibold"
+          text="Loading All Scholarships..."
           textColor="#0c5f5a"
         />
       </div>

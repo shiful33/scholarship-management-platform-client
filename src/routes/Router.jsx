@@ -16,6 +16,7 @@ import Analytics from "../pages/AdminDashboard/Analytics";
 import Checkout from "../components/Checkout";
 import MyApplications from "../pages/AdminDashboard/MyApplications";
 import MyProfile from "../pages/AdminDashboard/MyProfile";
+import ErrorPage from "../pages/ErrorPage";
 
 export const router = createBrowserRouter([
   // Main Layout
@@ -77,10 +78,6 @@ export const router = createBrowserRouter([
   // 404 Page
   {
     path: "*",
-    element: (
-      <div className="text-center py-32 text-4xl font-bold text-red-600">
-        404 - Page Not Found
-      </div>
-    ),
+    element: <ErrorPage />
   },
 ]);
