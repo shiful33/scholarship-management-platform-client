@@ -17,6 +17,15 @@ import Checkout from "../components/Checkout";
 import MyApplications from "../pages/AdminDashboard/MyApplications";
 import MyProfile from "../pages/AdminDashboard/MyProfile";
 import ErrorPage from "../pages/ErrorPage";
+import StudentProfile from "../pages/Dashboard/StudentProfile";
+import ModeratorReview from "../components/Dashboard/Moderator/ModeratorReview";
+import ModeratorRoute from "./ModeratorRoute";
+import AdminRoute from "./AdminRoute";
+import AdminHome from "../pages/Dashboard/AdminHome";
+import ManageApplications from "../pages/Dashboard/ManageApplications";
+import AdminReviews from "../pages/Dashboard/AdminReviews";
+import MyReviews from "../pages/Dashboard/MyReviews";
+import EditReview from "../pages/Dashboard/EditReview";
 
 export const router = createBrowserRouter([
   // Main Layout
@@ -66,18 +75,80 @@ export const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <MyProfile /> },
+      { path: "student-profile", element: <StudentProfile /> },
       { path: "my-profile", element: <MyProfile /> },
       { path: "my-applications", element: <MyApplications /> },
+      { path: "my-reviews", element: <MyReviews /> },
+      { path: "edit-review/:id", element: <EditReview /> },
+      { path: "moderator-review", element: <ModeratorReview /> },
+      {
+        path: "addScholarship",
+        element: (
+          <ModeratorRoute>
+            <AddScholarship />
+          </ModeratorRoute>
+        ),
+      },
+      {
+        path: "allScholarships",
+        element: (
+          <ModeratorRoute>
+            <AllScholarships />
+          </ModeratorRoute>
+        ),
+      },
+      {
+        path: "updateScholarship/:id",
+        element: (
+          <ModeratorRoute>
+            <UpdateScholarship />
+          </ModeratorRoute>
+        ),
+      },
+      //  Admin Routes
       { path: "admin-addScholar", element: <AdminScholar /> },
+      {
+        path: "adminHome",
+        element: (
+          <AdminRoute>
+            <AdminHome />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "manageUsers",
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "manageApplications",
+        element: (
+          <AdminRoute>
+            <ManageApplications />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin-review",
+        element: (
+          <AdminRoute>
+            <AdminReviews />
+          </AdminRoute>
+        ),
+      },
       { path: "update-scholarship/:id", element: <UpdateScholarship /> },
       { path: "manage-users", element: <ManageUsers /> },
       { path: "analytics", element: <Analytics /> },
+      { path: "student-profile", element: <StudentProfile /> },
     ],
   },
 
   // 404 Page
   {
     path: "*",
-    element: <ErrorPage />
+    element: <ErrorPage />,
   },
 ]);

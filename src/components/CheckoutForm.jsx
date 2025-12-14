@@ -5,8 +5,14 @@ import { useNavigate } from "react-router";
 
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
 
-const CheckoutForm = ({ applicationFees, scholarshipId }) => {
+const CheckoutForm = ({
+  applicationFees,
+  scholarshipId,
+  scholarshipTitle,
+  scholarshipDetails,
+}) => {
   const [clientSecret, setClientSecret] = useState("");
   const [error, setError] = useState("");
   const [processing, setProcessing] = useState(false);
@@ -17,23 +23,69 @@ const CheckoutForm = ({ applicationFees, scholarshipId }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
 
+  console.log("Final Check - Passed Details:", scholarshipDetails);
+
   const fees = applicationFees || 0;
 
   useEffect(() => {
-    if (fees > 0) {
+    if (fees > 0 && user?.email) {
+      const amountInCents = Math.round(fees * 100);
+
       axiosSecure
-        .post("/create-payment-intent", { fees: fees })
+        .post("/create-payment-intent", { price:   amountInCents })
         .then((res) => {
           setClientSecret(res.data.clientSecret);
         })
         .catch((err) => {
           console.error("Error fetching client secret:", err);
           setError(
-            "Could not initialize payment. Please check your fees amount."
+            "Could not initialize payment. Check server or fees amount."
           );
+          setClientSecret("");
         });
+    } else if (fees <= 0) {
+      setClientSecret(null);
     }
-  }, [fees, axiosSecure]);
+  }, [fees, axiosSecure, user?.email]);
+
+  const saveApplication = async (transactionId, paidAmount) => {
+    const scholarshipName = scholarshipDetails?.scholarshipName || "Unknown Scholarship";
+        const universityName = scholarshipDetails?.universityName || "Unknown University";
+
+    const applicationData = {
+      scholarshipId: scholarshipId,
+      scholarshipTitle: scholarshipName,
+      universityName: universityName,
+      applicantEmail: user.email,
+      applicantName: user.displayName || "User",
+      transactionId: transactionId,
+      paidFees: paidAmount,
+      status: "Pending",
+      appliedDate: new Date(),
+    };
+
+    try {
+      const res = await axiosSecure.post("/applications", applicationData);
+      if (res.data.insertedId) {
+        Swal.fire({
+          title: "Payment Successful!",
+          text: `Application submitted. Transaction ID: ${transactionId}`,
+          icon: "success",
+          confirmButtonText: "View Applications",
+          confirmButtonColor: "#0c5f5a",
+        }).then(() => {
+          navigate("/dashboard/my-applications");
+        });
+      } else {
+        toast.warn(
+          "Payment succeeded but application submission failed. Contact support."
+        );
+      }
+    } catch (appError) {
+      console.error("Application save error:", appError);
+      toast.error("An error occurred during application saving.");
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -43,48 +95,54 @@ const CheckoutForm = ({ applicationFees, scholarshipId }) => {
       return;
     }
 
-    setProcessing(true);
-    setError("");
-
-    if (fees <= 0) {
-      const applicationData = {
-        scholarshipId: scholarshipId,
-        applicantEmail: user.email,
-        transactionId: "FREE_APPLICATION",
-        paidFees: 0,
-        paymentDate: new Date(),
-      };
-
-      try {
-        const res = await axiosSecure.post("/applications", applicationData);
-        if (res.data.insertedId) {
-          toast.success("Free scholarship application submitted successfully!");
-          navigate("/dashboard/my-applications");
-        } else {
-          toast.warn("Application submission failed. Contact support.");
-        }
-      } catch (appError) {
-        console.error("Application save error:", appError);
-        toast.error("An error occurred during application saving.");
-      }
+    if (
+      fees > 0 &&
+      (!scholarshipDetails || !scholarshipDetails.scholarshipName)
+    ) {
+      toast.error(
+        "Scholarship details are missing. Cannot proceed with payment."
+      );
       return;
     }
 
-    if (!stripe || !elements || processing) {
+    if (fees <= 0) {
+      setProcessing(true);
+      await saveApplication("FREE_APPLICATION", 0);
       setProcessing(false);
+      return;
+    }
+
+    if (!stripe || !elements || !clientSecret) {
+      toast.error("Payment gateway is not ready. Please wait a moment.");
       return;
     }
 
     const card = elements.getElement(CardElement);
     if (card == null) {
-      setProcessing(false);
+      toast.error("Card details are incomplete.");
       return;
     }
 
-    /* setProcessing(true);
-    setError(""); */
+    const confirmationResult = await Swal.fire({
+      title: "Confirm Payment",
+      text: `Are you sure you want to pay $${fees.toFixed(
+        2
+      )} for this scholarship application?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Pay Now",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#0c5f5a",
+      cancelButtonColor: "#d33",
+    });
 
-    // Confirm Payment
+    if (!confirmationResult.isConfirmed) {
+      return;
+    }
+
+    setProcessing(true);
+    setError("");
+
     const { paymentIntent, error: confirmError } =
       await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
@@ -98,35 +156,9 @@ const CheckoutForm = ({ applicationFees, scholarshipId }) => {
 
     if (confirmError) {
       setError(confirmError.message);
-      setProcessing(false);
-      return;
-    }
-
-    if (paymentIntent.status === "succeeded") {
-      toast.success(`Payment successful! Transaction ID: ${paymentIntent.id}`);
-
-      const applicationData = {
-        scholarshipId: scholarshipId,
-        applicantEmail: user.email,
-        transactionId: paymentIntent.id,
-        paidFees: fees,
-        paymentDate: new Date(),
-      };
-
-      try {
-        const res = await axiosSecure.post("/applications", applicationData);
-        if (res.data.insertedId) {
-          toast.success("Scholarship application submitted successfully!");
-          navigate("/dashboard/my-applications");
-        } else {
-          toast.warn(
-            "Payment succeeded but application submission failed. Contact support."
-          );
-        }
-      } catch (appError) {
-        console.error("Application save error:", appError);
-        toast.error("An error occurred during application saving.");
-      }
+      toast.error(`Payment failed: ${confirmError.message}`);
+    } else if (paymentIntent.status === "succeeded") {
+      await saveApplication(paymentIntent.id, fees);
     }
 
     setProcessing(false);
@@ -168,8 +200,8 @@ const CheckoutForm = ({ applicationFees, scholarshipId }) => {
         type="submit"
         className={`w-full py-3 text-white font-semibold rounded-lg transition-all duration-300 ${
           (fees > 0 && (!stripe || !clientSecret)) || processing
-            ? "bg-gradient-to-r from-teal-400 to-orange-200 text-white font-semibold cursor-not-allowed"
-            : "bg-teal-500 hover:bg-teal-600"
+            ? "bg-teal-to-r from-teal-300 to-orange-200 text-white font-semibold cursor-not-allowed"
+            : "bg-teal-500 hover:bg-teal-600 cursor-pointer"
         }`}
         disabled={processing || (fees > 0 && (!stripe || !clientSecret))}
       >

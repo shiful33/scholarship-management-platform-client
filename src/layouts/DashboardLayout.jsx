@@ -38,9 +38,9 @@ const DashboardLayout = () => {
                 <nav className="navbar w-full bg-orange-500 text-white shadow-xl">
                     
                     <label
-                        htmlFor="my-drawer-4"
-                        aria-label="open sidebar"
-                        className="btn btn-square btn-ghost lg:hidden" 
+                    htmlFor="my-drawer-4"
+                    aria-label="open sidebar"
+                    className="btn btn-square btn-ghost lg:hidden" 
                     >
                         <GiToggles className="text-2xl" />
                     </label>

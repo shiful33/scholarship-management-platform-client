@@ -202,15 +202,15 @@ const NavBar = () => {
                   {user.displayName || user.email}
                 </li>
                 <li>
-                  <Link to="/dashboard/my-profile" className="justify-between">
+                  <Link to="/dashboard/my-profile" className="justify-between text-primary font-semibold">
                     My Profile
                   </Link>
                 </li>
                 <li>
-                  <Link to="/dashboard/admin-addScholar">Admin Dashboard</Link>
+                  <Link to="/dashboard" className="text-primary font-semibold">Dashboard</Link>
                 </li>
                 <li>
-                  <button onClick={handleLogOut}>Log Out</button>
+                  <button onClick={handleLogOut} className=" font-bold">Log Out</button>
                 </li>
               </ul>
             </div>

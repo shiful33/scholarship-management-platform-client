@@ -19,6 +19,10 @@ import { IoLogoLinkedin } from "react-icons/io";
 import { BsTwitterX } from "react-icons/bs";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import useAuth from "../hooks/useAuth";
+import ScholarshipReviews from '../components/ScholarshipReviews';
+import ReviewForm from "../components/ReviewForm";
+
+
 
 const image_API_URL = `https://api.imgbb.com/1/upload?key=${
   import.meta.env.VITE_image_host_key
@@ -39,7 +43,7 @@ const ScholarshipDetails = () => {
 
   // Fetch Scholarship Details
   const {
-    data: scholarship = {},
+    data:  scholarshipData = {}, 
     isLoading: isScholarshipLoading,
     isError: isScholarshipError,
   } = useQuery({
@@ -50,6 +54,9 @@ const ScholarshipDetails = () => {
     },
     enabled: !!id,
   });
+
+  const scholarshipId = scholarshipData._id; 
+  const scholarshipTitle = scholarshipData.scholarshipName;
 
   /* Review Handle */
   const handleReviewSubmit = async (data) => {
@@ -84,7 +91,7 @@ const ScholarshipDetails = () => {
     }
 
     const reviewData = {
-      scholarshipId: scholarship._id,
+      scholarshipId: scholarshipData._id,
       reviewerEmail: user.email,
       reviewerName: user.displayName || "Anonymous",
       reviewerImage: reviewerImageUrl,
@@ -123,7 +130,7 @@ const ScholarshipDetails = () => {
   }
 
   // Handle Error State
-  if (isScholarshipError || !scholarship._id) {
+  if (isScholarshipError || !scholarshipData._id) {
     return (
       <div className="p-12 text-center text-lg font-semibold text-red-600 h-[70vh]">
         Error loading scholarship details. The scholarship might not exist.
@@ -132,12 +139,12 @@ const ScholarshipDetails = () => {
   }
 
   // Format Data
-  const deadline = scholarship.applicationDeadline
-    ? new Date(scholarship.applicationDeadline).toLocaleDateString()
+  const deadline = scholarshipData.applicationDeadline
+    ? new Date(scholarshipData.applicationDeadline).toLocaleDateString()
     : "N/A";
 
-  const fees = scholarship.applicationFees
-    ? `$${scholarship.applicationFees}`
+  const fees = scholarshipData.applicationFees
+    ? `$${scholarshipData.applicationFees}`
     : "Free";
 
   // Function to handle Application Click
@@ -152,6 +159,7 @@ const ScholarshipDetails = () => {
   };
 
   return (
+    <>
     <div className="p-4 md:p-10 lg:p-0 my-20">
       <div className="lg:flex gap-6">
 
@@ -159,13 +167,13 @@ const ScholarshipDetails = () => {
           <h1 className="text-2xl font-bold text-[#0c5f5a] mb-2">
             University:{" "}
             <span className="text-xl font-semibold">
-              {scholarship.universityName}
+              {scholarshipData.universityName}
             </span>
           </h1>
           <h2 className="text-2xl font-bold text-[#0c5f5a] mb-6">
             Scholarship:{" "}
             <span className="text-xl font-semibold">
-              {scholarship.scholarshipName}
+              {scholarshipData.scholarshipName}
             </span>
             <div className="flex gap-4 items-center  mt-6">
               <h4 className="text-[17px] text-gray-400 font-medium">Share: </h4>
@@ -186,7 +194,7 @@ const ScholarshipDetails = () => {
             Scholarship Description:
           </h3>
           <p className="text-gray-600 whitespace-pre-line mb-8">
-            {scholarship.description}
+            {scholarshipData.description}
           </p>
 
           <h3 className="text-xl font-bold mb-3 text-[#0c5f5a]">
@@ -196,24 +204,24 @@ const ScholarshipDetails = () => {
             <li className="flex items-center">
               <BiSolidCategory className="mr-2 text-orange-400" />
               <span className="font-bold mr-2">Category: </span>{" "}
-              {scholarship.scholarshipCategory}
+              {scholarshipData.scholarshipCategory}
             </li>
             <li className="flex items-center">
               <FaGraduationCap className="mr-2 text-gray-800" />
               <span className="font-bold mr-2">Degree Level:</span>{" "}
-              {scholarship.degreeLevel}
+              {scholarshipData.degreeLevel}
             </li>
             <li className="flex items-center">
               <FaMoneyBill className="mr-2 text-gray-400" />
               <span className="font-bold mr-2">Tuition Covered:</span>{" "}
-              {scholarship.tuitionFeesCovered
+              {scholarshipData.tuitionFeesCovered
                 ? "Yes, fully covered"
-                : `No (Est. Annual Fee: $${scholarship.tuitionFees || "N/A"})`}
+                : `No (Est. Annual Fee: $${scholarshipData.tuitionFees || "N/A"})`}
             </li>
             <li className="flex items-center">
               <FaMoneyBill className="mr-2 text-green-600" />
               <span className="font-bold mr-2">Service Charge:</span> $
-              {scholarship.serviceCharge}
+              {scholarshipData.serviceCharge}
             </li>
           </ul>
         </div>
@@ -222,8 +230,8 @@ const ScholarshipDetails = () => {
         {/* --- University Image --- */}
         <div className="h-96 flex-1 mb-25">
           <img
-            src={scholarship.universityImage}
-            alt={scholarship.universityName}
+            src={scholarshipData.universityImage}
+            alt={scholarshipData.universityName}
             className="w-full object-cover rounded-xl shadow-lg"
           />
         </div>
@@ -235,11 +243,11 @@ const ScholarshipDetails = () => {
           <div className="gap-4 mb-8 p-4 border-1 border-orange-400 rounded-lg bg-gray-50">
             <p className="flex items-center text-gray-600 font-medium">
               <FaGlobe className="mr-2 text-orange-400" />
-              World Rank: {scholarship.worldRank}
+              World Rank: {scholarshipData.worldRank}
             </p>
             <p className="flex items-center text-gray-600 font-medium">
               <FaMapMarkerAlt className="mr-2 text-teal-600" />
-              Location: {scholarship.country}, {scholarship.city}.
+              Location: {scholarshipData.country}, {scholarshipData.city}.
             </p>
             <p className="flex items-center text-gray-600 font-medium">
               <FaCalendarAlt className="mr-2 text-orange-500" />
@@ -362,6 +370,15 @@ const ScholarshipDetails = () => {
         <div className="mt-12 p-6 bg-white rounded-xl shadow-2xl border border-gray-100"></div>
       </div>
     </div>
+    
+    {/* Review Form & Review Section */}
+    {/* <div className="mt-12 space-y-12">
+        <ReviewForm scholarshipId={scholarshipId} 
+            scholarshipTitle={scholarshipTitle} />
+
+        <ScholarshipReviews scholarshipId={scholarshipId} />
+    </div> */}
+    </>
   );
 };
 

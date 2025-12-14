@@ -2,13 +2,15 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ThreeDot } from "react-loading-indicators";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { toast } from "react-toastify"; 
+import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 const MyApplications = () => {
   const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const {
     data: applications = [],
@@ -41,6 +43,52 @@ const MyApplications = () => {
     },
   });
 
+  // Action Handlers
+
+  const handleDetails = (app) => {
+    console.log("Details clicked for:", app._id);
+    Swal.fire({
+      title: "Application Details",
+      html: `
+            <p>Scholarship: <strong>${
+              app.scholarshipTitle || "N/A"
+            }</strong></p>
+            <p>Fees Paid: <strong>$${(app.paidFees || 0).toFixed(
+              2
+            )}</strong></p>
+            <p>Status: <strong>${app.status}</strong></p>
+            <p>Transaction ID: <strong>${
+              app.transactionId || "N/A"
+            }</strong></p>
+        `,
+      icon: "info",
+      confirmButtonText: "Close",
+    });
+  };
+
+  const handleEdit = (app) => {
+    console.log("Edit clicked for:", app._id);
+
+    toast.info("Edit functionality coming soon!");
+  };
+
+  const handlePay = (app) => {
+    console.log("Pay clicked for:", app._id);
+
+    navigate(`/checkout/${app._id}`, {
+      state: {
+        applicationId: app._id,
+        fees: app.paidFees || 0,
+      },
+    });
+  };
+
+  const handleAddReview = (app) => {
+    console.log("Add Review clicked for:", app._id);
+
+    toast.info("Review functionality coming soon!");
+  };
+
   // Handle Delete
   const handleDelete = (applicationId, status) => {
     if (status !== "Pending") {
@@ -60,8 +108,6 @@ const MyApplications = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         deleteMutation.mutate(applicationId);
-        // Optional: Success message with Swal
-        // Swal.fire("Deleted!", "Your application has been deleted.", "success");
       }
     });
   };
@@ -113,54 +159,108 @@ const MyApplications = () => {
               </tr>
             </thead>
             <tbody>
-              {applications.map((app, index) => (
-                <tr key={app._id} className="hover:bg-gray-50">
-                  <th>{index + 1}</th>
-                  <td>
-                    {app.scholarshipTitle ||
-                      app.scholarshipDetails?.scholarshipName ||
-                      "Unknown Scholarship"}
-                  </td>
-                  <td className="font-semibold text-green-600">
-                    ${(app.paidFees || app.applicationFees || 0)}
-                  </td>
-                  <td>
-                    <span
-                      className={`badge badge-lg ${
-                        app.status === "Pending"
-                          ? "badge-warning"
-                          : app.status === "Rejected"
-                          ? "badge-error"
-                          : app.status === "Accepted"
-                          ? "badge-success"
-                          : "badge-ghost"
-                      }`}
-                    >
-                      {app.status || "Pending"}
-                    </span>
-                  </td>
-                  <td>
-                    {app.paymentDate
-                      ? new Date(app.paymentDate).toLocaleDateString()
-                      : app.appliedDate
-                      ? new Date(app.appliedDate).toLocaleDateString()
-                      : "N/A"}
-                  </td>
-                  <td>
-                    {app.status === "Pending" ? (
-                      <button
-                        onClick={() => handleDelete(app._id, app.status)}
-                        disabled={deleteMutation.isLoading}
-                        className="btn btn-error btn-sm text-white hover:bg-red-600"
+              {applications.map((app, index) => {
+                const isPending = app.status === "Pending";
+                const isCompleted = app.status === "Completed";
+                const isPaid = app.paymentStatus === "paid";
+
+                const applicationFee = app.paidFees || app.applicationFees || 0;
+
+                return (
+                  <tr key={app._id} className="hover:bg-gray-50">
+                    <th>{index + 1}</th>
+                    <td>
+                      {app.scholarshipTitle || "Unknown Scholarship"}
+                    </td>
+                    <td className="font-semibold text-green-600">
+                      ${applicationFee.toFixed(2)}
+                    </td>
+
+                    {/* PAYMENT STATUS */}
+                    <td>
+                      <span
+                        className={`badge badge-sm ${
+                          isPaid
+                            ? "badge-success text-white"
+                            : "badge-warning text-gray-800"
+                        }`}
                       >
-                        {deleteMutation.isLoading ? "Deleting..." : "Delete"}
-                      </button>
-                    ) : (
-                      <span className="text-gray-400 text-sm">No Action</span>
-                    )}
-                  </td>
-                </tr>
-              ))}
+                        {isPaid ? "Paid" : "Unpaid"}
+                      </span>
+                    </td>
+
+                    {/* APPLICATION STATUS */}
+                    <td>
+                      <span
+                        className={`badge badge-lg ${
+                          isPending
+                            ? "badge-info"
+                            : app.status === "Completed"
+                            ? "badge-success"
+                            : "badge-error"
+                        } text-white`}
+                      >
+                        {app.status || "Pending"}
+                      </span>
+                    </td>
+
+                    <td>{new Date(app.appliedDate).toLocaleDateString()}</td>
+
+                    <td>
+                      <div className="flex flex-wrap gap-2">
+                        {/* Details Button */}
+                        <button
+                          onClick={() => handleDetails(app)}
+                          className="btn btn-xs btn-outline btn-info"
+                        >
+                          Details
+                        </button>
+
+                        {/* Pay Button */}
+                        {isPending && !isPaid && (
+                          <button
+                            onClick={() => handlePay(app)}
+                            className="btn btn-xs btn-success text-white"
+                          >
+                            Pay Now
+                          </button>
+                        )}
+
+                        {/* Edit Button*/}
+                        {isPending && (
+                          <button
+                            onClick={() => handleEdit(app)}
+                            className="btn btn-xs btn-warning"
+                          >
+                            Edit
+                          </button>
+                        )}
+
+                        {/* Delete Button */}
+                        {isPending && (
+                          <button
+                            onClick={() => handleDelete(app._id, app.status)}
+                            disabled={deleteMutation.isLoading}
+                            className="btn btn-xs btn-error text-white"
+                          >
+                            {deleteMutation.isLoading ? "..." : "Delete"}
+                          </button>
+                        )}
+
+                        {/* Add Review Button  */}
+                        {isCompleted && (
+                          <button
+                            onClick={() => handleAddReview(app)}
+                            className="btn btn-xs btn-secondary text-white"
+                          >
+                            Add Review
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

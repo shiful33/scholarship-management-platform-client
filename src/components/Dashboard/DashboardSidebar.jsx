@@ -93,10 +93,14 @@ const DashboardSidebar = ({ role }) => {
         {role.charAt(0).toUpperCase() + role.slice(1)} Menu
       </h1>
 
-      <ul className="menu w-full grow text-base">
+      <ul className="menu w-full grow text-base gap-2">
         {sidebarLinks}
 
         <div className="divider text-teal-300 mx-4 my-2"></div>
+
+        <SidebarLink to="/dashboard/my-applications" icon={MdManageAccounts}>
+          My Applications
+        </SidebarLink>
 
         <SidebarLink to="/dashboard/my-profile" icon={MdManageAccounts}>
           My Profile

@@ -7,6 +7,7 @@ import { FaEye } from "react-icons/fa";
 import { IoMdEyeOff } from "react-icons/io";
 import { toast } from "react-toastify";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Login = () => {
   const auth = getAuth();
@@ -20,24 +21,47 @@ const Login = () => {
   const [error, setError] = useState(null);
 
   const { signInUser } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const location = useLocation();
 
   // Login handle
   const handleLoginSubmit = (data) => {
     setError(null);
-    signInUser(data.email, data.password)
-      .then((result) => {
-        console.log("Logged in user:", result.user);
-        toast.success("Login successful!");
-        navigate(location?.state || '/')
+    const { email, password } = data; // ✅ ডেটা ডিস্ট্রাকচার করা হলো
+
+    signInUser(email, password)
+      .then(result => {
+        const user = result.user;
+        
+        axiosSecure.post('/users', { 
+          email: user.email, 
+          name: user.displayName || 'Anonymous User', 
+          role: 'user'
+        })
+          .then(res => {
+            console.log('User data saved/updated in MongoDB:', res.data);
+            // রিডাইরেক্ট পাথ
+            const from = location.state?.from?.pathname || "/";
+            navigate(from, { replace: true }); 
+          })
+          .catch(err => {
+            console.error('Failed to save user in DB:', err);
+            const from = location.state?.from?.pathname || "/";
+            navigate(from, { replace: true });
+          });
+          
       })
-      .catch((error) => {
-        console.log(error);
-        setError(error.message);
-        toast.error(error.message);
+      .catch(firebaseError => { // 'error' এর জায়গায় 'firebaseError' ব্যবহার করুন
+        console.error("Firebase Login Error:", firebaseError);
+        setError(firebaseError.message);
+        toast.error(firebaseError.message);
       });
   };
+
+  
+ 
+
 
   /* Forgot Password */
   const handleForgotPassword = () => {
