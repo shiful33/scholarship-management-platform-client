@@ -75,7 +75,7 @@ const ModeratorReview = () => {
     return (
     <div className="p-4 md:p-8">
         <h2 className="text-3xl font-bold text-orange-600 mb-6 border-b pb-2">
-            ⏳ Moderator Review Panel ({pendingApps.length} Pending)
+             Moderator Review Panel ({pendingApps.length} Pending)
         </h2>
 
         {pendingApps.length === 0 ? (

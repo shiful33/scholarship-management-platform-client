@@ -22,12 +22,12 @@ import ModeratorReview from "../components/Dashboard/Moderator/ModeratorReview";
 import ModeratorRoute from "./ModeratorRoute";
 import AdminRoute from "./AdminRoute";
 import AdminHome from "../pages/Dashboard/AdminHome";
-import ManageApplications from "../pages/Dashboard/ManageApplications";
-import AdminReviews from "../pages/Dashboard/AdminReviews";
 import MyReviews from "../pages/Dashboard/MyReviews";
 import EditReview from "../pages/Dashboard/EditReview";
 import ManageScholarships from "../pages/ManageScholarships";
 import ManageAppliedApplication from "../pages/Dashboard/ManageAppliedApplication";
+import AdminReviews from "../pages/Dashboard/AdminReviews";
+
 
 export const router = createBrowserRouter([
   // Main Layout
@@ -78,6 +78,8 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <MyProfile /> },
       { path: "manageAppliedApplication", element: <ManageAppliedApplication /> },
+      { path: "admin-reviews", element: <AdminReviews /> },
+      { path: "edit-review", element: <EditReview /> },
       { path: "student-profile", element: <StudentProfile /> },
       { path: "my-profile", element: <MyProfile /> },
       { path: "my-applications", element: <MyApplications /> },
@@ -127,14 +129,7 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
-      {
-        path: "admin-review",
-        element: (
-          <AdminRoute>
-            <AdminReviews />
-          </AdminRoute>
-        ),
-      },
+      
       { path: "addScholership", element: <AddScholarship /> },
       { path: "manage-scholarships", element: <ManageScholarships /> },
       {

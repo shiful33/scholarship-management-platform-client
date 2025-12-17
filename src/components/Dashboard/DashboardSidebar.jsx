@@ -52,7 +52,7 @@ const getSidebarLinks = (role) => {
             Manage Applied Applications
           </SidebarLink>
 
-          <SidebarLink to="/dashboard/all-reviews" icon={MdOutlineReviews}>
+          <SidebarLink to="/dashboard/admin-reviews" icon={MdOutlineReviews}>
             All Reviews
           </SidebarLink>
         </>

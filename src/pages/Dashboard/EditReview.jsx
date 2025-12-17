@@ -76,8 +76,8 @@ const EditReview = () => {
 
   return (
     <div className="p-4 md:p-8 bg-gray-50 min-h-screen">
-      <h2 className="text-3xl font-bold text-green-600 mb-8 border-b-4 border-green-500 pb-3">
-        ✏️ Edit Your Review
+      <h2 className="text-3xl font-bold text-teal-800 mb-8 border-b-4 border-teal-800 pb-3">
+        Edit Your Review
       </h2>
 
       <div className="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow-lg">
@@ -95,7 +95,7 @@ const EditReview = () => {
           {/* Rating Input */}
           <div className="mb-4">
             <label className="label">
-              <span className="label-text font-semibold">Rating (1-5)</span>
+              <span className="label-text text-[#555555] mb-2 font-semibold">Rating (1-5)</span>
             </label>
             <input
               type="number"
@@ -112,7 +112,7 @@ const EditReview = () => {
           {/* Comment Textarea */}
           <div className="mb-6">
             <label className="label">
-              <span className="label-text font-semibold">Your Comment</span>
+              <span className="label-text text-[#555555] mb-2 font-semibold">Your Comment</span>
             </label>
             <textarea
               name="comment"
@@ -126,7 +126,7 @@ const EditReview = () => {
           <div>
             <button
               type="submit"
-              className="btn w-full bg-green-600 border-none hover:bg-green-700 text-white text-lg"
+              className="btn w-full bg-teal-600 border-none hover:bg-teal-700 text-white text-lg"
               disabled={updateMutation.isLoading}
             >
               <FaSave />

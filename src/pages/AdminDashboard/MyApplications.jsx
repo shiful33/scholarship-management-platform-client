@@ -44,7 +44,6 @@ const MyApplications = () => {
   });
 
   // Action Handlers
-
   const handleDetails = (app) => {
     console.log("Details clicked for:", app._id);
     Swal.fire({
@@ -83,10 +82,75 @@ const MyApplications = () => {
     });
   };
 
+  // Handle Review
   const handleAddReview = (app) => {
-    console.log("Add Review clicked for:", app._id);
+    Swal.fire({
+      title: "Share Your Experience",
+      html: `
+        <div style="text-align: left;">
+          <label style="display: block; margin-bottom: 10px; font-weight: bold;">Rate your experience:</label>
+          <div class="star-rating" style="display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 10px; margin-bottom: 20px;">
+            <input type="radio" id="star5" name="rating" value="5" style="display:none;"/><label for="star5" style="cursor:pointer; font-size:30px; color:#ccc;">★</label>
+            <input type="radio" id="star4" name="rating" value="4" style="display:none;"/><label for="star4" style="cursor:pointer; font-size:30px; color:#ccc;">★</label>
+            <input type="radio" id="star3" name="rating" value="3" style="display:none;"/><label for="star3" style="cursor:pointer; font-size:30px; color:#ccc;">★</label>
+            <input type="radio" id="star2" name="rating" value="2" style="display:none;"/><label for="star2" style="cursor:pointer; font-size:30px; color:#ccc;">★</label>
+            <input type="radio" id="star1" name="rating" value="1" style="display:none;"/><label for="star1" style="cursor:pointer; font-size:30px; color:#ccc;">★</label>
+          </div>
+          
+          <label style="display: block; margin-bottom: 5px; font-weight: bold;">Your Feedback:</label>
+          <textarea id="swal-input-comment" class="swal2-textarea" placeholder="Tell us more about the scholarship..." style="width: 100%; height: 100px; margin: 0;"></textarea>
+        </div>
+        <style>
+          .star-rating label:hover,
+          .star-rating label:hover ~ label,
+          .star-rating input:checked ~ label { color: #f39c12 !important; }
+        </style>
+      `,
+      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: "Submit Review",
+      confirmButtonColor: "#0c5f5a",
+      preConfirm: () => {
+        const rating = document.querySelector(
+          'input[name="rating"]:checked'
+        )?.value;
+        const comment = document.getElementById("swal-input-comment").value;
 
-    toast.info("Review functionality coming soon!");
+        if (!rating) {
+          Swal.showValidationMessage("Please select a star rating");
+          return false;
+        }
+        if (!comment) {
+          Swal.showValidationMessage("Please write a comment");
+          return false;
+        }
+
+        return { rating: parseInt(rating), comment: comment };
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const reviewData = {
+            scholarshipId: app.scholarshipId || app._id,
+            universityName: app.universityName,
+            scholarshipName: app.scholarshipTitle,
+            userName: user?.displayName,
+            userEmail: user?.email,
+            userImage: user?.photoURL,
+            rating: result.value.rating,
+            comment: result.value.comment,
+            reviewDate: new Date().toISOString(),
+          };
+
+          const res = await axiosSecure.post("/reviews", reviewData);
+          if (res.data.insertedId) {
+            Swal.fire("Success!", "Review submitted successfully!", "success");
+          }
+        } catch (error) {
+          Swal.fire("Error", "Failed to submit review. Try again.", "error");
+        }
+      }
+    });
   };
 
   // Handle Delete
@@ -136,7 +200,7 @@ const MyApplications = () => {
   return (
     <div className="p-4 md:p-8">
       <h2 className="text-3xl font-bold text-[#0c5f5a] mb-6 border-b pb-2">
-        📚 My Submitted Applications ({applications.length})
+        My Submitted Applications ({applications.length})
       </h2>
 
       {applications.length === 0 ? (
@@ -153,25 +217,27 @@ const MyApplications = () => {
                 <th>SL</th>
                 <th>Scholarship Name</th>
                 <th>Paid Fees</th>
-                <th>Status</th>
+                <th>Paid/Unpaid</th>
+                <th>Processing</th>
                 <th>Application Date</th>
-                <th>Action</th>
+                <th>Action: Details/Pay Now/Edit/Delete</th>
+                <th>Add Review</th>
               </tr>
             </thead>
             <tbody>
               {applications.map((app, index) => {
-                const isPending = app.status === "Pending";
-                const isCompleted = app.status === "Completed";
-                const isPaid = app.paymentStatus === "paid";
+              
+                const currentStatus = app.status?.toLowerCase();
+                const isPending = currentStatus === "pending";
+                const isCompleted = currentStatus === "completed";
+                const isPaid = app.paymentStatus?.toLowerCase() === "paid";
 
                 const applicationFee = app.paidFees || app.applicationFees || 0;
 
                 return (
                   <tr key={app._id} className="hover:bg-gray-50">
                     <th>{index + 1}</th>
-                    <td>
-                      {app.scholarshipTitle || "Unknown Scholarship"}
-                    </td>
+                    <td>{app.scholarshipTitle || "Unknown Scholarship"}</td>
                     <td className="font-semibold text-green-600">
                       ${applicationFee.toFixed(2)}
                     </td>
@@ -195,7 +261,7 @@ const MyApplications = () => {
                         className={`badge badge-lg ${
                           isPending
                             ? "badge-info"
-                            : app.status === "Completed"
+                            : isCompleted
                             ? "badge-success"
                             : "badge-error"
                         } text-white`}
@@ -216,7 +282,7 @@ const MyApplications = () => {
                           Details
                         </button>
 
-                        {/* Pay Button */}
+                        {/* Paid/Unpaid Button */}
                         {isPending && !isPaid && (
                           <button
                             onClick={() => handlePay(app)}
@@ -226,28 +292,26 @@ const MyApplications = () => {
                           </button>
                         )}
 
-                        {/* Edit Button*/}
+                        {/* Edit & Delete */}
                         {isPending && (
-                          <button
-                            onClick={() => handleEdit(app)}
-                            className="btn btn-xs btn-warning"
-                          >
-                            Edit
-                          </button>
+                          <>
+                            <button
+                              onClick={() => handleEdit(app)}
+                              className="btn btn-xs btn-warning"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDelete(app._id, app.status)}
+                              disabled={deleteMutation.isLoading}
+                              className="btn btn-xs btn-error text-white"
+                            >
+                              {deleteMutation.isLoading ? "..." : "Delete"}
+                            </button>
+                          </>
                         )}
 
-                        {/* Delete Button */}
-                        {isPending && (
-                          <button
-                            onClick={() => handleDelete(app._id, app.status)}
-                            disabled={deleteMutation.isLoading}
-                            className="btn btn-xs btn-error text-white"
-                          >
-                            {deleteMutation.isLoading ? "..." : "Delete"}
-                          </button>
-                        )}
-
-                        {/* Add Review Button  */}
+                        {/* Add Review Button */}
                         {isCompleted && (
                           <button
                             onClick={() => handleAddReview(app)}
