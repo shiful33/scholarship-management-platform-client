@@ -17,10 +17,10 @@ import { MdOutlineMarkEmailRead } from "react-icons/md";
 import { HiOutlineShare } from "react-icons/hi";
 import { IoLogoLinkedin } from "react-icons/io";
 import { BsTwitterX } from "react-icons/bs";
-import useAxiosSecure from "../hooks/useAxiosSecure";
-import useAuth from "../hooks/useAuth";
 import ScholarshipReviews from '../components/ScholarshipReviews';
 import ReviewForm from "../components/ReviewForm";
+import useAuth from "../hooks/useAuth";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 
 
@@ -49,7 +49,7 @@ const ScholarshipDetails = () => {
   } = useQuery({
     queryKey: ["scholarship-details", id],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/scholarships/${id}`);
+      const res = await axiosSecure.get(`/all-scholarships/${id}`);
       return res.data;
     },
     enabled: !!id,
@@ -161,7 +161,7 @@ const ScholarshipDetails = () => {
   return (
     <>
     <div className="p-4 md:p-10 lg:p-0 my-20">
-      <div className="lg:flex gap-6">
+      <div className="lg:flex gap-6 items-center justify-center">
 
         <div className="flex-1">
           <h1 className="text-2xl font-bold text-[#0c5f5a] mb-2">
@@ -228,11 +228,11 @@ const ScholarshipDetails = () => {
         </div>
 
         {/* --- University Image --- */}
-        <div className="h-96 flex-1 mb-25">
+        <div className="h-100 flex-1 mb-25">
           <img
             src={scholarshipData.universityImage}
             alt={scholarshipData.universityName}
-            className="w-full object-cover rounded-xl shadow-lg"
+            className="w-full h-full object-cover rounded-xl shadow-lg"
           />
         </div>
       </div>

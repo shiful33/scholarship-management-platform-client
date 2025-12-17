@@ -3,6 +3,7 @@ import { FaEye, FaCommentDots } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
+
 const MyApplications = () => {
   const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
@@ -14,7 +15,7 @@ const MyApplications = () => {
       if (!user?.email) return [];
       // API call for user
       const res = await axiosSecure.get(
-        `/applications/my-applications?email=${user.email}`
+        `/dashboard/my-applications?email=${user.email}`
       );
       return res.data;
     },

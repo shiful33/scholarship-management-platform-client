@@ -8,6 +8,7 @@ import { IoMdEyeOff } from "react-icons/io";
 import { toast } from "react-toastify";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import axios from "axios";
 
 const Login = () => {
   const auth = getAuth();
@@ -26,42 +27,39 @@ const Login = () => {
   const location = useLocation();
 
   // Login handle
-  const handleLoginSubmit = (data) => {
+  const handleLoginSubmit = async (data) => {
     setError(null);
-    const { email, password } = data; // ✅ ডেটা ডিস্ট্রাকচার করা হলো
+    const { email, password } = data;
 
-    signInUser(email, password)
-      .then(result => {
-        const user = result.user;
-        
-        axiosSecure.post('/users', { 
-          email: user.email, 
-          name: user.displayName || 'Anonymous User', 
-          role: 'user'
-        })
-          .then(res => {
-            console.log('User data saved/updated in MongoDB:', res.data);
-            // রিডাইরেক্ট পাথ
-            const from = location.state?.from?.pathname || "/";
-            navigate(from, { replace: true }); 
-          })
-          .catch(err => {
-            console.error('Failed to save user in DB:', err);
-            const from = location.state?.from?.pathname || "/";
-            navigate(from, { replace: true });
-          });
-          
-      })
-      .catch(firebaseError => { // 'error' এর জায়গায় 'firebaseError' ব্যবহার করুন
-        console.error("Firebase Login Error:", firebaseError);
-        setError(firebaseError.message);
-        toast.error(firebaseError.message);
+    try {
+      const result = await signInUser(email, password);
+      const user = result.user;
+
+      const userInfo = {
+        email: user.email,
+        name: user.displayName || "New User",
+        role: "student",
+      };
+
+      await axios.post("http://localhost:3000/users", userInfo);
+
+      const res = await axios.post("http://localhost:3000/jwt", {
+        email: user.email,
       });
+
+      if (res.data.token) {
+        localStorage.setItem("access-token", res.data.token);
+
+        const from = location.state?.from?.pathname || "/";
+        navigate(from, { replace: true });
+        toast.success("Welcome Back!");
+      }
+    } catch (err) {
+      console.error("Login Error:", err);
+      setError(err.message);
+      toast.error(err.message || "Login failed, please try again.");
+    }
   };
-
-  
- 
-
 
   /* Forgot Password */
   const handleForgotPassword = () => {
@@ -79,7 +77,6 @@ const Login = () => {
         toast.error(error.message);
       });
   };
-
 
   return (
     <div className="card bg-base-100 w-full max-w-md shrink-0 shadow-2xl my-12 lg:my-0">
@@ -156,9 +153,7 @@ const Login = () => {
             </button>
             <p className="text-center text-[15px] mt-2">
               You don't have account?{" "}
-              <Link
-              state={location.state}
-              to="/register">
+              <Link state={location.state} to="/register">
                 <span className="underline font-semibold text-primary text-[16px] cursor-pointer">
                   Please Register
                 </span>

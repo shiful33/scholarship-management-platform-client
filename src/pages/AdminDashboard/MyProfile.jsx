@@ -62,7 +62,7 @@ const MyProfile = () => {
                             <FaUserCircle className="w-32 h-32 text-gray-400" />
                         )}
                         {/* Role Badge */}
-                        <span className={`absolute bottom-3.5 right-2 px-2 py-2 text-xs font-semibold border-1 border-white shadow-md rounded-full text-white ${userRole === 'Admin' ? 'bg-red-500' : 'bg-green-400'}`}>
+                        <span className={`absolute bottom-1.5 right-[-16px] px-3 py-1 text-xs font-semibold border-1 border-white shadow-md rounded-full text-white ${userRole === 'Admin' ? 'bg-red-500' : 'bg-green-400'}`}>
                             {userRole}
                         </span>
                     </div>

@@ -9,8 +9,9 @@ import {
   FaFilter,
   FaMoneyBill,
 } from "react-icons/fa";
-import { toast } from "react-toastify";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+
+
 
 const AllScholarships = () => {
   const axiosSecure = useAxiosSecure();
@@ -22,12 +23,13 @@ const AllScholarships = () => {
   });
 
   const {
-    data: scholarships = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["allScholarships", filters, searchQuery],
-    queryFn: async () => {
+  data: scholarships = [],
+  isLoading,
+  refetch,
+} = useQuery({
+  queryKey: ["allScholarships", filters, searchQuery],
+  queryFn: async () => {
+    try {
       const params = new URLSearchParams({
         search: searchQuery,
         category: filters.category,
@@ -35,10 +37,15 @@ const AllScholarships = () => {
         location: filters.location,
       }).toString();
 
-      const res = await axiosSecure.get(`/scholarships/all?${params}`);
-      return res.data;
-    },
-  });
+      const res = await axiosSecure.get(`/all-scholarships?${params}`);
+      
+      return Array.isArray(res.data) ? res.data : [];
+    } catch (error) {
+      console.error("Fetch error:", error);
+      return [];
+    }
+  },
+});
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -168,7 +175,7 @@ const AllScholarships = () => {
               flex flex-col h-full"
             >
               {/* University Image */}
-              <div className="h-40 bg-gray-200 overflow-hidden">
+              <div className="h-70 bg-gray-200 overflow-hidden">
                 <img
                   src={scholarship.universityImage}
                   alt={scholarship.universityName}

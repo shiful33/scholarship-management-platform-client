@@ -26,7 +26,6 @@ const subjectOptions = [
 const UpdateScholarship = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
-
   const navigate = useNavigate();
 
   const {
@@ -53,7 +52,7 @@ const UpdateScholarship = () => {
     queryKey: ["scholarship-details", id],
     enabled: !!id,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/scholarships/${id}`);
+      const res = await axiosSecure.get(`/all-scholarships/${id}`);
       return res.data;
     },
   });
@@ -115,43 +114,50 @@ const UpdateScholarship = () => {
       reverseButtons: true,
     });
 
+
     if (!result.isConfirmed) {
       toast.info("Scholarship update cancelled.");
       return;
     }
 
-    const updatedData = {
-      ...data,
-      worldRank: Number(data.worldRank),
-      applicationFees: Number(data.applicationFees),
-      serviceCharge: Number(data.serviceCharge),
-
-      applicationDeadline: new Date(data.applicationDeadline).toISOString(),
-      userEmail: scholarshipData.userEmail,
-    };
-
-    let universityImageUrl = scholarshipData?.universityImage || "";
-    const uniImageFile = data.universityImage[0];
-
-    if (uniImageFile) {
-      const formData = new FormData();
-      formData.append("image", uniImageFile);
-
-      try {
-        const imgRes = await axios.post(image_API_URL, formData);
-        universityImageUrl = imgRes.data.data.url;
-      } catch (error) {
-        toast.error("Failed to upload new image.");
-        console.error("Image Upload Error:", error);
-        return;
-      }
-    }
-
-    updatedData.universityImage = universityImageUrl;
 
     try {
+
+      let universityImageUrl = scholarshipData?.universityImage || "";
+      const uniImageFile = data.universityImage?.[0];
+
+      if (uniImageFile instanceof File) {
+        const formData = new FormData();
+        formData.append("image", uniImageFile);
+
+        const imgRes = await axios.post(image_API_URL, formData);
+        universityImageUrl = imgRes.data.data.url;
+      }
+
+      const updatedData = {
+        ...data,
+        worldRank: Number(data.worldRank),
+        applicationFees: Number(data.applicationFees),
+        serviceCharge: Number(data.serviceCharge),
+        applicationDeadline: new Date(data.applicationDeadline).toISOString(),
+        universityImage: universityImageUrl,
+        userEmail: scholarshipData.userEmail,
+      };
+
       const res = await axiosSecure.put(`/addScholars/${id}`, updatedData);
-    } catch (error) {}
+
+      if (res.data.modifiedCount > 0 || res.data.matchedCount > 0) {
+        Swal.fire(
+          "Updated!",
+          "The scholarship has been updated successfully.",
+          "success"
+        );
+        navigate("/dashboard/manage-scholarships");
+      }
+    } catch (error) {
+      console.error("Update Error:", error);
+      toast.error("Failed to update scholarship. Please try again.");
+    }
   };
 
   if (isLoading) {
@@ -440,7 +446,7 @@ const UpdateScholarship = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 transition duration-150 cursor-pointer"
+          className="w-full py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-teal-600 hover:bg-teal-700 transition duration-150 cursor-pointer"
         >
           Update Scholarship
         </button>

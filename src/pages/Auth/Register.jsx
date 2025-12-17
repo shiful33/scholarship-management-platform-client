@@ -6,6 +6,7 @@ import SocialLogin from "./SocialLogin";
 import axios from "axios";
 import { FaEye } from "react-icons/fa";
 import { IoMdEyeOff } from "react-icons/io";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const {
@@ -20,42 +21,46 @@ const Register = () => {
 
   const location = useLocation();
 
-  const handleRegistration = (data) => {
+  const handleRegistration = async (data) => {
     const profileImg = data.photo[0];
-    // Send the photo to store and get the url
-    const image_API_URL = `https://api.imgbb.com/1/upload?key=${
-      import.meta.env.VITE_image_host_key
-    }`;
+    const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`;
 
-    registerUser(data.email, data.password).then((result) => {
-      console.log(result.user);
+    try {
+      const result = await registerUser(data.email, data.password);
+      const firebaseUser = result.user;
 
-      // store the image in form data
       const formData = new FormData();
       formData.append("image", profileImg);
+      const imgRes = await axios.post(image_API_URL, formData);
+      const imgURL = imgRes.data.data.url;
 
-      axios
-        .post(image_API_URL, formData)
-        .then((res) => {
-          const imgURL = res.data.data.url;
-          console.log("Image URL received:", imgURL);
-          // update user profile in firebase
-          const userProfile = {
-            displayName: data.name,
-            photoURL: res.data.data.url,
-          };
+      const userProfile = {
+        displayName: data.name,
+        photoURL: imgURL,
+      };
+      await updateUserProfile(userProfile);
 
-          updateUserProfile(userProfile)
-            .then(() => {
-              console.log("user profile updated done");
-              navigate(location.state || "/");
-            })
-            .catch((error) => console.log(error));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
+      const userInfo = {
+        name: data.name,
+        email: data.email,
+        image: imgURL,
+        role: "student",
+      };
+      
+      const dbRes = await axios.post("http://localhost:3000/users", userInfo);
+
+      if (dbRes.data.insertedId || dbRes.data.message === 'User already exists') {
+        const jwtRes = await axios.post("http://localhost:3000/jwt", { email: data.email });
+        if (jwtRes.data.token) {
+          localStorage.setItem("access-token", jwtRes.data.token);
+          toast.success("Registration Successful!");
+          navigate(location.state || "/");
+        }
+      }
+    } catch (error) {
+      console.error("Registration error:", error);
+      toast.error(error.message);
+    }
   };
 
   return (

@@ -26,6 +26,8 @@ import ManageApplications from "../pages/Dashboard/ManageApplications";
 import AdminReviews from "../pages/Dashboard/AdminReviews";
 import MyReviews from "../pages/Dashboard/MyReviews";
 import EditReview from "../pages/Dashboard/EditReview";
+import ManageScholarships from "../pages/ManageScholarships";
+import ManageAppliedApplication from "../pages/Dashboard/ManageAppliedApplication";
 
 export const router = createBrowserRouter([
   // Main Layout
@@ -75,6 +77,7 @@ export const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <MyProfile /> },
+      { path: "manageAppliedApplication", element: <ManageAppliedApplication /> },
       { path: "student-profile", element: <StudentProfile /> },
       { path: "my-profile", element: <MyProfile /> },
       { path: "my-applications", element: <MyApplications /> },
@@ -113,21 +116,14 @@ export const router = createBrowserRouter([
           <AdminRoute>
             <AdminHome />
           </AdminRoute>
-        ),
+        )
       },
+      
       {
         path: "manageUsers",
         element: (
           <AdminRoute>
             <ManageUsers />
-          </AdminRoute>
-        ),
-      },
-      {
-        path: "manageApplications",
-        element: (
-          <AdminRoute>
-            <ManageApplications />
           </AdminRoute>
         ),
       },
@@ -139,7 +135,13 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
-      { path: "update-scholarship/:id", element: <UpdateScholarship /> },
+      { path: "addScholership", element: <AddScholarship /> },
+      { path: "manage-scholarships", element: <ManageScholarships /> },
+      {
+        path: "updateScholarship/:id",
+        element: <UpdateScholarship />,
+        loader: ({ params }) =>   fetch(`http://localhost:3000/scholarship/${params.id}`)
+      },
       { path: "manage-users", element: <ManageUsers /> },
       { path: "analytics", element: <Analytics /> },
       { path: "student-profile", element: <StudentProfile /> },

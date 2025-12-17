@@ -14,7 +14,7 @@ const Checkout = () => {
   const { data: scholarship = {}, isLoading } = useQuery({
     queryKey: ["checkout-scholarship", id],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/scholarships/${id}`);
+      const res = await axiosSecure.get(`/all-scholarships/${id}`);
       return res.data;
     },
     enabled: !!id,

@@ -1,31 +1,45 @@
 import React from "react";
-import useAuth from "../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router";
+import useAuth from "../../hooks/useAuth";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const SocialLogin = () => {
-
-  const {signInGoogle} = useAuth();
+  const { signInGoogle } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleGoogleSignIn = () => {
-      signInGoogle()
-      .then(result => {
-        console.log(result.user);
-        navigate(location.state || '/');
+    signInGoogle()
+      .then(async (result) => {
+        const user = result.user;
+
+        try {
+          const res = await         axios.post("http://localhost:3000/jwt", {
+            email: user.email,
+          });
+          if (res.data.token) {
+            localStorage.setItem("access-token", res.data.token);
+            console.log("Token saved from Social Login");
+            toast.success("Login Successful!");
+            navigate("/");
+          }
+        } catch (err) {
+          console.error("JWT Fetch Error:", err);
+          navigate(location.state || "/");
+        }
       })
-      .catch(error => {
-        console.log(error)
-      })
-  }
+      .catch((error) => toast.error(error.message));
+  };
 
   return (
     <div className="text-center">
       <p className="font-semibold text-primary mb-2">Or</p>
       {/* Google */}
-      <button 
-          onClick={handleGoogleSignIn}
-          className="btn w-full bg-white text-primary border-[#e5e5e5] hover:bg-teal-300 hover:text-white">
+      <button
+        onClick={handleGoogleSignIn}
+        className="btn w-full bg-white text-primary border-[#e5e5e5] hover:bg-teal-300 hover:text-white"
+      >
         <svg
           aria-label="Google logo"
           width="16"
