@@ -16,15 +16,6 @@ const DashboardLayout = () => {
 
   const { role, isRoleLoading } = useRole();
 
-  /* let dashboardTitle = "User Dashboard";
-  if (role === "admin") {
-    dashboardTitle = "Admin Dashboard";
-  } else if (role === "moderator") {
-    dashboardTitle = "Moderator Dashboard";
-  } else if (role === "student") {
-    dashboardTitle = "Student Dashboard";
-  } */
-
   const dashboardTitle = 
   role === "admin" ? "Admin Dashboard" : 
   role === "moderator" ? "Moderator Dashboard" : 

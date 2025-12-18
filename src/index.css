@@ -4,6 +4,7 @@
 @plugin "daisyui";
 
 body {
+  background-color: #a3fff6;
   font-family: "Urbanist", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;

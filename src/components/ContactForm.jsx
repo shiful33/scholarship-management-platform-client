@@ -62,23 +62,23 @@ const ContactForm = () => {
       <div className="flex flex-col lg:flex-row shadow-2xl rounded-xl overflow-hidden bg-white">
         
         {/* Left Contact Info */}
-        <div className="lg:w-1/3 p-8 bg-teal-500 text-white flex flex-col justify-center space-y-6">
+        <div className="lg:w-1/3 p-8 bg-[#57ffee] text-white flex flex-col justify-center space-y-6">
           <h2 className="text-3xl font-bold text-eye">Need Help?
             <br/>Get in Touch!</h2>
-          <p className="text-blue-100">Our support team is ready to assist you with your scholarship application or general questions.</p>
+          <p className="text-[#575757]">Our support team is ready to assist you with your scholarship application or general questions.</p>
           
           <div className="space-y-4 pt-4">
             <div className="flex items-center space-x-3">
               <Mail className="w-10 h-10 text-blue-200"/>
-              <p className="text-lg">support@scholarshipstream.com</p>
+              <p className="text-lg text-eye">support@scholarshipstream.com</p>
             </div>
             <div className="flex items-center space-x-3">
               <Phone className="w-6 h-6 text-green-600"/>
-              <p className="text-lg">+880 1XXXXXXXXX</p>
+              <p className="text-lg text-eye">+880 1XXXXXXXXX</p>
             </div>
             <div className="flex items-center space-x-3">
-              <MapPin className="w-6 h-6 text-blue-200"/>
-              <p className="text-lg">Dhaka, Bangladesh</p>
+              <MapPin className="w-6 h-6 text-gray-600"/>
+              <p className="text-lg text-eye">Dhaka, Bangladesh</p>
             </div>
           </div>
         </div>
