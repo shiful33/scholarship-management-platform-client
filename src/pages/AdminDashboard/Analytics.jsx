@@ -14,7 +14,6 @@ import {
 } from "recharts";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
-
 const formatValue = (value, isCurrency = false) => {
   if (isCurrency) {
     return new Intl.NumberFormat("en-US", {
@@ -32,7 +31,6 @@ const formatValue = (value, isCurrency = false) => {
   }
   return value;
 };
-
 
 const MetricCard = ({
   title,
@@ -58,7 +56,6 @@ const Analytics = () => {
   const { data: stats = {}, isLoading } = useQuery({
     queryKey: ["platformStats"],
     queryFn: async () => {
-
       const res = await axiosSecure.get("/analytics/platform-stats");
       return res.data;
     },
@@ -81,9 +78,8 @@ const Analytics = () => {
     totalUsers = 0,
     totalFeesCollected = 0,
     totalScholarships = 0,
-    applicationsByCategory = [], 
+    applicationsByCategory = [],
   } = stats;
-
 
   return (
     <div className="p-4 md:p-8">
@@ -101,14 +97,14 @@ const Analytics = () => {
         />
         <MetricCard
           title="Fees Collected"
-          value={totalFeesCollected}
+          value={totalFeesCollected || 0}
           icon={FaDollarSign}
           isCurrency={true}
           bgColor="bg-green-400"
         />
         <MetricCard
           title="Total Scholarships"
-          value={totalScholarships}
+          value={totalScholarships || 0}
           icon={FaGraduationCap}
           bgColor="bg-orange-400"
         />
@@ -116,55 +112,58 @@ const Analytics = () => {
 
       <hr className="my-10 border-gray-300" />
 
-      {/* Chart  */}
-      <div className="bg-white p-6 md:p-10 rounded-xl shadow-2xl border border-gray-100">
+      {/* Chart Section */}
+      <div className="bg-white p-6 md:p-10 rounded-xl shadow-2xl border border-gray-100 mt-10">
         <h3 className="text-2xl font-bold mb-8 text-gray-700">
           Application Count per Scholarship Category
         </h3>
 
-        {applicationsByCategory.length > 0 ? (
-          <div style={{ width: "100%", height: 400 }}>
+        {applicationsByCategory && applicationsByCategory.length > 0 ? (
+          <div className="w-full h-[400px]">
+            {" "}
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
+                key={applicationsByCategory.length}
                 data={applicationsByCategory}
-                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
               >
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  vertical={false}
+                  stroke="#eee"
+                />
                 <XAxis
                   dataKey="category"
-                  stroke="#333"
-                  tick={{ fontSize: 12 }}
-                  label={{ value: "Scholarship Category", position: "bottom" }}
+                  tick={{ fill: "#666", fontSize: 12 }}
+                  angle={-20}
+                  textAnchor="end"
+                  interval={0}
                 />
-                <YAxis
-                  allowDecimals={false}
-                  stroke="#333"
-                  label={{
-                    value: "Total Applications",
-                    angle: -90,
-                    position: "left",
+                <YAxis tick={{ fill: "#666" }} />
+                <Tooltip
+                  cursor={{ fill: "#f5f5f5" }}
+                  contentStyle={{
+                    borderRadius: "10px",
+                    border: "none",
+                    boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
                   }}
                 />
-                <Tooltip
-                  formatter={(value) => [
-                    `Applications: ${value}`,
-                    "Category Count",
-                  ]}
-                  labelFormatter={(label) => `Category: ${label}`}
-                />
-                <Legend wrapperStyle={{ paddingTop: 20 }} />
+                <Legend verticalAlign="top" height={36} />
                 <Bar
                   dataKey="count"
                   fill="#0c5f5a"
-                  name="Applications"
-                  radius={[10, 10, 0, 0]}
+                  radius={[6, 6, 0, 0]}
+                  barSize={50}
+                  name="Total Applications"
                 />
               </BarChart>
             </ResponsiveContainer>
           </div>
         ) : (
-          <div className="text-center py-10 text-gray-500 font-semibold">
-            No application data available for charting.
+          <div className="flex flex-col items-center justify-center py-20 bg-gray-50 rounded-lg border-2 border-dashed">
+            <p className="text-gray-400">
+              No application data found to display chart.
+            </p>
           </div>
         )}
       </div>

@@ -75,7 +75,7 @@ const ManageScholarships = () => {
               <th>University Name</th>
               <th>Subject Category</th>
               <th>Degree</th>
-              <th>Application Fee</th>
+              <th>Application Fees</th>
               <th className="text-center">Actions</th>
             </tr>
           </thead>
@@ -91,9 +91,9 @@ const ManageScholarships = () => {
                 <td>{item.universityName}</td>
                 <td>{item.subjectCategory}</td>
                 <td>
-                  <span className="badge badge-outline">{item.degree}</span>
+                  <span className="badge badge-outline">{item.degreeLevel}</span>
                 </td>
-                <td className="font-bold">${item.applicationFee}</td>
+                <td className="font-bold">${item.applicationFees}</td>
 
                 <td className="flex justify-center items-center gap-2">
                   <Link to={`/dashboard/updateScholarship/${item._id}`}>
