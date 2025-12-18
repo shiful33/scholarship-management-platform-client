@@ -87,7 +87,7 @@ const ManageApplications = () => {
   return (
     <div className="p-4 md:p-8">
       <h2 className="text-3xl font-bold text-red-700 mb-6 border-b pb-2">
-        📋 Manage All Applications ({allApplications.length})
+        Manage All Applications ({allApplications.length})
       </h2>
 
       {/* Filter and Search Section */}

@@ -7,7 +7,6 @@ import { FaEye } from "react-icons/fa";
 import { IoMdEyeOff } from "react-icons/io";
 import { toast } from "react-toastify";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 import axios from "axios";
 
 const Login = () => {
@@ -18,18 +17,18 @@ const Login = () => {
     formState: { errors },
     getValues,
   } = useForm();
+
   const [show, setShow] = useState(false);
-  const [error, setError] = useState(null);
+  const [ error, setError ] = useState(null);
 
   const { signInUser } = useAuth();
-  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Login handle
+
   const handleLoginSubmit = async (data) => {
-    setError(null);
     const { email, password } = data;
+    setError(null);
 
     try {
       const result = await signInUser(email, password);
@@ -37,11 +36,14 @@ const Login = () => {
 
       const userInfo = {
         email: user.email,
-        name: user.displayName || "New User",
-        role: "student",
+        name: user.displayName || "Existing User",
       };
 
-      await axios.post("http://localhost:3000/users", userInfo);
+      try {
+        await axios.post("http://localhost:3000/users", userInfo);
+      } catch (userErr) {
+        console.log("User already exists or error saving user");
+      }
 
       const res = await axios.post("http://localhost:3000/jwt", {
         email: user.email,
@@ -49,15 +51,19 @@ const Login = () => {
 
       if (res.data.token) {
         localStorage.setItem("access-token", res.data.token);
+        toast.success("Welcome Back! ✨");
 
         const from = location.state?.from?.pathname || "/";
         navigate(from, { replace: true });
-        toast.success("Welcome Back!");
+      } else {
+        throw new Error("Token not received from server");
       }
     } catch (err) {
-      console.error("Login Error:", err);
-      setError(err.message);
-      toast.error(err.message || "Login failed, please try again.");
+      console.error("Login Error Details:", err);
+      const errorMessage =
+        err.response?.data?.message || err.message || "Login failed";
+      setError(errorMessage);
+      toast.error(errorMessage);
     }
   };
 
@@ -79,89 +85,89 @@ const Login = () => {
   };
 
   return (
-    <div className="card bg-base-100 w-full max-w-md shrink-0 shadow-2xl my-12 lg:my-0">
-      <h2 className="text-2xl md:text-3xl font-extrabold text-eye text-center my-6">
-        Welcome To Login
-      </h2>
-      <p className="text-[18px] font-semibold text-center text-primary">
-        Please login your account.
-      </p>
-      <div className="card-body">
-        <form onSubmit={handleSubmit(handleLoginSubmit)}>
-          <fieldset className="fieldset">
-            {/* Email field */}
-            <label className="label">Email</label>
-            <input
-              type="email"
-              {...register("email", { required: true, minLength: 6 })}
-              className="input w-full"
-              placeholder="Email"
-            />
-            {errors.email?.type === "required" && (
-              <p className="text-red-500">Email is required</p>
-            )}
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+      <div className="card bg-base-100 w-full max-w-md shrink-0 shadow-2xl my-12">
+        <h2 className="text-2xl md:text-3xl font-extrabold text-center mt-6 text-[#0c5f5a]">
+          Welcome To Login
+        </h2>
+        <p className="text-[18px] font-semibold text-center text-gray-500">
+          Please login to your account.
+        </p>
+        <div className="card-body">
 
-            {/* Password field */}
-            <label className="label">Password</label>
-            <div className="relative">
+          <form onSubmit={handleSubmit(handleLoginSubmit)}>
+            <div className="form-control">
+              <label className="label font-semibold">Email</label>
               <input
-                type={show ? "text" : "password"}
-                id="password-input"
-                {...register("password", {
-                  required: true,
-                  minLength: 6,
-                  pattern:
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                })}
-                className="input w-full"
-                placeholder="Password"
+                type="email"
+                {...register("email", { required: "Email is required" })}
+                className="input input-bordered w-full"
+                placeholder="Email"
               />
-
-              {/* Show Password  */}
-              <span
-                onClick={() => setShow(!show)}
-                className="absolute text-[17px] text-[#606162] top-1/2 transform -translate-y-1/2 right-4 cursor-pointer"
-              >
-                {show ? <FaEye /> : <IoMdEyeOff />}
-              </span>
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
-            {errors.password?.type === "required" && (
-              <p className="text-red-500">Password is required.</p>
-            )}
-            {errors.password?.type === "pattern" && (
-              <p className="text-red-500">
-                Password must have at least one uppercase, lowercase, number,
-                and special character.
-              </p>
-            )}
+            <div className="form-control mt-2">
+              <label className="label font-semibold">Password</label>
+              <div className="relative">
+                <input
+                  type={show ? "text" : "password"}
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: { value: 6, message: "Minimum 6 characters" },
+                  })}
+                  className="input input-bordered w-full"
+                  placeholder="Password"
+                />
+                <span
+                  onClick={() => setShow(!show)}
+                  className="absolute text-[17px] text-[#606162] top-1/2 transform -translate-y-1/2 right-4 cursor-pointer"
+                >
+                  {show ? <FaEye /> : <IoMdEyeOff />}
+                </span>
+              </div>
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
 
-            {/* Forgot password */}
-            <div className="flex justify-start my-2">
+            <div className="flex justify-between items-center my-4">
               <a
                 onClick={handleForgotPassword}
-                className="hover:underline text-sm text-primary font-medium cursor-pointer"
+                className="hover:underline text-sm text-[#0c5f5a] font-medium cursor-pointer"
               >
                 Forgot password?
               </a>
-              {error && <p className="text-xs text-red-400">{error}</p>}
             </div>
 
-            {/* Login Button*/}
-            <button className="btn bg-primary text-white mt-4 w-full">
+            <button
+              type="submit"
+              className="btn bg-[#0c5f5a] hover:bg-[#084642] text-white w-full"
+            >
               Login
             </button>
-            <p className="text-center text-[15px] mt-2">
-              You don't have account?{" "}
-              <Link state={location.state} to="/register">
-                <span className="underline font-semibold text-primary text-[16px] cursor-pointer">
-                  Please Register
-                </span>
+
+            <p className="text-center text-[15px] mt-4">
+              Don't have an account?{" "}
+              <Link
+                state={location.state}
+                to="/register"
+                className="underline font-semibold text-[#0c5f5a]"
+              >
+                Please Register
               </Link>
             </p>
-          </fieldset>
+          </form>
+
+          <div className="divider">OR</div>
           <SocialLogin />
-        </form>
+        </div>
       </div>
     </div>
   );

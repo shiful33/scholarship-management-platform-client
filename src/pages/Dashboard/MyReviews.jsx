@@ -6,7 +6,6 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
-
 const MyReviews = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -20,11 +19,11 @@ const MyReviews = () => {
     error,
   } = useQuery({
     queryKey: ["myReviewsUser", user?.email],
+    enabled: !!user?.email && !!localStorage.getItem("access-token"),
     queryFn: async () => {
       const res = await axiosSecure.get(`/user/my-reviews?email=${user.email}`);
       return res.data;
     },
-    enabled: !!user?.email,
   });
 
   const deleteMutation = useMutation({
@@ -74,6 +73,7 @@ const MyReviews = () => {
     );
   }
 
+
   return (
     <div className="p-4 md:p-8">
       <h2 className="text-3xl font-bold text-teal-800 mb-6 border-b pb-2">
@@ -107,7 +107,8 @@ const MyReviews = () => {
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleEdit(review._id)}
-                        className="btn btn-xs btn-info text-white" >
+                        className="btn btn-xs btn-info text-white"
+                      >
                         <FaEdit /> Edit
                       </button>
 

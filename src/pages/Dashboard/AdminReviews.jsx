@@ -51,8 +51,8 @@ const AdminReviews = () => {
 
   return (
     <div className="p-4 md:p-8">
-      <h2 className="text-3xl font-bold text-red-600 mb-6 border-b pb-2">
-        🗑️ Manage All Reviews ({allReviews.length})
+      <h2 className="text-3xl font-bold text-teal-700 mb-6 border-b pb-2">
+        Manage All Reviews ({allReviews.length})
       </h2>
 
       {allReviews.length === 0 ? (
@@ -61,9 +61,9 @@ const AdminReviews = () => {
         <div className="overflow-x-auto bg-white rounded-lg shadow-xl">
           <table className="table w-full">
             <thead>
-              <tr className="bg-red-500 text-white">
+              <tr className="bg-teal-600 text-white">
                 <th>SL</th>
-                <th>Scholarship</th>
+                <th>Name</th>
                 <th>Reviewer</th>
                 <th>Rating</th>
                 <th>Comment</th>
@@ -74,7 +74,7 @@ const AdminReviews = () => {
               {allReviews.map((review, index) => (
                 <tr key={review._id} className="hover:bg-red-50/50">
                   <th>{index + 1}</th>
-                  <td>{review.scholarshipTitle || "N/A"}</td>
+                  <td>{review.reviewerName || "N/A"}</td>
                   <td>
                     {review.reviewerName} ({review.reviewerEmail})
                   </td>

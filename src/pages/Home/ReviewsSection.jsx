@@ -58,11 +58,12 @@ const ReviewsSection = () => {
           spaceBetween={30}
           slidesPerView={1} 
           loop={true} 
-          speed={5000}
-          allowTouchMove={false} 
+          speed={20000}
+          // allowTouchMove={true} 
           autoplay={{
             delay: 0,
             disableOnInteraction: false,
+            pauseOnMouseEnter: true,
           }}
           breakpoints={{
             640: { slidesPerView: 1 },
@@ -70,7 +71,7 @@ const ReviewsSection = () => {
             1024: { slidesPerView: 3 },
           }}
           modules={[Autoplay]}
-          className="mySwiper pointer-events-none"
+          className="mySwiper"
         >
           {latestReviews.map((review, index) => (
             <SwiperSlide key={review._id || index}>

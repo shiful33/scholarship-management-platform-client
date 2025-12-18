@@ -5,13 +5,11 @@ import { toast } from "react-toastify";
 import { FaSave } from "react-icons/fa";
 
 const EditReview = () => {
-
-  const { id } = useParams(); 
+  const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  
   const {
     data: reviewData = {},
     isLoading,
@@ -25,26 +23,28 @@ const EditReview = () => {
     enabled: !!id,
   });
 
+
   const updateMutation = useMutation({
     mutationFn: async (updatedData) => {
-      
       const res = await axiosSecure.patch(`/reviews/${id}`, updatedData);
       return res.data;
     },
-    onSuccess: (data) => {
-      toast.success(data.message || "Review updated successfully!");
+    onSuccess: () => {
+      toast.success("Review updated successfully! ✨");
 
-      queryClient.invalidateQueries(["myReviewsUser"]);
-      queryClient.invalidateQueries(["singleReview", id]);
+      queryClient.invalidateQueries({ queryKey: ["myReviewsUser"] });
+      queryClient.invalidateQueries({ queryKey: ["singleReview", id] });
+
       navigate("/dashboard/my-reviews");
     },
     onError: (error) => {
       console.error("Review Update Error:", error);
-      toast.error(error.response?.data?.message || "Failed to update review.");
+      const message =
+        error.response?.data?.message || "Failed to update review.";
+      toast.error(message);
     },
   });
 
-  
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -54,7 +54,6 @@ const EditReview = () => {
       comment: form.comment.value,
     };
 
-    
     if (updatedReview.rating < 1 || updatedReview.rating > 5) {
       return toast.error("Rating must be between 1 and 5.");
     }
@@ -63,13 +62,17 @@ const EditReview = () => {
   };
 
   if (isLoading) {
-    return <div className="text-center p-10">Loading review data...</div>;
+    return (
+      <div className="text-center p-20 text-teal-600 font-bold">
+        Loading review data...
+      </div>
+    );
   }
 
-  if (isError || !reviewData._id) {
+  if (isError || !reviewData?._id) {
     return (
-      <div className="text-center p-10 text-red-600">
-        Review not found or invalid ID.
+      <div className="text-center p-20 text-red-600 font-semibold">
+        Review not found or invalid ID. ❌
       </div>
     );
   }
@@ -80,28 +83,30 @@ const EditReview = () => {
         Edit Your Review
       </h2>
 
-      <div className="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow-lg">
-        {/* Review Context Card */}
-        <div className="mb-6 p-4 border rounded-lg bg-green-50">
-          <p className="text-lg font-semibold text-green-800">
+      <div className="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow-lg border">
+        
+        <div className="mb-6 p-4 border rounded-lg bg-teal-50">
+          <p className="text-lg font-semibold text-teal-800">
             Scholarship: {reviewData.scholarshipTitle || "N/A"}
           </p>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 italic">
             Reviewer: {reviewData.reviewerName} ({reviewData.reviewerEmail})
           </p>
         </div>
 
         <form onSubmit={handleSubmit}>
           {/* Rating Input */}
-          <div className="mb-4">
+          <div className="form-control mb-4">
             <label className="label">
-              <span className="label-text text-[#555555] mb-2 font-semibold">Rating (1-5)</span>
+              <span className="label-text text-gray-700 font-bold">
+                Rating (1-5)
+              </span>
             </label>
             <input
               type="number"
               name="rating"
-              className="input input-bordered w-full"
-              defaultValue={reviewData.rating || 1}
+              className="input input-bordered w-full focus:outline-teal-600"
+              defaultValue={reviewData.rating}
               min="1"
               max="5"
               step="0.1"
@@ -110,14 +115,16 @@ const EditReview = () => {
           </div>
 
           {/* Comment Textarea */}
-          <div className="mb-6">
+          <div className="form-control mb-6">
             <label className="label">
-              <span className="label-text text-[#555555] mb-2 font-semibold">Your Comment</span>
+              <span className="label-text text-gray-700 font-bold">
+                Your Comment
+              </span>
             </label>
             <textarea
               name="comment"
-              className="textarea textarea-bordered w-full h-32"
-              defaultValue={reviewData.comment || ""}
+              className="textarea textarea-bordered w-full h-32 focus:outline-teal-600"
+              defaultValue={reviewData.comment}
               required
             ></textarea>
           </div>
@@ -126,11 +133,15 @@ const EditReview = () => {
           <div>
             <button
               type="submit"
-              className="btn w-full bg-teal-600 border-none hover:bg-teal-700 text-white text-lg"
-              disabled={updateMutation.isLoading}
+              className="btn w-full bg-teal-600 hover:bg-teal-700 text-white text-lg flex items-center gap-2"
+              disabled={updateMutation.isPending}
             >
-              <FaSave />
-              {updateMutation.isLoading
+              {updateMutation.isPending ? (
+                <span className="loading loading-spinner"></span>
+              ) : (
+                <FaSave />
+              )}
+              {updateMutation.isPending
                 ? "Saving Changes..."
                 : "Save Updated Review"}
             </button>

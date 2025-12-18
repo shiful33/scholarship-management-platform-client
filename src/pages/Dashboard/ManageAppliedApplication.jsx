@@ -76,8 +76,7 @@ const ManageAppliedApplication = () => {
         <table className="table table-zebra w-full shadow-sm border">
           <thead className="bg-[#0c5f5a] text-white">
             <tr>
-              <th>Applicant</th>
-              <th>University</th>
+              <th>University Name</th>
               <th>Status</th>
               <th>Payment</th>
               <th className="text-center">Actions</th>
@@ -86,10 +85,6 @@ const ManageAppliedApplication = () => {
           <tbody>
             {applications.map((app) => (
               <tr key={app._id} className="hover:bg-gray-50">
-                <td>
-                  <div className="font-bold">{app.userName}</div>
-                  <div className="text-sm opacity-60">{app.userEmail}</div>
-                </td>
                 <td>{app.universityName}</td>
                 <td>
                   <span
