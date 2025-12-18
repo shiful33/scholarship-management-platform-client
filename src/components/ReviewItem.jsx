@@ -17,7 +17,7 @@ const ReviewItem = ({ review }) => {
   const rating = Math.min(5, Math.max(0, review.rating || 0));
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 hover:shadow-xl">
+    <div className="bg-base-100 p-6 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 hover:shadow-xl h-110">
       {/* Reviewer Info */}
       <div className="flex items-center mb-4">
         <img

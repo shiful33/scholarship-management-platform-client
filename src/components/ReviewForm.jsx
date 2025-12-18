@@ -3,11 +3,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useNavigate } from "react-router";
 
 const ReviewForm = ({ scholarshipId, scholarshipTitle }) => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
@@ -32,41 +34,35 @@ const ReviewForm = ({ scholarshipId, scholarshipTitle }) => {
     return stars;
   };
 
-  // Review Submission Mutation
   const submitReviewMutation = useMutation({
     mutationFn: async (reviewData) => {
       const res = await axiosSecure.post("/reviews", reviewData);
       return res.data;
     },
-    onSuccess: () => {
-      toast.success("Thank you for your valuable feedback!");
 
-      queryClient.invalidateQueries(["scholarshipReviews", scholarshipId]);
+    onSuccess: (data) => {
+        console.log("Response Data:", data);
 
-      setRating(0);
-      setComment("");
-    },
+        toast.success("Review Submitted Successfully!");
+
+        setRating(0);
+        setComment("");
+
+        queryClient.invalidateQueries(["scholarshipReviews", scholarshipId]);
+
+          navigate("/all-scholarships");
+      },
     onError: (error) => {
-      console.error("Review Submission Error:", error);
-      const errorMessage =
-        error.response?.data?.message ||
-        "Could not submit review. Please try again.";
-      toast.error(errorMessage);
-    },
+      console.error("Mutation Error:", error);
+      toast.error("Failed to navigate. Please check console.");
+    }
   });
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!user) {
-      toast.error("Please log in to submit a review.");
-      return;
-    }
-
-    if (rating === 0) {
-      toast.warn("Please give a rating before submitting.");
-      return;
-    }
+    if (!user) return toast.error("Please log in!");
+    if (rating === 0) return toast.warn("Please give a rating!");
 
     const reviewData = {
       scholarshipId,
@@ -76,6 +72,7 @@ const ReviewForm = ({ scholarshipId, scholarshipTitle }) => {
       reviewerPhoto: user.photoURL || null,
       rating: rating,
       comment: comment.trim(),
+      reviewDate: new Date().toISOString(),
     };
 
     submitReviewMutation.mutate(reviewData);
@@ -88,7 +85,6 @@ const ReviewForm = ({ scholarshipId, scholarshipTitle }) => {
       </h3>
 
       <form onSubmit={handleSubmit}>
-        {/* Rating Input */}
         <div className="mb-4">
           <label className="block text-gray-700 font-medium mb-2">
             Your Rating (1-5)
@@ -99,7 +95,6 @@ const ReviewForm = ({ scholarshipId, scholarshipTitle }) => {
           </p>
         </div>
 
-        {/* Comment Input */}
         <div className="mb-4">
           <label
             htmlFor="comment"
@@ -117,19 +112,13 @@ const ReviewForm = ({ scholarshipId, scholarshipTitle }) => {
           ></textarea>
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           className="w-full bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-700 transition duration-300 disabled:bg-gray-400"
-          disabled={submitReviewMutation.isLoading || rating === 0 || !user}
+          disabled={submitReviewMutation.isPending}
         >
-          {submitReviewMutation.isLoading ? "Submitting..." : "Submit Review"}
+          {submitReviewMutation.isPending ? "Submitting..." : "Submit Review"}
         </button>
-        {!user && (
-          <p className="text-red-500 text-sm mt-2 text-center">
-            Please log in to submit a review.
-          </p>
-        )}
       </form>
     </div>
   );
