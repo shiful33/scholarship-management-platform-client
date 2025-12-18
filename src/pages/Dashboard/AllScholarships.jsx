@@ -27,10 +27,10 @@ const AllScholarships = () => {
 
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
-      await axiosSecure.delete(`/scholarships/${id}`);
+      await axiosSecure.delete(`/allScholarships/${id}`);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["all-scholarships"]);
+      queryClient.invalidateQueries(["allScholarships"]);
       toast.success("Scholarship deleted!");
     },
     onError: (err) => {
