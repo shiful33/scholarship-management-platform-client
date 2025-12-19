@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useNavigate } from "react-router";
+import axios from "axios";
 
 
 
@@ -15,7 +16,7 @@ const AllScholarships = () => {
   const { data: rawData, isLoading, isError, error } = useQuery({
     queryKey: ["allScholarships"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/all-scholarships");
+      const res = await axios.get("http://localhost:3000/all-scholarships");
        
       return res.data;
     },

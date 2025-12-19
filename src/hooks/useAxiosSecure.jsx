@@ -49,7 +49,7 @@ import { useEffect } from "react";
 import useAuth from "./useAuth";
 
 const axiosSecure = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
+    baseURL: import.meta.env.VITE_API_URL || "https://scholarship-management-platform-ser.vercel.app",
 });
 
 const useAxiosSecure = () => {
