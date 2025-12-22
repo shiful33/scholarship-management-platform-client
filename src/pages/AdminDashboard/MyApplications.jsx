@@ -28,7 +28,7 @@ const MyApplications = () => {
     enabled: !!user?.email && !loading,
   });
 
-  console.log(applications)
+  console.log(applications);
 
   // Delete Mutation
   const deleteMutation = useMutation({
@@ -217,6 +217,7 @@ const MyApplications = () => {
             <thead>
               <tr className="bg-teal-500 text-white">
                 <th>SL</th>
+                <th>University Name</th>
                 <th>Scholarship Name</th>
                 <th>Paid Fees</th>
                 <th>Paid/Unpaid</th>
@@ -228,7 +229,6 @@ const MyApplications = () => {
             </thead>
             <tbody>
               {applications.map((app, index) => {
-              
                 const currentStatus = app.status?.toLowerCase();
                 const isPending = currentStatus === "pending";
                 const isCompleted = currentStatus === "completed";
@@ -239,7 +239,8 @@ const MyApplications = () => {
                 return (
                   <tr key={app._id} className="hover:bg-gray-50">
                     <th>{index + 1}</th>
-                    <td>{app.scholarshipTitle || "Unknown Scholarship"}</td>
+                    <td>{app.universityName}</td>
+                    <td>{app.scholarshipTitle}</td>
                     <td className="font-semibold text-green-600">
                       ${applicationFee.toFixed(2)}
                     </td>
