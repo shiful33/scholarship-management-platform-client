@@ -15,7 +15,7 @@ const SocialLogin = () => {
         const user = result.user;
 
         try {
-          const res = await         axios.post("http://localhost:3000/jwt", {
+          const res = await         axios.post("https://scholarship-management-platform-ser.vercel.app/jwt", {
             email: user.email,
           });
           if (res.data.token) {

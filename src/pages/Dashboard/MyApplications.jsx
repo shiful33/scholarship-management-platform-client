@@ -21,6 +21,7 @@ const MyApplications = () => {
     },
   });
 
+  console.log(myApplications)
  
   const handleReviewSubmit = async (e) => {
     e.preventDefault();

@@ -40,12 +40,12 @@ const Login = () => {
       };
 
       try {
-        await axios.post("http://localhost:3000/users", userInfo);
+        await axios.post("https://scholarship-management-platform-ser.vercel.app/users", userInfo);
       } catch (userErr) {
         console.log("User already exists or error saving user");
       }
 
-      const res = await axios.post("http://localhost:3000/jwt", {
+      const res = await axios.post("https://scholarship-management-platform-ser.vercel.app/jwt", {
         email: user.email,
       });
 

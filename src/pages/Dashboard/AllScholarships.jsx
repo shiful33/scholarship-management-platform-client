@@ -16,7 +16,7 @@ const AllScholarships = () => {
   const { data: rawData, isLoading, isError, error } = useQuery({
     queryKey: ["allScholarships"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:3000/all-scholarships");
+      const res = await axios.get("https://scholarship-management-platform-ser.vercel.app/all-scholarships");
        
       return res.data;
     },

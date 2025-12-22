@@ -47,10 +47,10 @@ const Register = () => {
         role: "student",
       };
       
-      const dbRes = await axios.post("http://localhost:3000/users", userInfo);
+      const dbRes = await axios.post("https://scholarship-management-platform-ser.vercel.app/users", userInfo);
 
       if (dbRes.data.insertedId || dbRes.data.message === 'User already exists') {
-        const jwtRes = await axios.post("http://localhost:3000/jwt", { email: data.email });
+        const jwtRes = await axios.post("https://scholarship-management-platform-ser.vercel.app/jwt", { email: data.email });
         if (jwtRes.data.token) {
           localStorage.setItem("access-token", jwtRes.data.token);
           toast.success("Registration Successful!");

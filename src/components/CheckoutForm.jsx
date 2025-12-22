@@ -16,6 +16,8 @@ const CheckoutForm = ({
   const [error, setError] = useState("");
   const [processing, setProcessing] = useState(false);
 
+  console.log(scholarshipDetails)
+
   const stripe = useStripe();
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
@@ -49,6 +51,7 @@ const CheckoutForm = ({
 
   const saveApplication = async (transactionId, paidAmount) => {
     const scholarshipName = scholarshipDetails?.scholarshipName || "Unknown Scholarship";
+    console.log(scholarshipDetails)
         const universityName = scholarshipDetails?.universityName || "Unknown University";
 
     const applicationData = {

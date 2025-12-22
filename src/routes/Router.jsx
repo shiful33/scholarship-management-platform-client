@@ -137,7 +137,7 @@ export const router = createBrowserRouter([
       {
         path: "updateScholarship/:id",
         element: <UpdateScholarship />,
-        loader: ({ params }) =>   fetch(`http://localhost:3000/scholarship/${params.id}`)
+        loader: ({ params }) =>   fetch(`https://scholarship-management-platform-ser.vercel.app/scholarship/${params.id}`)
       },
       { path: "manage-users", element: <ManageUsers /> },
       { path: "analytics", element: <Analytics /> },

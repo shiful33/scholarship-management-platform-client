@@ -28,6 +28,8 @@ const MyApplications = () => {
     enabled: !!user?.email && !loading,
   });
 
+  console.log(applications)
+
   // Delete Mutation
   const deleteMutation = useMutation({
     mutationFn: async (applicationId) => {
