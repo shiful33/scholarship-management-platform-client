@@ -187,22 +187,25 @@ const ManageAppliedApplication = () => {
           {selectedApp && (
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div className="p-2 bg-gray-50 rounded">
-                <strong>Applicant Name:</strong> {selectedApp.userName}
+                <strong>University Name:</strong> {selectedApp.universityName}
               </div>
               <div className="p-2 bg-gray-50 rounded">
-                <strong>Scholarship:</strong> {selectedApp.scholarshipName}
+                <strong>Scholarship Title:</strong> {selectedApp.scholarshipTitle}
               </div>
               <div className="p-2 bg-gray-50 rounded">
-                <strong>Degree:</strong> {selectedApp.degree}
+                <strong>Applicant Name:</strong> {selectedApp.applicantName}
               </div>
               <div className="p-2 bg-gray-50 rounded">
-                <strong>Category:</strong> {selectedApp.subjectCategory}
+                <strong>Transaction Id:</strong> {selectedApp.transactionId}
               </div>
               <div className="p-2 bg-gray-50 rounded col-span-2">
-                <strong>Address:</strong> {selectedApp.address || "N/A"}
+                <strong>Applicant User:</strong> {selectedApp.applicantEmail || "N/A"}
               </div>
               <div className="p-2 bg-gray-50 rounded">
-                <strong>Phone:</strong> {selectedApp.phone}
+                <strong>Paid Fees:</strong> ${selectedApp.paidFees}
+              </div>
+              <div className="p-2 bg-gray-50 rounded">
+                <strong>Applied Date:</strong> {selectedApp.appliedDate}
               </div>
             </div>
           )}

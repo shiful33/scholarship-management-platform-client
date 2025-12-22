@@ -21,7 +21,7 @@ const ManageApplications = () => {
     queryKey: ["adminAllApplications", statusFilter],
 
     queryFn: async () => {
-      // /admin/all-applications API কল করা
+      // /admin/all-applications API
       const res = await axiosSecure.get(
         `/admin/all-applications?status=${statusFilter}`
       );

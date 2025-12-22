@@ -1,7 +1,7 @@
 import React from 'react';
-import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { QueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const UserManagement = () => {
 

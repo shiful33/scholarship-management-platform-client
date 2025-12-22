@@ -21,7 +21,6 @@ const MyApplications = () => {
     },
   });
 
-  console.log(myApplications)
  
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
@@ -31,6 +30,7 @@ const MyApplications = () => {
 
     const reviewData = {
       scholarshipId: reviewApp.scholarshipId, 
+      scholarshipName: reviewApp.scholarshipName, 
       universityName: reviewApp.universityName,
       userName: user?.displayName,
       userEmail: user?.email,
@@ -99,7 +99,7 @@ const MyApplications = () => {
                     <button className="btn btn-xs btn-error text-white"><FaTrashAlt /></button>
                   )}
 
-                  {/* ✅ Add Review: 'completed' */}
+                  {/* Add Review: 'completed' */}
                   {app.status === "completed" && (
                     <button 
                       onClick={() => { setReviewApp(app); document.getElementById("review-modal").showModal(); }}
