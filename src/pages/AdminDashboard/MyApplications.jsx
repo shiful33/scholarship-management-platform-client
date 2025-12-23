@@ -96,7 +96,7 @@ const MyApplications = () => {
               <th>Status</th>
               <th>Actions</th>
             </tr>
-          </thead>
+          </thead> 
           <tbody>
             {applications.map((app) => {
               const s = app.scholarshipDetails || {};

@@ -105,7 +105,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "updateScholarship/:id",
+        path: "/dashboard/updateScholarship/:id",
         element: (
           <ModeratorRoute>
             <UpdateScholarship />

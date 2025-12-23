@@ -5,6 +5,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import { ThreeDot } from "react-loading-indicators";
+import { FaEdit } from "react-icons/fa";
 
 const AdminScholar = () => {
   const { user } = useAuth();
@@ -50,7 +51,7 @@ const AdminScholar = () => {
   };
 
   const handleUpdate = (id) => {
-      navigate(`/dashboard/update-scholarship/${id}`);
+      navigate(`/dashboard/updateScholarship/${id}`);
   };
 
   if (isLoading) {
@@ -126,7 +127,7 @@ const AdminScholar = () => {
                       onClick={() => handleUpdate(scholarship._id)}
                       className="btn btn-sm bg-green-500 text-white"
                     >
-                      Update
+                    <FaEdit /> Update
                     </button>
                     <button
                       onClick={() => handleDelete(scholarship._id)}

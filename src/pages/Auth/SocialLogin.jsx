@@ -34,7 +34,6 @@ const SocialLogin = () => {
 
   return (
     <div className="text-center">
-      <p className="font-semibold text-primary mb-2">Or</p>
       {/* Google */}
       <button
         onClick={handleGoogleSignIn}

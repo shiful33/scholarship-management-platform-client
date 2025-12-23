@@ -143,7 +143,7 @@ const Register = () => {
               {/* Show Password */}
               <span
                 onClick={() => setShow(!show)}
-                className="absolute text-[17px] right-10 top-96 text-[#606162] cursor-pointer"
+                className="absolute text-[17px] right-10 top-7 text-[#606162] cursor-pointer"
               >
                 {show ? <FaEye /> : <IoMdEyeOff />}
               </span>
@@ -162,6 +162,7 @@ const Register = () => {
               </Link>
             </p>
           </fieldset>
+          <div className="divider">OR</div>
           <SocialLogin />
         </form>
       </div>
