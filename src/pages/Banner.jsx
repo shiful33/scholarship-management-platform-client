@@ -1,55 +1,108 @@
 import React from "react";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+// Swiper React components and modules
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, EffectFade, Navigation } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/effect-fade";
+import "swiper/css/navigation";
+
 import banner1 from "../assets/banner/banner1.png";
 import banner2 from "../assets/banner/banner2.png";
 import banner3 from "../assets/banner/banner3.png";
-import { FaGoogleScholar } from "react-icons/fa6";
-import { BadgeDollarSign, HandHeart, HeartPlus } from "lucide-react";
+import { HandHeart, HeartPlus, Search } from "lucide-react";
 
 const Banner = () => {
+  const slides = [
+    { img: banner1, title: "Find Scholarships", highlight: "for study", color: "bg-teal-50" },
+    { img: banner2, title: "Unlock Your", highlight: "Future", color: "bg-blue-50" },
+    { img: banner3, title: "Global Opportunities", highlight: "Await", color: "bg-orange-50" },
+  ];
+
   return (
-    <Carousel
-    autoPlay={true}
-    infiniteLoop={true}
-    className="p-4 my-20 lg:p-0 bg-base-100 text-base-content"
-    >
-      <div className="transition-all duration-300 opacity-85 bg-[#57ffee] shadow-lg pl-2 ">
-        <img src={banner1} className="relative m-4"/>
-        
-        <div className="absolute bottom-[5%] lg:bottom-[15%] lg:left-[5%] text-primary font-semibold text-left">
-          <h2 className="text-xl font-extrabold md:text-5xl lg:text-6xl lg:mb-6">Find <span className="text-eye">Scholarships</span><br/> for study</h2>
-            
-            <p className="flex items-center gap-3 text-sm lg:text-[20px] w-[180px] lg:w-full"><HandHeart className="text-[#404040]"/>100% free scholarship</p>
-            <p className="flex items-center gap-3 text-sm lg:text-[20px] w-[180px] lg:w-full"><HeartPlus  className="text-[#404040]"/>Durable opportunities for every students</p>
-            <button className="hidden lg:block  bg-outline border-2 py-4 bg-[#bdfffb] hover:bg-[#0c5f5a] hover:text-white transition-colors duration-500 px-10 mt-6 cursor-pointer font-semibold text-[19px] rounded">Search Scholarship</button>
-        </div>
-      </div>
+    <div className="w-full h-[60vh] lg:h-[70vh] bg-base-100 overflow-hidden">
+      <Swiper
+        spaceBetween={0}
+        effect={"fade"} // সুন্দর ফেড অ্যানিমেশন
+        centeredSlides={true}
+        autoplay={{
+          delay: 4000,
+          disableOnInteraction: false,
+        }}
+        pagination={{
+          clickable: true,
+          dynamicBullets: true,
+        }}
+        navigation={true}
+        modules={[Autoplay, Pagination, EffectFade, Navigation]}
+        className="h-full mySwiper"
+      >
+        {slides.map((slide, index) => (
+          <SwiperSlide key={index}>
+            <div className={`relative flex items-center h-full w-full ${slide.color} dark:bg-gray-900 px-6 lg:px-20`}>
+              
+              {/* Left Content */}
+              <div className="z-10 w-full space-y-4 text-left lg:w-1/2 lg:space-y-6">
+                <h2 className="text-4xl font-black leading-tight text-gray-800 md:text-6xl lg:text-6xl dark:text-white">
+                  {slide.title} <br />
+                  <span className="text-teal-500 underline decoration-orange-300 decoration-4">
+                    {slide.highlight}
+                  </span>
+                </h2>
+                
+                <div className="space-y-2">
+                  <p className="flex items-center gap-3 text-base font-medium text-gray-600 dark:text-gray-300 lg:text-xl">
+                    <HandHeart className="text-teal-500" /> 100% Free scholarship programs
+                  </p>
+                  <p className="flex items-center gap-3 text-base font-medium text-gray-600 dark:text-gray-300 lg:text-xl">
+                    <HeartPlus className="text-orange-400" /> Durable opportunities for every student
+                  </p>
+                </div>
 
-      <div className="transition-all duration-300 opacity-85 bg-[#57ffee] shadow-lg pl-2">
-        <img src={banner2} className="relative m-4"/>
-        
-        <div className="absolute bottom-[5%] lg:bottom-[15%] lg:left-[5%] text-primary font-semibold text-left">
-          <h2 className="text-xl font-extrabold md:text-5xl lg:text-6xl lg:mb-6">Find <span className="text-eye">Scholarships</span><br/> for study</h2>
-            
-            <p className="flex items-center gap-3 text-sm lg:text-[20px] w-[180px] lg:w-full"><HandHeart className="text-[#404040]"/>100% free scholarship</p>
-            <p className="flex items-center gap-3 text-sm lg:text-[20px] w-[180px] lg:w-full"><HeartPlus  className="text-[#404040]"/>Durable opportunities for every students</p>
-            <button className="hidden lg:block  bg-outline border-2 py-4 bg-[#bdfffb] hover:bg-[#0c5f5a] hover:text-white transition-colors duration-500 px-10 mt-6 cursor-pointer font-semibold text-[19px] rounded">Search Scholarship</button>
-        </div>
-      </div>
+                <div className="flex gap-4 pt-6">
+                  <button className="px-8 py-4 text-white transition-all bg-teal-500 border-none rounded-full shadow-lg btn btn-lg hover:bg-teal-600 hover:scale-105">
+                    <Search size={20} className="mr-2" /> Search Scholarship
+                  </button>
+                </div>
+              </div>
 
-      <div className="transition-all duration-300 opacity-85 bg-[#57ffee] shadow-lg pl-2">
-        <img src={banner3} className="relative m-4"/>
-        
-        <div className="absolute bottom-[5%] lg:bottom-[15%] lg:left-[5%] text-primary font-semibold text-left">
-          <h2 className="text-xl font-extrabold md:text-5xl lg:text-6xl lg:mb-6">Find <span className="text-eye">Scholarships</span><br/> for study</h2>
-            
-            <p className="flex items-center gap-3 text-sm lg:text-[20px] w-[180px] lg:w-full"><HandHeart className="text-[#404040]"/>100% free scholarship</p>
-            <p className="flex items-center gap-3 text-sm lg:text-[20px] w-[180px] lg:w-full"><HeartPlus  className="text-[#404040]"/>Durable opportunities for every students</p>
-            <button className="hidden lg:block  bg-outline border-2 py-4 bg-[#bdfffb] hover:bg-[#0c5f5a] hover:text-white transition-colors duration-500 px-10 mt-6 cursor-pointer font-semibold text-[19px] rounded">Search Scholarship</button>
-        </div>
-      </div>
-    </Carousel>
+              {/* Right Image (Floating Animation) */}
+              <div className="items-center justify-center hidden w-1/2 h-full lg:flex">
+                <img 
+                  src={slide.img} 
+                  alt="Banner" 
+                  className="max-h-[85%] object-contain animate-float"
+                />
+              </div>
+
+              {/* Background Decorative Element */}
+              <div className="absolute w-64 h-64 rounded-full top-10 right-10 bg-teal-200/20 blur-3xl"></div>
+              <div className="absolute w-48 h-48 rounded-full bottom-10 left-10 bg-orange-200/20 blur-3xl"></div>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      {/* Custom CSS for Floating Effect */}
+      <style>{`
+        @keyframes float {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-20px); }
+          100% { transform: translateY(0px); }
+        }
+        .animate-float {
+          animation: float 4s ease-in-out infinite;
+        }
+        .swiper-button-next, .swiper-button-prev {
+          color: #14b8a6 !important; /* Teal-500 */
+        }
+        .swiper-pagination-bullet-active {
+          background: #14b8a6 !important;
+        }
+      `}</style>
+    </div>
   );
 };
 

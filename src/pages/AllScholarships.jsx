@@ -80,7 +80,7 @@ const AllScholarships = () => {
 
   return (
     <div className="p-4 lg:p-0 mt-25 bg-base-100 text-base-content">
-      <h1 className="text-4xl font-extrabold mb-8 text-center text-[#0c5f5a]">
+      <h1 className="mb-8 text-4xl font-extrabold text-center text-white text-eye">
         Explore All Scholarships
       </h1>
 
@@ -154,7 +154,7 @@ const AllScholarships = () => {
           {/* Reset Button */}
           <button
             onClick={handleResetFilters}
-            className="p-3 font-semibold text-white transition duration-150 bg-teal-300 rounded-lg cursor-pointer hover:bg-teal-400"
+            className="p-3 font-semibold text-white transition duration-150 rounded-lg cursor-pointer bg-gradient-to-r from-teal-400 to-orange-200 hover:from-orange-200 hover:to-teal-400"
           >
             Reset Filters
           </button>
@@ -224,7 +224,7 @@ const AllScholarships = () => {
                 <div className="mt-6">
                   <Link to={`/scholarship-details/${scholarship._id}`}>
                   <button
-                      className="w-full px-4 py-3 font-semibold text-white transition-all duration-300 transform rounded-lg shadow-md cursor-pointer bg-gradient-to-r from-teal-400 to-orange-200 hover:from-orange-300 hover:to-teal-400 hover:scale-105"
+                      className="w-full px-4 py-3 font-semibold text-white transition-all duration-300 transform rounded-lg shadow-md cursor-pointer bg-gradient-to-r from-teal-400 to-orange-200 hover:from-orange-200 hover:to-teal-400 hover:scale-105"
                     >
                       View Details
                       </button>

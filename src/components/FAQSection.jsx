@@ -73,9 +73,9 @@ const FAQSection = () => {
       initial="hidden"
       whileInView="visible" 
       viewport={{ once: true, amount: 0.1 }}
-      className="faq-section-wrapper mt-[100px] mx-4 lg:mx-0 bg-base-100 text-base-content"
+      className="faq-section-wrapper mt-[100px] mx-4 lg:mx-0"
     >
-      <div className="container p-8 rounded-md bg-base-100 text-base-content">
+      <div className="container p-8 rounded-md ">
         <h2 className="flex items-center text-2xl font-bold text-left mg:text-3xl lg:text-4xl text-eye">
           <span role="img" ></span><FaQuestion /> Frequently Asked Questions
         </h2>

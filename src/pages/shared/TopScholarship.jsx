@@ -60,7 +60,7 @@ const TopScholarship = () => {
         </p>
 
         <Link to="/all-scholarships">
-          <button className="font-normal border-2 bg-transparent px-8 py-3 rounded-lg hover:bg-orange-600 text-[#404040] transition-all duration-300 hover:text-white border-orange-600">
+          <button className="px-8 py-3 font-normal transition-all duration-300 bg-transparent border-2 border-orange-600 rounded-lg dark:text-white hover:bg-orange-600 hover:text-white">
             Find Scholarship Now
           </button>
         </Link>

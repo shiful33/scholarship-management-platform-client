@@ -11,7 +11,7 @@ const HowItWorksCard = ({ item, index }) => (
     className="relative p-6 transition-all duration-300 bg-teal-500 shadow-xl hover:bg-teal-600 rounded-xl group"
   >
     <div
-      className="absolute flex items-center justify-center text-white transition-all duration-300 bg-teal-600 border-4 border-white rounded-full shadow-lg -top-5 left-6 w-14 h-14 glow-pulse group-hover:scale-110 group-hover:shadow-teal-500/70"
+      className="absolute flex items-center justify-center text-white transition-all duration-300 bg-teal-500 border-4 border-white rounded-full shadow-lg -top-5 left-6 w-14 h-14 glow-pulse group-hover:scale-110 group-hover:shadow-teal-500/70"
     >
       <item.icon size={26} />
     </div>
@@ -44,7 +44,7 @@ const HowItWorks = () => {
           Scholarships.com is a free college scholarship search platform that
           matches you to college scholarships you qualify for.
         </p>
-        <button className="font-normal border-2 bg-transparent px-6 py-2 cursor-pointer rounded-lg hover:bg-orange-600 text-[#404040] transition-all duration-300 hover:text-white border-orange-600 mt-4">
+        <button className="px-6 py-2 mt-4 font-normal transition-all duration-300 bg-transparent border-2 border-orange-600 rounded-lg cursor-pointer hover:bg-orange-600 dark:text-white hover:text-white">
           Find Scholarship Now
         </button>
       </motion.div>

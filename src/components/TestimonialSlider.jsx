@@ -11,11 +11,11 @@ import { motion } from "framer-motion";
 
 
 const TestimonialCard = ({ quote, name, designation, scholarshipName, image }) => (
-  <div className=" bg-[#ddfffa] p-6 rounded-xl shadow-xl overflow-hidden transition-all duration-300">
-    <div className="text-[54px] text-secondary text-left">❝</div>
-    <p className="mb-4 text-left">{quote}</p>
+  <div className="p-6 overflow-hidden transition-all duration-300 bg-teal-500 shadow-xl rounded-xl">
+    <div className="text-[54px] text-white text-left">❝</div>
+    <p className="mb-4 text-left text-white">{quote}</p>
     <div className="scholarship-info">
-        <p className="text-[#404040] font-bold text-[19px] text-left">{scholarshipName}</p>
+        <p className="text-gray-300 font-bold text-[19px] text-left">{scholarshipName}</p>
     </div>
     <div className="student-details">
 

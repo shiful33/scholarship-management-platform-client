@@ -1,5 +1,6 @@
 import React from "react";
 import Logo from "../../components/Logo";
+import { Link } from "react-router";
 
 const Footer = () => {
   return (
@@ -8,12 +9,12 @@ const Footer = () => {
         <section className=" bg-[#212121] text-white border-base-300">
         <aside className="grid justify-start text-left">
           <Logo />
-          <p className="lg:ml-5 mt-4">
+          <p className="mt-4 lg:ml-5">
             Scholar Stream Academy Ltd.
             <br />
             Providing reliable foreign Education 1998.
           </p>
-          <div className="flex justify-start gap-4 lg:ml-5 mt-4">
+          <div className="flex justify-start gap-4 mt-4 lg:ml-5">
             <a>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -62,16 +63,16 @@ const Footer = () => {
         </nav>
         <nav>
           <h6 className="footer-title">Company</h6>
-          <a className="link link-hover">About us</a>
-          <a className="link link-hover">Contact</a>
-          <a className="link link-hover">Jobs</a>
-          <a className="link link-hover">Press kit</a>
+          <Link to={"/about"} className="link link-hover">About us</Link>
+          <Link to={"/contact"} className="link link-hover">Contact</Link>
+          <Link to={"/faq"} className="link link-hover">FAQ</Link>
+          <Link className="link link-hover">Jobs</Link>
         </nav>
         <nav>
           <h6 className="footer-title">Legal</h6>
-          <a className="link link-hover">Terms of use</a>
-          <a className="link link-hover">Privacy policy</a>
-          <a className="link link-hover">Cookie policy</a>
+          <Link to={"/terms-of-use"} className="link link-hover">Terms of use</Link>
+          <Link to={"/privacy-policy"} className="link link-hover">Privacy policy</Link>
+          <Link to={"/cookie-policy"} className="link link-hover">Cookie policy</Link>
         </nav>
         
       </footer>

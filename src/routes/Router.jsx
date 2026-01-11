@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Route } from "react-router";
 import RootLayout from "../layouts/RootLayout";
 import Home from "../pages/Home/Home";
 import AuthLayout from "../layouts/AuthLayout";
@@ -27,8 +27,12 @@ import EditReview from "../pages/Dashboard/EditReview";
 import ManageScholarships from "../pages/ManageScholarships";
 import ManageAppliedApplication from "../pages/Dashboard/ManageAppliedApplication";
 import AdminReviews from "../pages/Dashboard/AdminReviews";
-import DashboardHome from "../components/DashboardHome";
-
+import About from "../pages/About";
+import Contact from "../pages/Contact";
+import FAQ from "../pages/FAQ";
+import TermsOfUse from "../pages/TermsOfUse";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
+import CookiePolicy from "../pages/CookiePolicy";
 
 export const router = createBrowserRouter([
   // Main Layout
@@ -38,9 +42,21 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: "all-scholarships", element: <AllScholarships /> },
-      { path: "scholarship-details/:id", element: <PrivateRoute>    <ScholarshipDetails />
-        </PrivateRoute>
-       },
+      { path: "about", element: <About /> },
+      { path: "contact", element: <Contact /> },
+      { path: "faq", element: <FAQ /> },
+      { path: "terms-of-use", element: <TermsOfUse /> },
+      { path: "privacy-policy", element: <PrivacyPolicy /> },
+      { path: "cookie-policy", element: <CookiePolicy /> },
+      {
+        path: "scholarship-details/:id",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <ScholarshipDetails />
+          </PrivateRoute>
+        ),
+      },
       {
         path: "checkout/:id",
         element: (
@@ -81,10 +97,9 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <MyProfile /> },
       {
-      index: true,
-      element: <DashboardHome />
-    },
-      { path: "manageAppliedApplication", element: <ManageAppliedApplication /> },
+        path: "manageAppliedApplication",
+        element: <ManageAppliedApplication />,
+      },
       { path: "admin-reviews", element: <AdminReviews /> },
       { path: "edit-review", element: <EditReview /> },
       { path: "student-profile", element: <StudentProfile /> },
@@ -125,9 +140,9 @@ export const router = createBrowserRouter([
           <AdminRoute>
             <AdminHome />
           </AdminRoute>
-        )
+        ),
       },
-      
+
       {
         path: "manageUsers",
         element: (
@@ -136,13 +151,16 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
-      
+
       { path: "addScholership", element: <AddScholarship /> },
       { path: "manage-scholarships", element: <ManageScholarships /> },
       {
         path: "updateScholarship/:id",
         element: <UpdateScholarship />,
-        loader: ({ params }) =>   fetch(`https://scholarship-management-platform-ser.vercel.app/scholarship/${params.id}`)
+        loader: ({ params }) =>
+          fetch(
+            `https://scholarship-management-platform-ser.vercel.app/scholarship/${params.id}`
+          ),
       },
       { path: "manage-users", element: <ManageUsers /> },
       { path: "analytics", element: <Analytics /> },

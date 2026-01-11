@@ -26,7 +26,7 @@ const NavBar = () => {
           className={`font-semibold ${
             isScrolled
               ? "text-gray-800 hover:text-white"
-              : "dark:text-white hover:text-orange-500"
+              : "dark:text-white hover:text-orange-600"
           }`}
         >
           Home
@@ -38,7 +38,7 @@ const NavBar = () => {
           className={`font-semibold ${
             isScrolled
               ? "text-gray-800 hover:text-[#212121]"
-              : "dark:text-white hover:text-orange-500"
+              : "dark:text-white hover:text-orange-600"
           }`}
         >
           All Scholarships
@@ -50,7 +50,7 @@ const NavBar = () => {
           className={`font-semibold ${
             isScrolled
               ? "text-gray-800 hover:text-[#212121]"
-              : "dark:text-white hover:text-orange-500"
+              : "dark:text-white hover:text-orange-600"
           }`}
         >
           Add Scholarship
@@ -65,7 +65,7 @@ const NavBar = () => {
               className={`font-semibold ${
                 isScrolled
                   ? "text-gray-800 hover:text-[#212121]"
-                  : "dark:text-white hover:text-orange-500"
+                  : "dark:text-white hover:text-orange-600"
               }`}
             >
               Admin Scholar
@@ -91,18 +91,18 @@ const NavBar = () => {
   }, []);
 
   const navbarClasses = isScrolled
-    ? "bg-transparent bg-opacity-95 shadow-md backdrop-blur-sm text-white"
-    : "bg-transparent text-white";
+    ? "bg-transparent bg-opacity-95 shadow-md backdrop-blur-sm "
+    : "bg-transparent text-orange-500";
 
   const logoColor = isScrolled ? "text-[#404040]" : "text-white";
 
   const loginButtonClasses = isScrolled
-    ? "bg-transparent text-[#0c5f5a]"
-    : "bg-transparent text-[#0c5f5a] border-[#0c5f5a]";
+    ? "bg-transparent text-orange-500"
+    : "bg-transparent text-orange-500 border-[#0c5f5a]";
 
   return (
     <div
-      className={`sticky top-0 z-50 transition-all duration-300  ${navbarClasses}`}
+      className={`sticky top-0 z-50 transition-all duration-300 ${navbarClasses}`}
     >
       <div className="grid w-full px-4 mx-auto mb-2 shadow md:justify-between md:flex navbar lg:px-0 ">
         <div className="navbar-start">

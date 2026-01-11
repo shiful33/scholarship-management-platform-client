@@ -154,18 +154,18 @@ const AddScholarship = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto py-12 px-4">
-      <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-teal-600 mb-16 text-center">
+    <div className="max-w-4xl px-4 py-12 mx-auto">
+      <h2 className="mb-16 text-2xl font-extrabold text-center text-white text-eye md:text-3xl lg:text-4xl">
         Add New Scholarship for Admin
       </h2>
 
       {/* handleSubmit */}
       <form
         onSubmit={handleSubmit(handleAddScholarship)}
-        className="bg-white border-1 border-gray-200 p-8 shadow-xl rounded-xl space-y-6"
+        className="p-8 space-y-6 bg-white border-gray-200 shadow-xl border-1 rounded-xl"
       >
         {/* Basic Info */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid gap-6 md:grid-cols-2">
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Scholarship Name
@@ -175,10 +175,10 @@ const AddScholarship = () => {
               {...register("scholarshipName", {
                 required: true,
               })}
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
+              className="block w-full p-2 mt-1 border-gray-300 rounded-md shadow-sm"
             />
             {errors.scholarshipName && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="mt-1 text-xs text-red-500">
                 {errors.scholarshipName.message}
               </p>
             )}
@@ -192,10 +192,10 @@ const AddScholarship = () => {
               {...register("universityName", {
                 required: true,
               })}
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
+              className="block w-full p-2 mt-1 border-gray-300 rounded-md shadow-sm"
             />
             {errors.universityName && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="mt-1 text-xs text-red-500">
                 {errors.universityName.message}
               </p>
             )}
@@ -203,7 +203,7 @@ const AddScholarship = () => {
         </div>
 
         {/* Location & Image */}
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid gap-6 md:grid-cols-3">
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Country
@@ -211,7 +211,7 @@ const AddScholarship = () => {
             <input
               type="text"
               {...register("country", { required: true })}
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
+              className="block w-full p-2 mt-1 border-gray-300 rounded-md shadow-sm"
             />
           </div>
           <div>
@@ -221,7 +221,7 @@ const AddScholarship = () => {
             <input
               type="text"
               {...register("city", { required: true })}
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
+              className="block w-full p-2 mt-1 border-gray-300 rounded-md shadow-sm"
             />
           </div>
 
@@ -231,27 +231,16 @@ const AddScholarship = () => {
             <input
               type="file"
               {...register("universityImage", { required: true })}
-              className="file-input w-full"
+              className="w-full file-input"
             />
             {errors.universityImage && (
               <p className="text-red-500">University Image is required.</p>
             )}
           </div>
-
-          {/* <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Image URL
-            </label>
-            <input
-              type="url"
-              {...register("universityImageURL", { required: true })}
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
-            />
-          </div> */}
         </div>
 
         {/* Categories & Rank */}
-        <div className="grid md:grid-cols-4 gap-6">
+        <div className="grid gap-6 md:grid-cols-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
               World Rank
@@ -262,7 +251,7 @@ const AddScholarship = () => {
                 required: true,
                 valueAsNumber: true,
               })}
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
+              className="block w-full p-2 mt-1 border-gray-300 rounded-md shadow-sm"
             />
           </div>
           <div>
@@ -271,7 +260,7 @@ const AddScholarship = () => {
             </label>
             <select
               {...register("scholarshipCategory", { required: true })}
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
+              className="block w-full p-2 mt-1 border-gray-300 rounded-md shadow-sm"
             >
               {scholarshipOptions.map((opt) => (
                 <option key={opt} value={opt}>
@@ -286,7 +275,7 @@ const AddScholarship = () => {
             </label>
             <select
               {...register("degreeLevel", { required: true })}
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
+              className="block w-full p-2 mt-1 border-gray-300 rounded-md shadow-sm"
             >
               {degreeOptions.map((opt) => (
                 <option key={opt} value={opt}>
@@ -303,7 +292,7 @@ const AddScholarship = () => {
             <select
               multiple
               {...register("subjectCategory", { required: true })}
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 h-20"
+              className="block w-full h-20 p-2 mt-1 border-gray-300 rounded-md shadow-sm"
             >
               {subjectOptions.map((opt) => (
                 <option key={opt} value={opt}>
@@ -318,12 +307,12 @@ const AddScholarship = () => {
         <h3 className="text-xl font-semibold pt-4 shadow text-[#0c5f5a]">
           Financial Details
         </h3>
-        <div className="grid md:grid-cols-4 gap-6 items-end">
+        <div className="grid items-end gap-6 md:grid-cols-4">
           <div className="md:col-span-1">
             <label className="inline-flex items-center">
               <input
                 type="checkbox"
-                {...register("tuitionFeesCovered")} // Checkbox register
+                {...register("tuitionFeesCovered")}
                 className="form-checkbox h-5 w-5 text-[#0c5f5a] rounded"
               />
               <span className="ml-2 text-sm text-gray-700">
@@ -358,7 +347,7 @@ const AddScholarship = () => {
                 valueAsNumber: true,
                 min: 0,
               })}
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
+              className="block w-full p-2 mt-1 border-gray-300 rounded-md shadow-sm"
             />
           </div>
           <div className="md:col-span-1">
@@ -372,7 +361,7 @@ const AddScholarship = () => {
                 valueAsNumber: true,
                 min: 0,
               })}
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
+              className="block w-full p-2 mt-1 border-gray-300 rounded-md shadow-sm"
             />
           </div>
         </div>
@@ -381,7 +370,7 @@ const AddScholarship = () => {
         <h3 className="text-xl font-semibold pt-4 shadow text-[#0c5f5a]">
           Timeline & Description
         </h3>
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid gap-6 md:grid-cols-2">
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Application Deadline
@@ -389,7 +378,7 @@ const AddScholarship = () => {
             <input
               type="date"
               {...register("applicationDeadline", { required: true })}
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
+              className="block w-full p-2 mt-1 border-gray-300 rounded-md shadow-sm"
             />
           </div>
 
@@ -401,13 +390,13 @@ const AddScholarship = () => {
               type="date"
               {...register("postDate")}
               readOnly
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 bg-gray-100"
+              className="block w-full p-2 mt-1 bg-gray-100 border-gray-300 rounded-md shadow-sm"
             />
           </div>
         </div>
 
         {/* User Email */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid gap-6 md:grid-cols-2">
           <div>
             <label className="block text-sm font-medium text-gray-700">
               User Email
@@ -419,10 +408,10 @@ const AddScholarship = () => {
               })}
               defaultValue={user?.email}
               placeholder="user@example.com"
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
+              className="block w-full p-2 mt-1 border-gray-300 rounded-md shadow-sm"
             />
             {errors.scholarshipName && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="mt-1 text-xs text-red-500">
                 {errors.scholarshipName.message}
               </p>
             )}
@@ -437,10 +426,10 @@ const AddScholarship = () => {
                 required: "Phone number is required",
               })}
               placeholder="Phone Number"
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
+              className="block w-full p-2 mt-1 border-gray-300 rounded-md shadow-sm"
             />
             {errors.universityName && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="mt-1 text-xs text-red-500">
                 {errors.universityName.message}
               </p>
             )}
@@ -455,7 +444,7 @@ const AddScholarship = () => {
             {...register("description", { required: true })}
             rows="4"
             placeholder="Type your description"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
+            className="block w-full p-2 mt-1 border-gray-300 rounded-md shadow-sm"
           ></textarea>
         </div>
 
@@ -463,16 +452,11 @@ const AddScholarship = () => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-teal-600 hover:bg-teal-700 transition duration-150 disabled:opacity-50 cursor-pointer"
+          className="w-full px-4 py-3 text-lg font-medium text-white transition duration-150 border border-transparent rounded-md shadow-sm cursor-pointer bg-gradient-to-r from-teal-400 to-orange-200 hover:from-orange-200 hover:to-teal-400 disabled:opacity-50"
         >
           {isSubmitting ? "Processing..." : "Add Scholarship"}
         </button>
       </form>
-
-      <div className="mt-8 p-4 bg-gray-50 rounded-lg text-sm">
-        <h4 className="font-semibold"></h4>
-        <pre className="whitespace-pre-wrap break-all text-red-600"></pre>
-      </div>
     </div>
   );
 };
