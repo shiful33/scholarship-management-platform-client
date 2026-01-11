@@ -22,10 +22,10 @@ const Banner = () => {
   ];
 
   return (
-    <div className="w-full h-[60vh] lg:h-[70vh] bg-base-100 overflow-hidden">
+    <div className="w-full h-[60vh] lg:h-[70vh] bg-base-100 overflow-hidden mb-20">
       <Swiper
         spaceBetween={0}
-        effect={"fade"} // সুন্দর ফেড অ্যানিমেশন
+        effect={"fade"}
         centeredSlides={true}
         autoplay={{
           delay: 4000,
