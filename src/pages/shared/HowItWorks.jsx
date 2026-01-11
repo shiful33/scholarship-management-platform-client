@@ -8,22 +8,19 @@ const HowItWorksCard = ({ item, index }) => (
   <motion.div
     key={index}
     variants={itemVariants}
-    className="relative hover:bg-teal-600 bg-teal-500 rounded-xl p-6 shadow-xl transition-all duration-300 group"
+    className="relative p-6 transition-all duration-300 bg-teal-500 shadow-xl hover:bg-teal-600 rounded-xl group"
   >
     <div
-      className="absolute -top-5 left-6 w-14 h-14 bg-teal-600 text-white
-        flex items-center justify-center rounded-full 
-        border-4 border-white shadow-lg glow-pulse
-        group-hover:scale-110 group-hover:shadow-teal-500/70 transition-all duration-300"
+      className="absolute flex items-center justify-center text-white transition-all duration-300 bg-teal-600 border-4 border-white rounded-full shadow-lg -top-5 left-6 w-14 h-14 glow-pulse group-hover:scale-110 group-hover:shadow-teal-500/70"
     >
       <item.icon size={26} />
     </div>
 
     <div className="mt-8">
-      <h3 className="font-bold text-lg text-white group-hover:text-white mt-6">
+      <h3 className="mt-6 text-lg font-bold text-white group-hover:text-white">
         {item.title}
       </h3>
-      <p className="text-white mt-2 leading-relaxed">{item.description}</p>
+      <p className="mt-2 leading-relaxed text-white">{item.description}</p>
     </div>
   </motion.div>
 );
@@ -31,19 +28,19 @@ const HowItWorksCard = ({ item, index }) => (
 const HowItWorks = () => {
   
   return (
-    <section className="m-4 lg:m-0 py-16">
+    <section className="py-16 m-4 lg:m-0 bg-base-100 text-base-content">
       
       <motion.div
         variants={slideInLeftVariants}
         initial="hidden"
         whileInView="visible" 
         viewport={{ once: true, amount: 0.5 }}
-        className="text-left mb-12"
+        className="mb-12 text-left"
       >
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 text-primary">
-          How<span className="text-eye text-orange-600"> It Works</span>
+        <h2 className="mb-4 text-3xl font-extrabold md:text-4xl lg:text-5xl text-primary">
+          How<span className="text-orange-600 text-eye"> It Works</span>
         </h2>
-        <p className="text-[18px] lg:w-[500px] mb-4 mx-auto lg:mx-0 text-gray-600">
+        <p className="text-[18px] lg:w-[500px] mb-4 mx-auto lg:mx-0  dark:text-white">
           Scholarships.com is a free college scholarship search platform that
           matches you to college scholarships you qualify for.
         </p>
@@ -57,7 +54,7 @@ const HowItWorks = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
-        className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 my-12"
+        className="grid gap-6 my-12 md:grid-cols-2 lg:grid-cols-4"
       >
         {cardData.map((item, index) => (
           <HowItWorksCard key={index} item={item} index={index} />

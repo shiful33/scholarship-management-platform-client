@@ -79,14 +79,14 @@ const AllScholarships = () => {
   }
 
   return (
-    <div className="p-4 lg:p-0 mt-25">
+    <div className="p-4 lg:p-0 mt-25 bg-base-100 text-base-content">
       <h1 className="text-4xl font-extrabold mb-8 text-center text-[#0c5f5a]">
         Explore All Scholarships
       </h1>
 
       {/* Search & Filter */}
-      <div className="bg-white p-6 rounded-xl shadow-lg mb-8 border border-gray-100">
-        <h3 className="text-xl font-bold mb-4 flex items-center text-gray-700">
+      <div className="p-6 mb-8 bg-white border border-gray-100 shadow-lg rounded-xl">
+        <h3 className="flex items-center mb-4 text-xl font-bold text-gray-700">
           <FaFilter className="mr-2 text-primary" /> Search & Filter Options
         </h3>
 
@@ -100,18 +100,18 @@ const AllScholarships = () => {
               onChange={handleSearchChange}
               className="w-full p-3 pl-10 border border-orange-300 rounded-lg focus:ring-[#0c5f5a] focus:border-[#0c5f5a]"
             />
-            <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary" />
+            <FaSearch className="absolute transform -translate-y-1/2 left-3 top-1/2 text-primary" />
           </div>
         </div>
 
         {/* Filter Dropdown */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
           {/* Scholarship Category Filter */}
           <select
             name="category"
             value={filters.category}
             onChange={handleFilterChange}
-            className="p-3 border border-orange-300 rounded-lg bg-white text-sm text-primary font-semibold"
+            className="p-3 text-sm font-semibold bg-white border border-orange-300 rounded-lg text-primary"
           >
             <option value="">Filter by Category</option>
             <option value="Merit-based">Merit-based</option>
@@ -125,7 +125,7 @@ const AllScholarships = () => {
             name="subject"
             value={filters.subject}
             onChange={handleFilterChange}
-            className="p-3 border border-orange-300 rounded-lg bg-white text-sm text-primary font-semibold"
+            className="p-3 text-sm font-semibold bg-white border border-orange-300 rounded-lg text-primary"
           >
             <option value="">Filter by Subject</option>
             <option value="Science">Science</option>
@@ -140,7 +140,7 @@ const AllScholarships = () => {
             name="location"
             value={filters.location}
             onChange={handleFilterChange}
-            className="p-3 border border-orange-300 rounded-lg bg-white text-sm text-primary font-semibold"
+            className="p-3 text-sm font-semibold bg-white border border-orange-300 rounded-lg text-primary"
           >
             <option value="">Filter by Location</option>
             <option value="USA">USA</option>
@@ -154,7 +154,7 @@ const AllScholarships = () => {
           {/* Reset Button */}
           <button
             onClick={handleResetFilters}
-            className="p-3 bg-teal-300 text-white rounded-lg hover:bg-teal-400 transition duration-150 font-semibold cursor-pointer"
+            className="p-3 font-semibold text-white transition duration-150 bg-teal-300 rounded-lg cursor-pointer hover:bg-teal-400"
           >
             Reset Filters
           </button>
@@ -163,36 +163,35 @@ const AllScholarships = () => {
 
       {/* Scholarship grid */}
       {scholarships.length === 0 ? (
-        <div className="text-center py-20 text-gray-500 text-xl font-semibold">
+        <div className="py-20 text-xl font-semibold text-center text-gray-500">
           No scholarships found matching your criteria.
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {scholarships.map((scholarship) => (
             <div
               key={scholarship._id}
-              className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 
-              flex flex-col h-full"
+              className="flex flex-col h-full overflow-hidden transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-xl hover:shadow-2xl"
             >
               {/* University Image */}
-              <div className="h-70 bg-gray-200 overflow-hidden">
+              <div className="overflow-hidden bg-gray-200 h-70">
                 <img
                   src={scholarship.universityImage}
                   alt={scholarship.universityName}
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                  className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
                 />
               </div>
 
               {/* Card Body */}
-              <div className="p-6 flex flex-col flex-grow">
+              <div className="flex flex-col flex-grow p-6">
                 <h2 className="text-xl font-extrabold text-[#0c5f5a] mb-2 text-left line-clamp-2">
                   {scholarship.scholarshipName}
                 </h2>
-                <h3 className="text-lg font-semibold text-gray-700 mb-3 text-left">
+                <h3 className="mb-3 text-lg font-semibold text-left text-gray-700">
                   {scholarship.universityName}
                 </h3>
 
-                <div className="space-y-3 text-sm text-gray-600 flex-grow">
+                <div className="flex-grow space-y-3 text-sm text-gray-600">
                   {/* Scholarship Category */}
                   <p className="flex items-center">
                     <FaGraduationCap className="mr-2 mt-0.5 text-orange-500 flex-shrink-0" />
@@ -212,7 +211,7 @@ const AllScholarships = () => {
                   </p>
 
                   {/* Application Fees */}
-                  <p className="flex items-center text-md font-bold">
+                  <p className="flex items-center font-bold text-md">
                     <FaMoneyBill className="mr-2 mt-0.5 text-green-600 flex-shrink-0" />
                     <span className="flex-none w-[70px]">Fees:</span>{" "}
                     {scholarship.applicationFees
@@ -225,9 +224,7 @@ const AllScholarships = () => {
                 <div className="mt-6">
                   <Link to={`/scholarship-details/${scholarship._id}`}>
                   <button
-                      className="w-full py-3 px-4 bg-gradient-to-r from-teal-400 to-orange-200 text-white font-semibold rounded-lg 
-                      hover:from-orange-300 hover:to-teal-400 transform hover:scale-105 transition-all duration-300 
-                      shadow-md cursor-pointer"
+                      className="w-full px-4 py-3 font-semibold text-white transition-all duration-300 transform rounded-lg shadow-md cursor-pointer bg-gradient-to-r from-teal-400 to-orange-200 hover:from-orange-300 hover:to-teal-400 hover:scale-105"
                     >
                       View Details
                       </button>

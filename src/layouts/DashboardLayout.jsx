@@ -24,7 +24,7 @@ const DashboardLayout = () => {
 
   if (isRoleLoading) {
     return (
-      <div className="text-center p-20">
+      <div className="p-20 text-center">
         <span className="loading loading-spinner loading-lg text-primary"></span>
         <p className="mt-4">Fetching user role...</p>
       </div>
@@ -36,9 +36,9 @@ const DashboardLayout = () => {
     <div className={`drawer ${isSidebarOpen ? "lg:drawer-open" : ""}`}>
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
 
-      <div className="drawer-content text-primary font-semibold text-2xl">
+      <div className="text-2xl font-semibold drawer-content text-primary">
         {/* Navbar */}
-        <nav className="navbar w-full bg-orange-500 text-white shadow-xl">
+        <nav className="w-full text-white bg-orange-500 shadow-xl navbar">
           <label
             htmlFor="my-drawer-4"
             aria-label="open sidebar"
@@ -49,7 +49,7 @@ const DashboardLayout = () => {
 
           <button
             onClick={handleSidebarToggle}
-            className="btn btn-square btn-ghost hidden lg:flex mr-4"
+            className="hidden mr-4 btn btn-square btn-ghost lg:flex"
             aria-label={isSidebarOpen ? "close sidebar" : "open sidebar"}
           >
             {isSidebarOpen ? (
@@ -59,7 +59,7 @@ const DashboardLayout = () => {
             )}
           </button>
 
-          <div className="px-4 font-bold text-xl">{dashboardTitle}</div>
+          <div className="px-4 text-xl font-bold">{dashboardTitle}</div>
         </nav>
 
         <div className="p-4 md:p-8">
@@ -67,7 +67,7 @@ const DashboardLayout = () => {
         </div>
       </div>
 
-      <div className="drawer-side z-50">
+      <div className="z-50 drawer-side">
         <label
           htmlFor="my-drawer-4"
           aria-label="close sidebar"

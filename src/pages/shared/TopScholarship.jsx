@@ -21,7 +21,7 @@ const TopScholarship = () => {
 
   if (isLoading) {
     return (
-      <div className="text-center py-20">
+      <div className="py-20 text-center">
         <span className="loading loading-spinner loading-lg text-primary"></span>
         <p className="mt-4 text-gray-600">Loading top scholarships...</p>
       </div>
@@ -30,11 +30,11 @@ const TopScholarship = () => {
 
   if (!Array.isArray(scholarships) || scholarships.length === 0) {
     return (
-      <div className="text-center py-20">
-        <h2 className="text-2xl text-primary font-bold">
+      <div className="py-20 text-center">
+        <h2 className="text-2xl font-bold text-primary">
           No Top Scholarships Found.
         </h2>
-        <p className="text-gray-500 mt-2">
+        <p className="mt-2 text-gray-500">
           Check back later or explore all scholarships.
         </p>
       </div>
@@ -42,19 +42,19 @@ const TopScholarship = () => {
   }
 
   return (
-    <div className="m-4 lg:m-0 py-12">
+    <div className="py-12 m-4 lg:m-0 bg-base-100 text-base-content">
       <motion.div
-        className="text-left px-4 lg:px-0"
+        className="px-4 text-left lg:px-0"
         variants={slideInLeftVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
       >
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 text-primary">
+        <h2 className="mb-4 text-3xl font-extrabold md:text-4xl lg:text-5xl text-primary">
           Top 6<span className="text-eye"> Scholarships Here</span>
         </h2>
 
-        <p className="text-[18px] lg:w-[550px] mb-6 text-gray-600">
+        <p className="text-[18px] lg:w-[550px] mb-6 dark:text-white">
           Scholarships.com is a free college scholarship search platform that
           matches you to college scholarships you qualify for.
         </p>
@@ -66,32 +66,32 @@ const TopScholarship = () => {
         </Link>
       </motion.div>
 
-      <div className="mx-auto px-4 lg:px-0 mt-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="px-4 mx-auto mt-12 lg:px-0">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {scholarships.map((scholarship) => (
             <motion.div
               key={scholarship._id}
-              className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 flex flex-col h-full"
+              className="flex flex-col h-full overflow-hidden transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-xl hover:shadow-2xl"
               whileHover={{ y: -8 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="h-70 bg-gray-200 overflow-hidden">
+              <div className="overflow-hidden bg-gray-200 h-70">
                 <img
                   src={scholarship.universityImage}
                   alt={scholarship.universityName}
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                  className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
                 />
               </div>
 
-              <div className="p-6 flex flex-col flex-grow">
+              <div className="flex flex-col flex-grow p-6">
                 <h3 className="text-xl font-bold text-[#0c5f5a] line-clamp-2">
                   {scholarship.scholarshipName}
                 </h3>
-                <p className="text-lg font-semibold text-gray-700 mt-1">
+                <p className="mt-1 text-lg font-semibold text-gray-700">
                   {scholarship.universityName}
                 </p>
 
-                <div className="mt-4 space-y-3 text-sm text-gray-600 flex-grow">
+                <div className="flex-grow mt-4 space-y-3 text-sm text-gray-600">
                   <p className="flex items-center">
                     <FaGraduationCap className="mr-3 text-orange-500" />
                     <span className="font-medium">Category:</span>
@@ -120,9 +120,7 @@ const TopScholarship = () => {
                 <div className="mt-6">
                   <Link to={`/scholarship-details/${scholarship._id}`}>
                     <button
-                      className="w-full py-3 px-4 bg-gradient-to-r from-teal-400 to-orange-200 text-white font-semibold rounded-lg 
-                     hover:from-orange-300 hover:to-teal-400 transform hover:scale-105 transition-all duration-300 
-                      shadow-md cursor-pointer"
+                      className="w-full px-4 py-3 font-semibold text-white transition-all duration-300 transform rounded-lg shadow-md cursor-pointer bg-gradient-to-r from-teal-400 to-orange-200 hover:from-orange-300 hover:to-teal-400 hover:scale-105"
                     >
                       View Details
                     </button>

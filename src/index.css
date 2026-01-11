@@ -3,11 +3,15 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-body {
-  background-color: #ffffff;
+html, body {
+  background-color: border-color;
   font-family: "Urbanist", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+}
+
+[data-theme='dark'] body {
+  background-color: #1d232a; 
 }
 
 :root {
@@ -80,22 +84,6 @@ body {
   z-index: 0;
 }
 
-/* .text-eye::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: 4px;
-  filter: blur(14px);
-  background: radial-gradient(ellipse at center,
-                rgba(255,165,0,0.18) 0%,
-                rgba(255,140,0,0.08) 30%,
-                transparent 70%);
-  opacity: 0.9;
-  transform: translateZ(0);
-  pointer-events: none;
-  animation: text-glow 3.2s ease-in-out infinite;
-} */
 
 /* Keyframes for gentle pulsing glow */
 @keyframes text-glow {

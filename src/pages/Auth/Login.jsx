@@ -85,9 +85,9 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen px-4">
-      <div className="card bg-base-100 w-full max-w-md shrink-0 shadow-2xl my-12">
-        <h2 className="text-2xl md:text-3xl font-extrabold text-center mt-6 text-[#0c5f5a]">
+    <div className="flex items-center justify-center min-h-screen px-4">
+      <div className="w-full max-w-md my-12 border border-white shadow-2xl card bg-base-100 shrink-0">
+        <h2 className="mt-6 text-2xl font-extrabold text-center md:text-3xl text-eye">
           Welcome To Login
         </h2>
         <p className="text-[18px] font-semibold text-center text-gray-500">
@@ -97,22 +97,22 @@ const Login = () => {
 
           <form onSubmit={handleSubmit(handleLoginSubmit)}>
             <div className="form-control">
-              <label className="label font-semibold">Email</label>
+              <label className="font-semibold label">Email</label>
               <input
                 type="email"
                 {...register("email", { required: "Email is required" })}
-                className="input input-bordered w-full"
+                className="w-full input input-bordered"
                 placeholder="Email"
               />
               {errors.email && (
-                <p className="text-red-500 text-sm mt-1">
+                <p className="mt-1 text-sm text-red-500">
                   {errors.email.message}
                 </p>
               )}
             </div>
 
-            <div className="form-control mt-2">
-              <label className="label font-semibold">Password</label>
+            <div className="mt-2 form-control">
+              <label className="font-semibold label">Password</label>
               <div className="relative">
                 <input
                   type={show ? "text" : "password"}
@@ -120,7 +120,7 @@ const Login = () => {
                     required: "Password is required",
                     minLength: { value: 6, message: "Minimum 6 characters" },
                   })}
-                  className="input input-bordered w-full"
+                  className="w-full input input-bordered"
                   placeholder="Password"
                 />
                 <span
@@ -131,13 +131,13 @@ const Login = () => {
                 </span>
               </div>
               {errors.password && (
-                <p className="text-red-500 text-sm mt-1">
+                <p className="mt-1 text-sm text-red-500">
                   {errors.password.message}
                 </p>
               )}
             </div>
 
-            <div className="flex justify-between items-center my-4">
+            <div className="flex items-center justify-between my-4">
               <a
                 onClick={handleForgotPassword}
                 className="hover:underline text-sm text-[#0c5f5a] font-medium cursor-pointer"
@@ -148,7 +148,7 @@ const Login = () => {
 
             <button
               type="submit"
-              className="btn bg-[#0c5f5a] hover:bg-[#084642] text-white w-full"
+              className="w-full text-white btn border-2-orange text-eye bg-gradient-to-r from-teal-400 to-orange-200 hover:from-orange-300 hover:to-teal-400"
             >
               Login
             </button>

@@ -21,7 +21,7 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <div className="min-h-screen">
       <Banner />
       <Brands />
       <HowItWorks />

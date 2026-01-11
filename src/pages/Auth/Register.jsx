@@ -64,8 +64,8 @@ const Register = () => {
   };
 
   return (
-    <div className="card bg-base-100 w-full max-w-md shrink-0 shadow-2xl my-12 lg:my-0">
-      <h2 className="text-2xl md:text-3xl font-extrabold text-eye text-center my-6">
+    <div className="w-full max-w-md my-12 border border-white shadow-2xl card bg-base-100 shrink-0 lg:my-0">
+      <h2 className="my-6 text-2xl font-extrabold text-center md:text-3xl text-eye">
         Welcome To Registration
       </h2>
       <p className="text-[18px] font-semibold text-center text-primary">
@@ -79,7 +79,7 @@ const Register = () => {
             <input
               type="text"
               {...register("name", { required: true })}
-              className="input  w-full"
+              className="w-full input"
               placeholder="Enter Your Name"
             />
             {errors.name?.type === "required" && (
@@ -91,7 +91,7 @@ const Register = () => {
             <input
               type="email"
               {...register("email", { required: true })}
-              className="input  w-full"
+              className="w-full input"
               placeholder="Enter Email"
             />
             {errors.email?.type === "required" && (
@@ -103,7 +103,7 @@ const Register = () => {
             <input
               type="file"
               {...register("photo", { required: true })}
-              className="file-input  w-full"
+              className="w-full file-input"
               placeholder="Photo URL"
             />
             {errors.email?.type === "required" && (
@@ -121,7 +121,7 @@ const Register = () => {
                   pattern:
                     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
                 })}
-                className="input w-full"
+                className="w-full input"
                 placeholder="Password"
               />
               {errors.password?.type === "required" && (
@@ -152,7 +152,7 @@ const Register = () => {
             </div>
 
             {/* Submit Button*/}
-            <button className="btn bg-primary mt-4">Register Now</button>
+            <button className="mt-4 btn bg-gradient-to-r from-teal-400 to-orange-200 hover:from-orange-300 hover:to-teal-400 text-eye">Register Now</button>
             <p className="text-center text-[15px] mt-2">
               You've already registered?{" "}
               <Link state={location.state} to="/login">

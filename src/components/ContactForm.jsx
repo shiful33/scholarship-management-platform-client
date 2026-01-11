@@ -43,10 +43,10 @@ const ContactForm = () => {
 
   if (isSubmitted) {
     return (
-      <div className="max-w-5xl mx-auto p-8 my-12 bg-green-50 border border-green-300 rounded-xl text-center shadow-lg">
-        <h2 className="text-3xl font-bold text-green-600 mb-4">🎉 Thank You! Message Received.</h2>
+      <div className="max-w-5xl p-8 mx-auto my-12 text-center border border-green-300 shadow-lg bg-green-50 rounded-xl">
+        <h2 className="mb-4 text-3xl font-bold text-green-600">🎉 Thank You! Message Received.</h2>
         <p className="text-lg text-green-700">We appreciate you reaching out. Our team will respond within 24-48 hours.</p>
-        <button onClick={() => setIsSubmitted(false)} className="mt-6 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">Submit Another Inquiry</button>
+        <button onClick={() => setIsSubmitted(false)} className="px-6 py-2 mt-6 text-white transition bg-green-600 rounded-lg hover:bg-green-700">Submit Another Inquiry</button>
       </div>
     );
   }
@@ -57,17 +57,17 @@ const ContactForm = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
-        className="lg:max-w-5xl mx-auto my-30 p-8 lg:p-0"
+        className="p-8 mx-auto lg:max-w-5xl my-30 lg:p-0 bg-base-100 text-base-content"
     >
-      <div className="flex flex-col lg:flex-row shadow-2xl rounded-xl overflow-hidden bg-white">
+      <div className="flex flex-col overflow-hidden shadow-2xl lg:flex-row rounded-xl bg-base-100 text-base-content">
         
         {/* Left Contact Info */}
-        <div className="lg:w-1/3 p-8 bg-teal-500 text-white flex flex-col justify-center space-y-6">
+        <div className="flex flex-col justify-center p-8 space-y-6 text-white bg-teal-500 lg:w-1/3">
           <h2 className="text-3xl font-bold text-eye">Need Help?
             <br/>Get in Touch!</h2>
           <p className="text-[#ffffff]">Our support team is ready to assist you with your scholarship application or general questions.</p>
           
-          <div className="space-y-4 pt-4">
+          <div className="pt-4 space-y-4">
             <div className="flex items-center space-x-3">
               
               <p className="text-lg text-eye">support@scholarshipstream.com</p>
@@ -84,12 +84,12 @@ const ContactForm = () => {
         </div>
         
         {/* Right Side: The Form */}
-        <form className="lg:w-2/3 p-8 md:p-12" onSubmit={handleSubmit}>
-          <h3 className="text-2xl font-bold text-teal-600 mb-6">Send Us a Message</h3>
+        <form className="p-8 border border-white rounded-md lg:w-2/3 md:p-12" onSubmit={handleSubmit}>
+          <h3 className="mb-6 text-2xl font-bold text-teal-600">Send Us a Message</h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div className="col-span-1">
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+              <label htmlFor="name" className="block mb-1 text-sm font-medium dark:text-white">Full Name</label>
               <input
                 type="text"
                 id="name"
@@ -98,12 +98,12 @@ const ContactForm = () => {
                 onChange={handleChange}
                 placeholder="Enter your full name"
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition"
+                className="w-full px-4 py-3 transition border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
 
             <div className="col-span-1">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+              <label htmlFor="email" className="block mb-1 text-sm font-medium dark:text-white">Email Address</label>
               <input
                 type="email"
                 id="email"
@@ -112,20 +112,20 @@ const ContactForm = () => {
                 onChange={handleChange}
                 placeholder="you@example.com"
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition"
+                className="w-full px-4 py-3 transition border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
           </div>
 
           <div className="mt-6">
-            <label htmlFor="inquiryType" className="block text-sm font-medium text-gray-700 mb-1">Inquiry Type</label>
+            <label htmlFor="inquiryType" className="block mb-1 text-sm font-medium dark:text-white">Inquiry Type</label>
             <select
               id="inquiryType"
               name="inquiryType"
               value={formData.inquiryType}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary focus:border-teal-500 bg-white transition"
+              className="w-full px-4 py-3 transition border border-gray-300 rounded-lg focus:ring-primary focus:border-teal-500 dark:text bg-base-100"
             >
               <option value="General Inquiry">General Inquiry</option>
               <option value="Application Status">Application Status</option>
@@ -135,7 +135,7 @@ const ContactForm = () => {
           </div>
 
           <div className="mt-6">
-            <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Your Message</label>
+            <label htmlFor="message" className="block mb-1 text-sm font-medium dark:text-white">Your Message</label>
             <textarea
               id="message"
               name="message"
@@ -144,11 +144,11 @@ const ContactForm = () => {
               rows="4"
               placeholder="Type your question or detailed inquiry here..."
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-teal-700 focus:text-teal-600 transition"
+              className="w-full px-4 py-3 transition border border-gray-300 rounded-lg focus:ring-teal-700 focus:text-teal-600"
             />
           </div>
 
-          <button type="submit" className="w-full flex justify-center items-center gap-2 font-semibold border-2 bg-transparent px-6 py-2 cursor-pointer rounded-lg hover:bg-orange-600 transition-all duration-300 hover:text-white border-orange-600 mt-4 text-teal-600">
+          <button type="submit" className="flex items-center justify-center w-full gap-2 px-6 py-2 mt-4 font-semibold text-teal-600 transition-all duration-300 bg-transparent border-2 border-orange-600 rounded-lg cursor-pointer hover:bg-orange-600 hover:text-white">
             <Send className="w-5 h-5"/>
             <span>Send Message</span>
           </button>

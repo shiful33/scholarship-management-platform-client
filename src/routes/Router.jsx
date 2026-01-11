@@ -27,6 +27,7 @@ import EditReview from "../pages/Dashboard/EditReview";
 import ManageScholarships from "../pages/ManageScholarships";
 import ManageAppliedApplication from "../pages/Dashboard/ManageAppliedApplication";
 import AdminReviews from "../pages/Dashboard/AdminReviews";
+import DashboardHome from "../components/DashboardHome";
 
 
 export const router = createBrowserRouter([
@@ -79,6 +80,10 @@ export const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <MyProfile /> },
+      {
+      index: true,
+      element: <DashboardHome />
+    },
       { path: "manageAppliedApplication", element: <ManageAppliedApplication /> },
       { path: "admin-reviews", element: <AdminReviews /> },
       { path: "edit-review", element: <EditReview /> },

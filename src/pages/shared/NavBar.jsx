@@ -3,8 +3,7 @@ import { Link, NavLink } from "react-router";
 import Logo from "../../components/Logo";
 import useAuth from "../../hooks/useAuth";
 import { FaUserCircle } from "react-icons/fa";
-
-
+import ThemeToggle from "../../components/ThemeToggle";
 
 const NavBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -20,14 +19,14 @@ const NavBar = () => {
   };
 
   const links = (
-    <>
+    <div className="flex dark:text-white">
       <li>
         <NavLink
           to="/"
           className={`font-semibold ${
             isScrolled
-              ? "text-gray-800 hover:text-[#212121]"
-              : "text-[#404040] hover:text-[#212121]"
+              ? "text-gray-800 hover:text-white"
+              : "dark:text-white hover:text-orange-500"
           }`}
         >
           Home
@@ -39,7 +38,7 @@ const NavBar = () => {
           className={`font-semibold ${
             isScrolled
               ? "text-gray-800 hover:text-[#212121]"
-              : "text-[#404040] hover:text-[#212121]"
+              : "dark:text-white hover:text-orange-500"
           }`}
         >
           All Scholarships
@@ -51,14 +50,14 @@ const NavBar = () => {
           className={`font-semibold ${
             isScrolled
               ? "text-gray-800 hover:text-[#212121]"
-              : "text-[#404040] hover:text-[#212121]"
+              : "dark:text-white hover:text-orange-500"
           }`}
         >
           Add Scholarship
         </NavLink>
       </li>
 
-      {user && (
+      {user && (  
         <>
           <li>
             <NavLink
@@ -66,7 +65,7 @@ const NavBar = () => {
               className={`font-semibold ${
                 isScrolled
                   ? "text-gray-800 hover:text-[#212121]"
-                  : "text-[#404040] hover:text-[#212121]"
+                  : "dark:text-white hover:text-orange-500"
               }`}
             >
               Admin Scholar
@@ -74,7 +73,7 @@ const NavBar = () => {
           </li>
         </>
       )}
-    </>
+    </div>
   );
 
   useEffect(() => {
@@ -84,14 +83,16 @@ const NavBar = () => {
 
     window.addEventListener("scroll", handleScroll);
 
+
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const navbarClasses = isScrolled
-    ? "bg-transparent bg-opacity-95 shadow-md backdrop-blur-sm"
-    : "bg-transparent";
+    ? "bg-transparent bg-opacity-95 shadow-md backdrop-blur-sm text-white"
+    : "bg-transparent text-white";
 
   const logoColor = isScrolled ? "text-[#404040]" : "text-white";
 
@@ -101,21 +102,19 @@ const NavBar = () => {
 
   return (
     <div
-      className={`sticky top-0 z-50 transition-all duration-300 bg-transparent ${navbarClasses}`}
+      className={`sticky top-0 z-50 transition-all duration-300  ${navbarClasses}`}
     >
-      <div className="navbar w-full shadow mx-auto px-4 lg:px-0 flex justify-between">
+      <div className="grid w-full px-4 mx-auto mb-2 shadow md:justify-between md:flex navbar lg:px-0 ">
         <div className="navbar-start">
-          {/* Dropdown Menu (Mobile) */}
+          {/* Mobile Menu Dropdown */}
           <div className="dropdown">
             <div
               tabIndex={0}
               role="button"
-              className={`btn btn-ghost lg:hidden transition-colors duration-300 ${
-                isScrolled ? "text-gray-800" : "text-gray-800"
-              }`}
+              className="border bg-base-100 btn lg:hidden"
             >
               <svg
-                className="h-5 w-5"
+                className="w-5 h-5"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -131,27 +130,10 @@ const NavBar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-md font-semibold dropdown-content bg-white rounded-box z-[1] mt-3 w-52 p-2 shadow text-[20px]"
+              className="menu menu-md font-semibold dropdown-content bg-gray-600 dark:bg-gray-800 rounded-box z-[1] mt-3 w-52 p-2 shadow text-[20px]"
             >
-              {/* Mobile menu with dropdown menu added */}
               {links}
-              {user ? (
-                <>
-                  <li>
-                    <Link to="/dashboard/my-profile">My Profile</Link>
-                  </li>
-                  <li>
-                    <Link to="/dashboard">Dashboard</Link>
-                  </li>
-                  <li>
-                    <button onClick={handleLogOut}>Log Out</button>
-                  </li>
-                </>
-              ) : (
-                <li>
-                  <Link to="/login">Log In</Link>
-                </li>
-              )}
+              {/* Mobile logic for login/logout can stay here */}
             </ul>
           </div>
 
@@ -162,21 +144,17 @@ const NavBar = () => {
           </div>
         </div>
 
-        <div className="navbar-center hidden lg:flex">
+        <div className="hidden navbar-center lg:flex">
           <ul className="menu menu-horizontal px-1 text-[18px]">{links}</ul>
         </div>
 
-        {/* LogIn / Profile Dropdown / Application Button */}
-        <div className="lg:navbar-end flex justify-center lg:justify-end gap-3 mt-3 mr-4">
-          {/* Application Scholarship Button */}
-          {/* <Link
-            to="/application-scholarship"
-            className="font-normal border-2 hover:bg-transparent px-6 py-2 cursor-pointer rounded-lg bg-orange-600 hover:text-[#404040] transition-all duration-300 text-white border-orange-600 flex items-center"
-          >
-            <span className="font-bold">Application Scholarship</span>
-          </Link> */}
+        {/* Right Side: ThemeToggle + Auth */}
+        <div className="flex items-center gap-4 navbar-end">
+          {/* Theme Toggle Button Here */}
+          <div className="flex items-center">
+            <ThemeToggle />
+          </div>
 
-          {/* User/Profile Dropdown or Login Button */}
           {user ? (
             <div className="dropdown dropdown-end">
               <div
@@ -188,7 +166,7 @@ const NavBar = () => {
                   <img
                     alt="User Avatar"
                     src={user.photoURL}
-                    className="rounded-full w-10 h-10 object-cover"
+                    className="object-cover w-10 h-10 rounded-full"
                   />
                 ) : (
                   <FaUserCircle className="w-10 h-10 text-[#0c5f5a]" />
@@ -196,30 +174,33 @@ const NavBar = () => {
               </div>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content bg-white rounded-box z-[1] mt-3 w-52 p-2 shadow text-base"
+                className="menu menu-sm dropdown-content bg-white dark:bg-gray-800 rounded-box z-[1] mt-3 w-52 p-2 shadow text-base text-gray-700 dark:text-gray-200"
               >
-                <li className="px-3 py-2 text-gray-700 font-semibold border-b">
+                <li className="px-3 py-2 font-semibold border-b dark:border-gray-700">
                   {user.displayName || user.email}
                 </li>
                 <li>
-                  <Link to="/dashboard/my-profile" className="justify-between text-primary font-semibold">
-                    My Profile
-                  </Link>
+                  <Link to="/dashboard/my-profile">My Profile</Link>
                 </li>
                 <li>
-                  <Link to="/dashboard" className="text-primary font-semibold">Dashboard</Link>
+                  <Link to="/dashboard">Dashboard</Link>
                 </li>
                 <li>
-                  <button onClick={handleLogOut} className=" font-bold">Log Out</button>
+                  <button
+                    onClick={handleLogOut}
+                    className="font-bold text-red-500"
+                  >
+                    Log Out
+                  </button>
                 </li>
               </ul>
             </div>
           ) : (
             <Link
               to="/login"
-              className={`font-normal border-2 text-teal-700 border-orange-300 px-6 py-2 cursor-pointer rounded-lg hover:bg-teal-300 hover:border-white hover:text-white transition-all duration-300 ${loginButtonClasses}`}
+              className={`font-bold rounded-md bg-gradient-to-r from-teal-400 to-orange-200 hover:from-orange-300 hover:to-teal-400 px-6 py-2 transition-all duration-300 shadow-sm text-[#0c5f5a]`}
             >
-            <span className="font-bold">Log In</span>
+              Log In
             </Link>
           )}
         </div>

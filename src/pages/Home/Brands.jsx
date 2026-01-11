@@ -47,6 +47,7 @@ const Brands = () => {
         disableOnInteraction: false,
       }}
       modules={[Autoplay]}
+      className="dark:bg-gray-900 bg-base-100 text-base-content"
     >
       {brandLogos.map((logo, index) => (
         <SwiperSlide key={index}>

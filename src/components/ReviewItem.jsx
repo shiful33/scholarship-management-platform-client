@@ -17,17 +17,17 @@ const ReviewItem = ({ review }) => {
   const rating = Math.min(5, Math.max(0, review.rating || 0));
 
   return (
-    <div className="bg-base-100 p-6 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 hover:shadow-xl h-110">
+    <div className="p-6 transition-all duration-300 border border-gray-100 shadow-lg bg-base-100 rounded-xl hover:shadow-xl h-110">
       {/* Reviewer Info */}
       <div className="flex items-center mb-4">
         <img
           src={review.reviewerImage || defaultImage}
           alt={review.reviewerName || "Reviewer"}
-          className="w-12 h-12 rounded-full object-cover mr-4 border-2 border-orange-400 flex-shrink-0"
+          className="flex-shrink-0 object-cover w-12 h-12 mr-4 border-2 border-orange-400 rounded-full"
         />
         <div>
           {/* Reviewer Name */}
-          <p className="font-bold text-gray-800">
+          <p className="font-bold dark:text-gray-800">
             {review.reviewerName || "Anonymous User"}
           </p>
 
@@ -48,17 +48,17 @@ const ReviewItem = ({ review }) => {
                   className="inline mr-0.5 text-gray-300"
                 />
               ))}
-            <span className="text-xs text-gray-500 ml-2">({rating}/5)</span>
+            <span className="ml-2 text-xs dark:text-gray-500">({rating}/5)</span>
           </div>
         </div>
       </div>
 
       {/* Comment */}
-      <p className="text-gray-700 italic border-l-4 border-teal-400 pl-4 min-h-[60px]">
+      <p className="dark:text-gray-700 italic border-l-4 border-teal-400 pl-4 min-h-[60px]">
         "{review.comment || "No comment provided."}"
       </p>
 
-      <p className="text-xs text-gray-400 mt-3 text-left">
+      <p className="mt-3 text-xs text-left text-gray-400">
         Reviewed on: {reviewDate}
       </p>
     </div>

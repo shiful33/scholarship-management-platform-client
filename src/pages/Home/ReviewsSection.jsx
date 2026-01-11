@@ -34,7 +34,7 @@ const ReviewsSection = () => {
   };
 
   if (isReviewsLoading) {
-    return <div className="text-center p-10">Loading reviews...</div>;
+    return <div className="p-10 text-center">Loading reviews...</div>;
   }
 
   if (isError || !Array.isArray(latestReviews) || latestReviews.length === 0) {
@@ -42,18 +42,18 @@ const ReviewsSection = () => {
   }
 
   return (
-    <section className="py-16 shadow-lg rounded-lg bg-gray-50 overflow-hidden">
+    <section className="py-16 overflow-hidden rounded-lg shadow-lg bg-base-100 text-base-content">
       <motion.h2
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={slideInLeft}
-        className="text-4xl font-extrabold text-center text-primary mb-12"
+        className="mb-12 text-4xl font-extrabold text-center text-primary"
       >
         ✨ Students Reviews
       </motion.h2>
 
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="px-4 mx-auto max-w-7xl">
         <Swiper
           spaceBetween={30}
           slidesPerView={1} 

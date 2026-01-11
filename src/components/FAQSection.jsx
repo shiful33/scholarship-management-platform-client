@@ -73,13 +73,13 @@ const FAQSection = () => {
       initial="hidden"
       whileInView="visible" 
       viewport={{ once: true, amount: 0.1 }}
-      className="faq-section-wrapper mt-[100px] mx-4 lg:mx-0"
+      className="faq-section-wrapper mt-[100px] mx-4 lg:mx-0 bg-base-100 text-base-content"
     >
-      <div className="container">
-        <h2 className="text-left text-2xl mg:text-3xl lg:text-4xl font-bold text-primary flex items-center">
+      <div className="container p-8 rounded-md bg-base-100 text-base-content">
+        <h2 className="flex items-center text-2xl font-bold text-left mg:text-3xl lg:text-4xl text-eye">
           <span role="img" ></span><FaQuestion /> Frequently Asked Questions
         </h2>
-        <p className="text-left mt-4 mb-8">Find quick answers to the most common queries regarding our scholarship stream.</p>
+        <p className="mt-4 mb-8 text-left">Find quick answers to the most common queries regarding our scholarship stream.</p>
         
         <div className="faq-list">
           {faqData.map(item => (

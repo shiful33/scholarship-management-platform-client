@@ -31,14 +31,14 @@ const TestimonialCard = ({ quote, name, designation, scholarshipName, image }) =
 // Main Slider Component
 const TestimonialSlider = () => {
   return (
-    <div className="mt-[120px] p-4 lg:p-0">
+    <div className="mt-[120px] p-4 lg:p-0 bg-base-100 text-base-content">
         <motion.div
         variants={slideInLeftVariants}
         initial="hidden"
         whileInView="visible" 
         viewport={{ once: true, amount: 0.5 }}
         >
-        <h2 className='text-2xl md:text-3xl lg:text-5xl font-extrabold mb-4 text-left text-primary'>Experiences of Our <span className='text-eye'>Scholarship Students</span></h2>
+        <h2 className='mb-4 text-2xl font-extrabold text-left md:text-3xl lg:text-5xl text-primary'>Experiences of Our <span className='text-eye'>Scholarship Students</span></h2>
         <p className='text-[18px] text-left  lg:w-[650px] mb-8'>community projects, and social initiatives. It encourages socially responsible education and provides funds to advance impactful projects.</p>
         </motion.div>
         <Swiper
